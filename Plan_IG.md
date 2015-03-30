@@ -14,22 +14,30 @@ _Données :_
 
 - Un nom de joueur (Ou manière arcade, inscrire son nom si meilleur score sur un
 niveau, au choix)
-- Plusieurs niveaux
+- Plusieurs niveaux (ie. style d'environnement différent ?)
 - Des sauvegardes
-- Sauvegarde des options de l’utilisateur (mapping de touche, …)
+- Sauvegarde des options de l’utilisateur (mapping de touche, choix du skin,
+  ...)
 - Un meilleur score (par niveau sans doute mieux)
 - Touches attribuées
+- Un mode d'aventure ?
 - Un choix de difficulté ?
 - Un choix dans le skin du goinfre ?
 
 #### _Niveau ou Aire de jeu :_
 
+L'idée serait de pouvoir permettre la génération aléatoire de niveaux (avec des
+pièges placé dès le départ *ET/OU* des pièges qui apparaissent, en même temps que
+des nutritionistes).  
+On pourrait donc différencier un mode dit ```aventure```, et un mode dit
+```aléatoire``` (donc deux tableaux de score différents) ?
+
 _Données :_
 
-- Un identifiant
+- Un identifiant (ie. id du style ?) OU génération aléatoire.
 - Un objectif (temps/ramasser un certain nombre de gâteaux)
 - Un goinfre
-- Un ou plusieurs type de nutritionnistes
+- Un ou plusieurs nutritionnistes (de type différent selon la difficulté)
 - Des gâteaux
 - Des obstacles ? (à définir si oui, il faut leur position)
 - Une taille
