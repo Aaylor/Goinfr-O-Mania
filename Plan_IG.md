@@ -123,3 +123,27 @@ _Méthode :_
 - Subir un malus
 - Se défendre (Plusieurs méthode possible de défense dépendant
 d’eventlisteners).
+
+## Organisation du package :
+
+Ici il va falloir détermier comment on organise le package à la compilation,
+afin de rendre un projet propre, et simple d'utilisation.  
+Cela permettrait aussi de simplifier la sauvegarde d'item édité (par
+exemple)...
+
+ - Doit on prendre en compte l'internationalisation ?
+ - Où doit-on sauvegarder les images ?
+ - Si on accepte un mode d'édition, comment et où les sauvegarder ?
+
+## Pseudo UML:
+
+ - Interface Playable : indique que l'on peut jouer.
+ - Interface Editable : indique que l'on peut éditer.
+ - AbstractEntity (correspondrait à une entité visible sur le plateau)
+    * MovableEntity (une entité movible)
+        * Goinfre, implémente Playable, Editable (représente un goinfre)
+        * Nutritioniste, implémente Editable
+    * FixedEntity   (une entité fixe)
+        * Items (doit-on différencier les deux ?)
+            + Bonus
+            + Trap
