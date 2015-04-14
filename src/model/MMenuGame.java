@@ -1,9 +1,11 @@
 package Model;
 
+import java.util.Observable;
+
 /**
  * This class represent the modelisation of the menu game.
  */
-public class MMenuGame {
+public class MMenuGame extends Observable {
 
     private MPlayer actualPlayer;
     /*
@@ -12,17 +14,20 @@ public class MMenuGame {
     Pareil pour les sauvegardes
     */
     private MDifficulties difficulties;
+    private MLevel actualLevel;
 
     //CONSTRUCTORS
 
-    public MMenuGame(MPlayer actualPlayer, MDifficulties difficulties) {
+    public MMenuGame(MPlayer actualPlayer, MDifficulties difficulties, MLevel actualLevel) {
         this.actualPlayer = actualPlayer;
         this.difficulties = difficulties;
+        this.actualLevel = actualLevel;
     }
 
     public MMenuGame() {
         this.actualPlayer = new MPlayer();
         this.difficulties = new MDifficulties();
+        this.actualLevel = new MLevel();
     }
 
     //SETTERS
@@ -35,6 +40,12 @@ public class MMenuGame {
         this.difficulties = difficulties;
     }
 
+    public void setActualLevel(MLevel actualLevel) {
+        this.actualLevel = actualLevel;
+        setChanged();
+        notifyObservers();
+    }
+
     //GETTERS
 
     public MPlayer getActualPlayer() {
@@ -43,5 +54,9 @@ public class MMenuGame {
 
     public MDifficulties getDifficulties() {
         return difficulties;
+    }
+
+    public MLevel getActualLevel() {
+        return actualLevel;
     }
 }

@@ -147,3 +147,32 @@ exemple)...
         * Items (doit-on différencier les deux ?)
             + Bonus
             + Trap
+
+
+######## Vue_details :
+
+(/!\ Modifiable signifie qu'un changement nécessite un rafraichissement, pas
+modifiable à la création.)
+
+Vue qui seront modifiable dans le temps :
+
+ - Sauvegarde
+ - Niveau
+ - Goinfre
+ - Nutritionistes
+ - Sélection des options
+ - Editer un niveau
+
+Vue qui seront fixes quoi qu'il advienne :
+
+ - Table des scores
+ - Gateau
+ - Pièges
+
+Vue qui dépendent de l'implémentation :
+
+ - VMenuGame (si hérite de JFrame, modulable, si simple paneau rentré dans une
+fenêtre par défaut, fixe)
+
+ - Sélection de la difficultée. (Si l'on affiche la difficultée actuelle dans
+   ce menu.)

@@ -15,7 +15,7 @@ public class MLevel {
         this.pan = pan;
     }
 
-    public MLevel(MScore actualScore) {
+    public MLevel() {
         this.actualScore = new MScore();
         this.goal = new MGoal();
         this.pan = new MPan();

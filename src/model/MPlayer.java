@@ -1,9 +1,11 @@
 package Model;
 
+import java.util.Observable;
+
 /**
  * This class represent the modelisation of a player
  */
-public class MPlayer {
+public class MPlayer extends Observable {
 
     private String name;
     private char up;
@@ -34,22 +36,32 @@ public class MPlayer {
 
     public void setName(String name) {
         this.name = name;
+        setChanged();
+        notifyObservers();
     }
 
     public void setUp(char up) {
         this.up = up;
+        setChanged();
+        notifyObservers();
     }
 
     public void setDown(char down) {
         this.down = down;
+        setChanged();
+        notifyObservers();
     }
 
     public void setLeft(char left) {
         this.left = left;
+        setChanged();
+        notifyObservers();
     }
 
     public void setRight(char right) {
         this.right = right;
+        setChanged();
+        notifyObservers();
     }
 
 

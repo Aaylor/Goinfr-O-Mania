@@ -1,9 +1,11 @@
 package Model;
 
+import java.util.Observable;
+
 /**
  * Created by tratost on 13/04/15.
  */
-public class MPan {
+public class MPan extends Observable {
 
     private MMusic actualMusic;
     private MEntity[] entities;

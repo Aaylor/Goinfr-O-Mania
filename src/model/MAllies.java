@@ -3,7 +3,7 @@ package Model;
 /**
  * Created by tratost on 13/04/15.
  */
-public class MAllies extends MMovable{
+public class MAllies extends MMovable {
 
     //CONSTRUCTORS
 
@@ -15,4 +15,10 @@ public class MAllies extends MMovable{
         super(nbLifes);
     }
 
+    @Override
+    public void setNbLifes(int nbLifes) {
+        super.setNbLifes(nbLifes);
+        setChanged();
+        notifyObservers();
+    }
 }

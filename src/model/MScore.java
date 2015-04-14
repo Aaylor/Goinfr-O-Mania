@@ -1,10 +1,12 @@
 package Model;
 
+import java.util.Observable;
+
 /**
  * Created by tratost on 13/04/15.
  */
-public class MScore {
-
+public class MScore extends Observable {
+    //Plutot un MPlayer ?
     private String name;
     private int value;
 
@@ -29,6 +31,8 @@ public class MScore {
 
     public void setValue(int value) {
         this.value = value;
+        setChanged();
+        notifyObservers();
     }
 
     //GETTERS
