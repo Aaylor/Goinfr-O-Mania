@@ -1,3 +1,5 @@
+package Model;
+
 /**
  * This class represent the modelisation of a player
  */
