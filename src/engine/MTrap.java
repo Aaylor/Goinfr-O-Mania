@@ -1,6 +1,6 @@
 package engine;
 
-import sound.MMusic;
+import sound.MSound;
 
 /**
  * Created by tratost on 13/04/15.
@@ -10,7 +10,7 @@ public class MTrap extends MMalus{
 
     //CONSTRUCTORS
 
-    public MTrap(int effect, MMusic musicMalus) {
+    public MTrap(int effect, MSound musicMalus) {
         super(effect, musicMalus);
     }
 

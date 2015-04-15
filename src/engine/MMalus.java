@@ -1,6 +1,6 @@
 package engine;
 
-import sound.MMusic;
+import sound.MSound;
 
 /**
  * Created by tratost on 13/04/15.
@@ -11,7 +11,7 @@ public class MMalus extends MFixed {
     //CONSTRUCTORS
 
 
-    public MMalus(int effect, MMusic musicMalus) {
+    public MMalus(int effect, MSound musicMalus) {
         super(effect, musicMalus);
     }
 

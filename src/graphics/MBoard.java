@@ -1,7 +1,7 @@
 package graphics;
 
 import engine.MEntity;
-import sound.MMusic;
+import sound.MSound;
 
 import java.util.Observable;
 
@@ -10,18 +10,18 @@ import java.util.Observable;
  */
 public class MBoard extends Observable {
 
-    private MMusic actualMusic;
+    private MSound actualMusic;
     private MEntity[] entities;
     private MBackground background;
 
-    public MBoard(MMusic actualMusic, MEntity[] entities, MBackground background) {
+    public MBoard(MSound actualMusic, MEntity[] entities, MBackground background) {
         this.actualMusic = actualMusic;
         this.entities = entities;
         this.background = background;
     }
 
     public MBoard() {
-        this.actualMusic = new MMusic();
+        this.actualMusic = null;
         this.entities = new MEntity[10];
         this.background = new MBackground();
     }

@@ -1,6 +1,6 @@
 package engine;
 
-import sound.MMusic;
+import sound.MSound;
 
 /**
  * Created by tratost on 13/04/15.
@@ -10,8 +10,8 @@ public class MBonus extends MFixed {
 
     //CONSTRUCTORS
 
-    public MBonus(int effect, MMusic musicBonus) {
-        super(effect, musicBonus);
+    public MBonus(int effect, MSound SoundBonus) {
+        super(effect, SoundBonus);
     }
 
     public MBonus(int effect) {
