@@ -1,4 +1,4 @@
-package Model;
+package graphics;
 
 /**
  * Created by tratost on 13/04/15.

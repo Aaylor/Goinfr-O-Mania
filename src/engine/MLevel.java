@@ -1,4 +1,6 @@
-package Model;
+package engine;
+
+import graphics.MBoard;
 
 /**
  * Created by tratost on 13/04/15.
@@ -7,17 +9,17 @@ public class MLevel {
 
     private MScore actualScore;
     private MGoal goal;
-    private MPan pan;
+    private MBoard board;
 
-    public MLevel(MScore actualScore, MGoal goal, MPan pan) {
+    public MLevel(MScore actualScore, MGoal goal, MBoard board) {
         this.actualScore = actualScore;
         this.goal = goal;
-        this.pan = pan;
+        this.board = board;
     }
 
     public MLevel() {
         this.actualScore = new MScore();
         this.goal = new MGoal();
-        this.pan = new MPan();
+        this.board = new MBoard();
     }
 }

@@ -1,4 +1,8 @@
-package Model;
+package graphics;
+
+import engine.MDifficulties;
+import engine.MLevel;
+import engine.MPlayer;
 
 import java.util.Observable;
 

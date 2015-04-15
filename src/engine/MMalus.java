@@ -1,4 +1,6 @@
-package Model;
+package engine;
+
+import sound.MMusic;
 
 /**
  * Created by tratost on 13/04/15.

@@ -1,4 +1,4 @@
-package Model;
+package sound;
 
 /**
  * Created by tratost on 13/04/15.
