@@ -3,15 +3,15 @@ package engine;
 /**
  * Created by tratost on 13/04/15.
  */
-public class MGlutton extends MAllies {
+public class Ennemies extends Movable {
 
     //CONSTRUCTORS
 
-    public MGlutton(int effect, int nbLifes) {
+    public Ennemies(int effect, int nbLifes) {
         super(effect, nbLifes);
     }
 
-    public MGlutton(int nbLifes) {
+    public Ennemies(int nbLifes) {
         super(nbLifes);
     }
 }

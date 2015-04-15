@@ -5,9 +5,9 @@ import javax.swing.*;
 /**
  * Created by tratost on 15/04/15.
  */
-public class VToolbar extends JMenuBar {
+public class ToolbarView extends JMenuBar {
 
-    public VToolbar() {
+    public ToolbarView() {
         super();
     }
 }

@@ -3,7 +3,7 @@ package graphics;
 /**
  * Created by tratost on 13/04/15.
  */
-public class MBackground {
+public class Background {
 
     private String path;
     private int weight;
@@ -12,13 +12,13 @@ public class MBackground {
 
     //CONSTRUCTORS
 
-    public MBackground(String path, int weight, int height) {
+    public Background(String path, int weight, int height) {
         this.path = path;
         this.weight = weight;
         this.height = height;
     }
 
-    public MBackground() {
+    public Background() {
         this.path = "to complete !!!";
         this.weight = 0;
         this.height = 0;

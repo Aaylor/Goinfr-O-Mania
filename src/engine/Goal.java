@@ -3,17 +3,17 @@ package engine;
 /**
  * Created by tratost on 13/04/15.
  */
-public class MGoal {
+public class Goal {
 
     private int typeOfGoal;
 
     //CONSTRUCTORS
 
-    public MGoal(int typeOfGoal) {
+    public Goal(int typeOfGoal) {
         this.typeOfGoal = typeOfGoal;
     }
 
-    public MGoal() {
+    public Goal() {
         this.typeOfGoal = 1;
     }
 

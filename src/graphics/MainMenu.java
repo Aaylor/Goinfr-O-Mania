@@ -1,50 +1,50 @@
 package graphics;
 
-import engine.MDifficulties;
-import engine.MLevel;
-import engine.MPlayer;
+import engine.Difficulties;
+import engine.Level;
+import engine.Player;
 
 import java.util.Observable;
 
 /**
  * This class represent the modelisation of the menu game.
  */
-public class MMainMenu extends Observable {
+public class MainMenu extends Observable {
 
-    private MPlayer actualPlayer;
+    private Player actualPlayer;
     /*
     La table des score n'est peut-être pas nécessaire dans le model du menu du jeu,
     Le controleur de jeu permettra d'accéder ?
     Pareil pour les sauvegardes
     */
-    private MDifficulties difficulties;
-    private MLevel actualLevel;
+    private Difficulties difficulties;
+    private Level actualLevel;
 
     //CONSTRUCTORS
 
-    public MMainMenu(MPlayer actualPlayer, MDifficulties difficulties, MLevel actualLevel) {
+    public MainMenu(Player actualPlayer, Difficulties difficulties, Level actualLevel) {
         this.actualPlayer = actualPlayer;
         this.difficulties = difficulties;
         this.actualLevel = actualLevel;
     }
 
-    public MMainMenu() {
-        this.actualPlayer = new MPlayer();
-        this.difficulties = new MDifficulties();
-        this.actualLevel = new MLevel();
+    public MainMenu() {
+        this.actualPlayer = new Player();
+        this.difficulties = new Difficulties();
+        this.actualLevel = new Level();
     }
 
     //SETTERS
 
-    public void setActualPlayer(MPlayer actualPlayer) {
+    public void setActualPlayer(Player actualPlayer) {
         this.actualPlayer = actualPlayer;
     }
 
-    public void setDifficulties(MDifficulties difficulties) {
+    public void setDifficulties(Difficulties difficulties) {
         this.difficulties = difficulties;
     }
 
-    public void setActualLevel(MLevel actualLevel) {
+    public void setActualLevel(Level actualLevel) {
         this.actualLevel = actualLevel;
         setChanged();
         notifyObservers();
@@ -52,15 +52,15 @@ public class MMainMenu extends Observable {
 
     //GETTERS
 
-    public MPlayer getActualPlayer() {
+    public Player getActualPlayer() {
         return actualPlayer;
     }
 
-    public MDifficulties getDifficulties() {
+    public Difficulties getDifficulties() {
         return difficulties;
     }
 
-    public MLevel getActualLevel() {
+    public Level getActualLevel() {
         return actualLevel;
     }
 }

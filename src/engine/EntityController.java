@@ -3,20 +3,20 @@ package engine;
 /**
  * Created by Aaylor, Tratost, PixelMan on 15/04/15.
  */
-public abstract class CEntity {
+public abstract class EntityController {
 
     /* Attributes */
 
     /**
      * The entity that must be controlled.
      */
-    private CEntity entity;
+    private Entity entity;
 
 
 
     /* Constructors */
 
-    public CEntity(CEntity entity) {
+    public EntityController(Entity entity) {
         this.entity = entity;
     }
 
@@ -24,7 +24,7 @@ public abstract class CEntity {
 
     /* Getters */
 
-    public CEntity getEntity() {
+    public Entity getEntity() {
         return entity;
     }
 

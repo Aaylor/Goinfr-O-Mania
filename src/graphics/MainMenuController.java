@@ -1,26 +1,23 @@
 package graphics;
 
-import engine.CLevel;
-
-import java.util.Observable;
-import java.util.Observer;
+import engine.LevelController;
 
 /**
  * Created by Aaylor, Tratost, PixelMan on 15/04/15.
  */
-public class CMainMenu {
+public class MainMenuController {
 
     /* Attributes */
 
     /**
      * The game main menu that must be controlled
      */
-    private MMainMenu mainMenu;
+    private MainMenu mainMenu;
 
     /**
      * The controller of the actual level
      */
-    private CLevel levelController;
+    private LevelController levelController;
 
     /* TODO : Add those attributes :
         - Difficulty controller
@@ -32,7 +29,7 @@ public class CMainMenu {
 
     /* Constructors */
 
-    public CMainMenu(MMainMenu mainMenu, CLevel levelController) {
+    public MainMenuController(MainMenu mainMenu, LevelController levelController) {
         this.mainMenu = mainMenu;
         this.levelController = levelController;
     }
@@ -41,11 +38,11 @@ public class CMainMenu {
 
     /* Getters */
 
-    public MMainMenu getMainMenu() {
+    public MainMenu getMainMenu() {
         return mainMenu;
     }
 
-    public CLevel getLevelController() {
+    public LevelController getLevelController() {
         return levelController;
     }
 

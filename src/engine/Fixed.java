@@ -5,22 +5,22 @@ import sound.MSound;
 /**
  * Created by tratost on 13/04/15.
  */
-public class MFixed extends MEntity{
+public class Fixed extends Entity {
 
     protected MSound sonorEffect;
 
     //CONSTRUCTORS
 
-    public MFixed(int effect, MSound sonorEffect) {
+    public Fixed(int effect, MSound sonorEffect) {
         super(effect);
         this.sonorEffect = sonorEffect;
     }
 
-    public MFixed(int effect) {
+    public Fixed(int effect) {
         super(effect);
     }
 
-    public MFixed() {
+    public Fixed() {
     }
 
 }

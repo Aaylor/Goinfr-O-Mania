@@ -1,29 +1,29 @@
 package engine;
 
-import graphics.CBoard;
+import graphics.BoardController;
 
 /**
  * Created by Aaylor, Tratost, PixelMan on 15/04/15.
  */
-public class CLevel {
+public class LevelController {
 
     /* Attributes */
 
     /**
      * The game level that must be controlled
      */
-    private MLevel level;
+    private Level level;
 
     /**
      * The controller of the board corresponding of the level
      */
-    private CBoard board_controller;
+    private BoardController board_controller;
 
 
 
     /* Constructors */
 
-    public CLevel(MLevel level, CBoard board_controller) {
+    public LevelController(Level level, BoardController board_controller) {
         this.level = level;
         this.board_controller = board_controller;
     }
@@ -32,11 +32,11 @@ public class CLevel {
 
     /* Getters */
 
-    public MLevel getLevel() {
+    public Level getLevel() {
         return level;
     }
 
-    public CBoard getBoard_controller() {
+    public BoardController getBoard_controller() {
         return board_controller;
     }
 

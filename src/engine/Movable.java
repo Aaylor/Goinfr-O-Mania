@@ -3,23 +3,23 @@ package engine;
 /**
  * Created by tratost on 13/04/15.
  */
-public class MMovable extends MEntity {
+public class Movable extends Entity {
 
     private int nbLifes;
 
     //CONSTRUCTORS
 
 
-    public MMovable(int effect, int nbLifes) {
+    public Movable(int effect, int nbLifes) {
         super(effect);
         this.nbLifes = nbLifes;
     }
 
-    public MMovable(int nbLifes) {
+    public Movable(int nbLifes) {
         this.nbLifes = nbLifes;
     }
 
-    public MMovable() {
+    public Movable() {
         this.nbLifes = 3;
     }
 

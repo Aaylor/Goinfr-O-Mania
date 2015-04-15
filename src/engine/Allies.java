@@ -3,15 +3,15 @@ package engine;
 /**
  * Created by tratost on 13/04/15.
  */
-public class MAllies extends MMovable {
+public class Allies extends Movable {
 
     //CONSTRUCTORS
 
-    public MAllies(int effect, int nbLifes) {
+    public Allies(int effect, int nbLifes) {
         super(effect, nbLifes);
     }
 
-    public MAllies(int nbLifes) {
+    public Allies(int nbLifes) {
         super(nbLifes);
     }
 

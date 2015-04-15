@@ -5,7 +5,7 @@ import java.util.Observable;
 /**
  * Created by tratost on 13/04/15.
  */
-public class MScore extends Observable {
+public class Score extends Observable {
     //Plutot un MPlayer ?
     private String name;
     private int value;
@@ -13,12 +13,12 @@ public class MScore extends Observable {
 
     //CONSTRUCTORS
 
-    public MScore(String name, int value) {
+    public Score(String name, int value) {
         this.name = name;
         this.value = value;
     }
 
-    public MScore() {
+    public Score() {
         this.name = "Tester";
         this.value = 0;
     }

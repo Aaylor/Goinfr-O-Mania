@@ -3,15 +3,15 @@ package engine;
 /**
  * Created by tratost on 13/04/15.
  */
-public class MEnnemies extends MMovable {
+public class Glutton extends Allies {
 
     //CONSTRUCTORS
 
-    public MEnnemies(int effect, int nbLifes) {
+    public Glutton(int effect, int nbLifes) {
         super(effect, nbLifes);
     }
 
-    public MEnnemies(int nbLifes) {
+    public Glutton(int nbLifes) {
         super(nbLifes);
     }
 }

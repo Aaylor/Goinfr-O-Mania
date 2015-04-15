@@ -5,7 +5,7 @@ import java.util.Observable;
 /**
  * This class represent the modelisation of a player
  */
-public class MPlayer extends Observable {
+public class Player extends Observable {
 
     private String name;
     private char up;
@@ -15,7 +15,7 @@ public class MPlayer extends Observable {
 
     //CONSTRUCTORS
 
-    public MPlayer(String name, char up, char down, char left, char right) {
+    public Player(String name, char up, char down, char left, char right) {
         this.name = name;
         this.up = up;
         this.down = down;
@@ -23,7 +23,7 @@ public class MPlayer extends Observable {
         this.right = right;
     }
 
-    public MPlayer() {
+    public Player() {
         this.name = "Tester";
         this.up = 'z';
         this.down = 's';

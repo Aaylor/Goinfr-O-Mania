@@ -5,7 +5,7 @@ import java.util.Observable;
 /**
  * Created by tratost on 13/04/15.
  */
-public class MEntity extends Observable {
+public class Entity extends Observable {
 
     protected int effect;
     protected String skin;
@@ -13,16 +13,16 @@ public class MEntity extends Observable {
     //CONSTRUCTORS
 
 
-    public MEntity(int effect, String skin) {
+    public Entity(int effect, String skin) {
         this.effect = effect;
         this.skin = skin;
     }
 
-    public MEntity(int effect) {
+    public Entity(int effect) {
         this.effect = effect;
     }
 
-    public MEntity() {
+    public Entity() {
         this.effect = 0;
     }
 

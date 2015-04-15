@@ -3,17 +3,17 @@ package engine;
 /**
  * Created by tratost on 13/04/15.
  */
-public class MDifficulties {
+public class Difficulties {
 
     private int value;
 
     //CONSTRUCTORS
 
-    public MDifficulties(int value) {
+    public Difficulties(int value) {
         this.value = value;
     }
 
-    public MDifficulties() {
+    public Difficulties() {
         this.value = 1;
     }
 

@@ -5,21 +5,21 @@ import sound.MSound;
 /**
  * Created by tratost on 13/04/15.
  */
-public class MMalus extends MFixed {
+public class Malus extends Fixed {
 
 
     //CONSTRUCTORS
 
 
-    public MMalus(int effect, MSound musicMalus) {
+    public Malus(int effect, MSound musicMalus) {
         super(effect, musicMalus);
     }
 
-    public MMalus(int effect) {
+    public Malus(int effect) {
         super(effect);
     }
 
-    public MMalus() {
+    public Malus() {
         super();
     }
 }

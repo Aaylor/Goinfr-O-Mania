@@ -5,20 +5,20 @@ import sound.MSound;
 /**
  * Created by tratost on 13/04/15.
  */
-public class MBonus extends MFixed {
+public class Bonus extends Fixed {
 
 
     //CONSTRUCTORS
 
-    public MBonus(int effect, MSound SoundBonus) {
+    public Bonus(int effect, MSound SoundBonus) {
         super(effect, SoundBonus);
     }
 
-    public MBonus(int effect) {
+    public Bonus(int effect) {
         super(effect);
     }
 
-    public MBonus() {
+    public Bonus() {
         super();
     }
 

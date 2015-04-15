@@ -2,26 +2,24 @@ package graphics;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  * Created by Aaylor, Tratost, PixelMan on 15/04/15.
  */
-public class CBoard implements MouseListener {
+public class BoardController implements MouseListener {
 
     /* Attributes */
 
     /**
      * The game board that must be controlled
      */
-    private MBoard board;
+    private Board board;
 
 
 
     /* Constructors */
 
-    public CBoard(MBoard board) {
+    public BoardController(Board board) {
         this.board = board;
     }
 
@@ -29,7 +27,7 @@ public class CBoard implements MouseListener {
 
     /* Getters */
 
-    public MBoard getBoard() {
+    public Board getBoard() {
         return board;
     }
 

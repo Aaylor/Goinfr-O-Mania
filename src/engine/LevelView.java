@@ -7,9 +7,9 @@ import java.util.Observer;
 /**
  * Created by tratost on 15/04/15.
  */
-public class VLevel extends JPanel {
+public class LevelView extends JPanel {
 
-    public VLevel() {
+    public LevelView() {
         super();
     }
 }
