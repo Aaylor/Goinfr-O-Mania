@@ -12,12 +12,12 @@ public class CLevel {
     /**
      * The game level that must be controlled
      */
-    MLevel level;
+    private MLevel level;
 
     /**
      * The controller of the board corresponding of the level
      */
-    CBoard board_controller;
+    private CBoard board_controller;
 
 
 

@@ -15,12 +15,12 @@ public class CMainMenu {
     /**
      * The game main menu that must be controlled
      */
-    MMainMenu mainMenu;
+    private MMainMenu mainMenu;
 
     /**
      * The controller of the actual level
      */
-    CLevel levelController;
+    private CLevel levelController;
 
     /* TODO : Add those attributes :
         - Difficulty controller

@@ -15,7 +15,7 @@ public class CBoard implements MouseListener {
     /**
      * The game board that must be controlled
      */
-    MBoard board;
+    private MBoard board;
 
 
 
