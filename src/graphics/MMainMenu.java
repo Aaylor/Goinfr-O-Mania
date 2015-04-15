@@ -9,7 +9,7 @@ import java.util.Observable;
 /**
  * This class represent the modelisation of the menu game.
  */
-public class MMenuGame extends Observable {
+public class MMainMenu extends Observable {
 
     private MPlayer actualPlayer;
     /*
@@ -22,13 +22,13 @@ public class MMenuGame extends Observable {
 
     //CONSTRUCTORS
 
-    public MMenuGame(MPlayer actualPlayer, MDifficulties difficulties, MLevel actualLevel) {
+    public MMainMenu(MPlayer actualPlayer, MDifficulties difficulties, MLevel actualLevel) {
         this.actualPlayer = actualPlayer;
         this.difficulties = difficulties;
         this.actualLevel = actualLevel;
     }
 
-    public MMenuGame() {
+    public MMainMenu() {
         this.actualPlayer = new MPlayer();
         this.difficulties = new MDifficulties();
         this.actualLevel = new MLevel();
