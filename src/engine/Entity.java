@@ -5,46 +5,19 @@ import java.util.Observable;
 /**
  * Created by tratost on 13/04/15.
  */
-public class Entity extends Observable {
+public abstract class Entity extends Observable {
 
-    protected int effect;
-    protected String skin;
+    /* Constructors */
 
-    //CONSTRUCTORS
+    public Entity() {}
 
 
-    public Entity(int effect, String skin) {
-        this.effect = effect;
-        this.skin = skin;
-    }
+    /* Entity Abstract Functionalities */
 
-    public Entity(int effect) {
-        this.effect = effect;
-    }
+    /**
+     * Apply the effect of the Entity.
+     */
+    public abstract void effect();
 
-    public Entity() {
-        this.effect = 0;
-    }
 
-    //SETTERS
-
-    public void setEffect(int effect) {
-        this.effect = effect;
-    }
-
-    public void setSkin(String skin) {
-        this.skin = skin;
-        setChanged();
-        notifyObservers();
-    }
-
-    //GETTERS
-
-    public int getEffect() {
-        return effect;
-    }
-
-    public String getSkin() {
-        return skin;
-    }
 }

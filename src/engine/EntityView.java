@@ -1,20 +1,42 @@
 package engine;
 
-import javax.swing.*;
-import java.util.Observable;
-import java.util.Observer;
+import log.IGLog;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by tratost on 15/04/15.
  */
-public class EntityView extends JPanel implements Observer {
+public class EntityView {
 
-    public EntityView() {
-        super();
+    private BufferedImage defaultSkin;
+
+
+    /* Constructors */
+
+    public EntityView(String defaultSkinPath) {
+        try {
+            defaultSkin = ImageIO.read(new File(defaultSkinPath));
+        } catch (IOException e) {
+            int grey = new Color(170, 170, 170).getRGB();
+            IGLog.error("The file " + defaultSkinPath + " was not found.");
+            defaultSkin = new BufferedImage(30, 30, BufferedImage.TYPE_INT_RGB);
+            for (int i = 0; i < 30; i++) {
+                for (int j = 0; j < 30; j++) {
+                    defaultSkin.setRGB(i, j, grey);
+                }
+            }
+        }
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        //TODO
+
+    /* Getters */
+
+    public BufferedImage getDefaultSkin() {
+        return defaultSkin;
     }
 }
