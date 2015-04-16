@@ -1,5 +1,6 @@
 package engine;
 
+import java.io.File;
 import java.util.Observable;
 
 /**
@@ -8,27 +9,32 @@ import java.util.Observable;
 public class Player extends Observable {
 
     private String name;
-    private char up;
-    private char down;
-    private char left;
-    private char right;
+    private KeyConfiguration keyConfiguration;
+    private String skin;
 
     //CONSTRUCTORS
 
-    public Player(String name, char up, char down, char left, char right) {
+
+    public Player(String name, KeyConfiguration keyConfiguration, String skin) {
         this.name = name;
-        this.up = up;
-        this.down = down;
-        this.left = left;
-        this.right = right;
+        this.keyConfiguration = keyConfiguration;
+        this.skin = skin;
     }
 
-    public Player() {
-        this.name = "Tester";
-        this.up = 'z';
-        this.down = 's';
-        this.left = 'q';
-        this.right = 'd';
+    public Player(String name) {
+        this.name = name;
+        loadKeyConfiguration(name);
+        this.skin = ""; // TODO
+    }
+
+    private void loadKeyConfiguration(String name) {
+        File file = new File("profiles/" + name + ".p");
+        if (file.exists()) {
+            // TODO
+            throw new UnsupportedOperationException();
+        } else {
+            this.keyConfiguration = KeyConfiguration.getDefaultConfiguration();
+        }
     }
 
 
@@ -40,51 +46,18 @@ public class Player extends Observable {
         notifyObservers();
     }
 
-    public void setUp(char up) {
-        this.up = up;
-        setChanged();
-        notifyObservers();
-    }
-
-    public void setDown(char down) {
-        this.down = down;
-        setChanged();
-        notifyObservers();
-    }
-
-    public void setLeft(char left) {
-        this.left = left;
-        setChanged();
-        notifyObservers();
-    }
-
-    public void setRight(char right) {
-        this.right = right;
-        setChanged();
-        notifyObservers();
-    }
 
 
     //GETTERS
-
 
     public String getName() {
         return name;
     }
 
-    public char getUp() {
-        return up;
+
+    public void saveProfile() {
+        // TODO
+        throw new UnsupportedOperationException();
     }
 
-    public char getDown() {
-        return down;
-    }
-
-    public char getLeft() {
-        return left;
-    }
-
-    public char getRight() {
-        return right;
-    }
 }
