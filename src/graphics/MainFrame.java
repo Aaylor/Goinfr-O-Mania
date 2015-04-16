@@ -1,5 +1,8 @@
 package graphics;
 
+import log.IGLog;
+import sun.applet.Main;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ResourceBundle;
@@ -11,6 +14,7 @@ public class MainFrame extends JFrame {
 
     public MainFrame(ResourceBundle bundle) throws HeadlessException {
         super(bundle.getString("title"));
+        IGLog.write("Main frame creation.");
         defaultFrameConfiguration();
     }
 
@@ -22,8 +26,11 @@ public class MainFrame extends JFrame {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
+                IGLog.write("Launching the interface.");
+                IGLog.info("Searching for bundle.");
                 ResourceBundle bundle =
                         ResourceBundle.getBundle("lang/bundle");
+                IGLog.info("Bundle loaded.");
                 new MainFrame(bundle);
             }
         });
