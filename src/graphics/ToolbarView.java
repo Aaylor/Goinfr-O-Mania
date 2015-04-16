@@ -1,13 +1,28 @@
 package graphics;
 
-import javax.swing.*;
+import log.IGLog;
 
-/**
- * Created by tratost on 15/04/15.
- */
+import javax.swing.*;
+import java.util.ResourceBundle;
+
 public class ToolbarView extends JMenuBar {
 
-    public ToolbarView() {
+    public ToolbarView(ResourceBundle bundle) {
         super();
+
+        IGLog.write("Creating toolbar.");
+
+        JMenu file = new JMenu(bundle.getString("file"));
+        JMenu help = new JMenu(bundle.getString("help"));
+
+        addJmenus(file, help);
     }
+
+    private void addJmenus(JMenu ... menus) {
+        for (JMenu menu : menus) {
+            add(menu);
+        }
+    }
+
+
 }
