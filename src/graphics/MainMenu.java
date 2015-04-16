@@ -28,11 +28,6 @@ public class MainMenu extends Observable {
         this.actualLevel = actualLevel;
     }
 
-    public MainMenu() {
-        this.actualPlayer = new Player();
-        this.difficulties = new Difficulties();
-        this.actualLevel = new Level();
-    }
 
     //SETTERS
 
