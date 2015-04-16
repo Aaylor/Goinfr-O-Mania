@@ -3,7 +3,7 @@ package engine;
 /**
  * Created by tratost on 13/04/15.
  */
-public class Movable extends Entity {
+public abstract class Movable extends Entity {
 
     private int nbLifes;
 
@@ -11,7 +11,7 @@ public class Movable extends Entity {
 
 
     public Movable(int effect, int nbLifes) {
-        super(effect);
+        super();
         this.nbLifes = nbLifes;
     }
 
