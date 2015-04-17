@@ -1,6 +1,7 @@
 package graphics;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -10,6 +11,7 @@ import java.util.Observer;
 public class MainMenuView extends JPanel implements Observer {
 
     private MainMenuButton play;
+    private Background background;
 
     //CONSTRUCTOR
 
@@ -17,6 +19,11 @@ public class MainMenuView extends JPanel implements Observer {
         super();
         instantiateButtons();
         this.add(play);
+    }
+
+    public MainMenuView(Background bg) {
+        this();
+        background = bg;
     }
 
     private void instantiateButtons(){
@@ -35,5 +42,13 @@ public class MainMenuView extends JPanel implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         //TODO
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (background != null) {
+            background.paintComponent(g);
+        }
     }
 }
