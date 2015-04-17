@@ -1,54 +1,48 @@
 package graphics;
 
-/**
- * Created by tratost on 13/04/15.
- */
-public class Background {
+import javax.swing.*;
+import java.awt.*;
+
+public class Background extends JPanel {
 
     private String path;
-    private int weight;
+    private Image image;
+    private JComponent parentComponent;
+
+    private int width;
     private int height;
 
+    public Background(String path) {
+        ImageIcon icon = new ImageIcon(path);
 
-    //CONSTRUCTORS
+        this.path  = path;
+        image = icon.getImage();
+        parentComponent = null;
 
-    public Background(String path, int weight, int height) {
+        width  = icon.getIconWidth();
+        height = icon.getIconHeight();
+    }
+
+    public Background(String path, JComponent parentComponent) {
         this.path = path;
-        this.weight = weight;
-        this.height = height;
+        image = new ImageIcon(path).getImage();
+        this.parentComponent = parentComponent;
+
+        width  = parentComponent.getWidth();
+        height = parentComponent.getHeight();
     }
 
-    public Background() {
-        this.path = "to complete !!!";
-        this.weight = 0;
-        this.height = 0;
+    private void updateParentComponent() {
+        if (parentComponent != null) {
+            width  = parentComponent.getWidth();
+            height = parentComponent.getHeight();
+        }
     }
 
-    //SETTERS
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    //GETTERS
-
-    public String getPath() {
-        return path;
-    }
-
-    public int getWeight() {
-        return weight;
-    }
-
-    public int getHeight() {
-        return height;
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        updateParentComponent();
+        g.drawImage(image, 0, 0, width, height, null);
     }
 }

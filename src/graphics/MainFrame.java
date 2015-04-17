@@ -18,19 +18,20 @@ public class MainFrame extends JFrame {
     public MainFrame(ResourceBundle bundle) throws HeadlessException {
         super(bundle.getString("title"));
         IGLog.write("Main frame creation.");
-        defaultFrameConfiguration(bundle);
         stackPanel = new Stack<>();
-        MainMenuView menuView = new MainMenuView();
-        this.addPanel(menuView);
+        defaultFrameConfiguration(bundle);
     }
 
     private void defaultFrameConfiguration(ResourceBundle bundle) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(500, 5000));
+        setPreferredSize(new Dimension(500, 500));
         setLocationByPlatform(true);
 
         ToolbarView bar = new ToolbarView(bundle);
         setJMenuBar(bar);
+
+        MainMenuView menuView = new MainMenuView();
+        addPanel(menuView);
 
         setVisible(true);
         pack();

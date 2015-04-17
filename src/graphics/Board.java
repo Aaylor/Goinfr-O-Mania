@@ -21,6 +21,6 @@ public class Board extends Observable {
     public Board() {
         this.actualMusic = null;
         this.entities = new LinkedList<>();
-        this.background = new Background();
+        //this.background = new Background();
     }
 }
