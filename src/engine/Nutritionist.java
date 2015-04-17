@@ -15,4 +15,9 @@ public class Nutritionist extends Ennemies {
     public Nutritionist(int nbLifes) {
         super(nbLifes);
     }
+
+    @Override
+    public void effect() {
+
+    }
 }

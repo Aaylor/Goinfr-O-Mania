@@ -9,11 +9,11 @@ public class Cake extends Bonus {
 
     //CONSTRUCTORS
 
-    public Cake(int effect, MSound musicBonus) {
-        super(effect, musicBonus);
+    public Cake(MSound musicBonus) {
+        super(musicBonus);
     }
 
-    public Cake(int effect) {
-        super(effect);
+    public Cake() {
+        super();
     }
 }

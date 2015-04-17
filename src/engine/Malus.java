@@ -12,14 +12,15 @@ public class Malus extends Fixed {
 
 
     public Malus(int effect, MSound musicMalus) {
-        super(effect, musicMalus);
-    }
-
-    public Malus(int effect) {
-        super(effect);
+        super(musicMalus);
     }
 
     public Malus() {
         super();
+    }
+
+    @Override
+    public void effect() {
+
     }
 }

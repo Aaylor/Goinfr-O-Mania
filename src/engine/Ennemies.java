@@ -14,4 +14,9 @@ public class Ennemies extends Movable {
     public Ennemies(int nbLifes) {
         super(nbLifes);
     }
+
+    @Override
+    public void effect() {
+
+    }
 }

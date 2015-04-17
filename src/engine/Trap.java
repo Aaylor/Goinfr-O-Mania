@@ -15,6 +15,6 @@ public class Trap extends Malus {
     }
 
     public Trap(int effect) {
-        super(effect);
+        super();
     }
 }

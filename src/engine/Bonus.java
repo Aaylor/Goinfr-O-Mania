@@ -10,16 +10,17 @@ public class Bonus extends Fixed {
 
     //CONSTRUCTORS
 
-    public Bonus(int effect, MSound SoundBonus) {
-        super(effect, SoundBonus);
-    }
-
-    public Bonus(int effect) {
-        super(effect);
+    public Bonus(MSound SoundBonus) {
+        super(SoundBonus);
     }
 
     public Bonus() {
         super();
+    }
+
+    @Override
+    public void effect() {
+
     }
 
 }

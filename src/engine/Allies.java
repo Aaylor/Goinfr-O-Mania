@@ -21,4 +21,9 @@ public class Allies extends Movable {
         setChanged();
         notifyObservers();
     }
+
+    @Override
+    public void effect() {
+
+    }
 }
