@@ -1,19 +1,23 @@
 package engine;
 
 import sound.MSound;
+import sound.Soundable;
 
 /**
  * Created by tratost on 13/04/15.
  */
-public class Cake extends Bonus {
+public class Cake implements Soundable {
+
+    MSound sound;
 
     //CONSTRUCTORS
 
-    public Cake(MSound musicBonus) {
-        super(musicBonus);
+    public Cake(MSound sound) {
+        this.sound = sound;
     }
 
-    public Cake() {
-        super();
+    @Override
+    public void playSound() {
+
     }
 }

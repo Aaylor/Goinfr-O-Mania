@@ -3,21 +3,28 @@ package engine;
 /**
  * Created by tratost on 13/04/15.
  */
-public class Nutritionist extends Ennemies {
+public class Nutritionist extends Entity implements Movable {
 
+    int nbLifes;
 
     //CONSTRUCTORS
 
-    public Nutritionist(int effect, int nbLifes) {
-        super(effect, nbLifes);
-    }
-
     public Nutritionist(int nbLifes) {
-        super(nbLifes);
+        this.nbLifes = nbLifes;
     }
 
     @Override
     public void effect() {
 
+    }
+
+    @Override
+    public void move() {
+
+    }
+
+    @Override
+    public int numberOfLife() {
+        return 0;
     }
 }
