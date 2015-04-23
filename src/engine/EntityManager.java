@@ -25,16 +25,20 @@ public class EntityManager {
         entities = (LinkedList<Entity>) defaultEntities.clone();
     }
 
-    public void initialize(){
-
-    }
-
+    /**
+     *  Entity loop. Does every operations needed by entities.
+     *  (Movable, Destruction, ...).
+     */
     public void entityLoop() {
+        for (Entity e1 : entities) {
+            for (Entity e2 : entities) {
+                if (e1 == e2) continue;
 
-    }
-
-    public boolean detectCollisions(){
-        return false;
+                if (collision(e1, e2)) {
+                    /* Do something here */
+                }
+            }
+        }
     }
 
     /**
@@ -44,7 +48,7 @@ public class EntityManager {
      *  @return True if they collided.
      */
     public boolean collision(Entity e1, Entity e2) {
-        return false;
+        return e1.getBounds().intersects(e2.getBounds());
     }
 
     /**

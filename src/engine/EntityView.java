@@ -8,9 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-/**
- * Created by tratost on 15/04/15.
- */
+
 public class EntityView {
 
     private BufferedImage defaultSkin;

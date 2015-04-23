@@ -23,6 +23,14 @@ public abstract class Entity extends Observable {
         this.size     = size;
     }
 
+    /**
+     *  Give the bounds of an Entity.
+     *  @return the rectangle of the entity.
+     */
+    public Rectangle getBounds() {
+        return new Rectangle(position.x, position.y,
+                (int)size.getWidth(), (int)size.getHeight());
+    }
 
     /* Entity Abstract Functionalities */
 
@@ -30,6 +38,5 @@ public abstract class Entity extends Observable {
      * Apply the effect of the Entity.
      */
     public abstract void effect();
-
 
 }
