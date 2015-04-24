@@ -130,4 +130,8 @@ public class EntityManager {
     public Collection<EntityView> getOthersView() {
         return othersView.values();
     }
+
+    public Glutton getGlutton() {
+        return player;
+    }
 }

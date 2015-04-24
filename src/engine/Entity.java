@@ -1,5 +1,6 @@
 package engine;
 
+import javax.swing.text.Position;
 import java.awt.*;
 import java.util.Observable;
 
@@ -23,6 +24,11 @@ public abstract class Entity extends Observable {
         this.size     = size;
     }
 
+    private void allNotify() {
+        setChanged();
+        notifyObservers();
+    }
+
     /**
      *  Give the bounds of an Entity.
      *  @return the rectangle of the entity.
@@ -42,6 +48,21 @@ public abstract class Entity extends Observable {
 
     public int getY() {
         return (int)position.getY();
+    }
+
+    protected void setPoint(Point p) {
+        position = p;
+        allNotify();
+    }
+
+    protected void setX(int x) {
+        position = new Point(x, (int) position.getY());
+        allNotify();
+    }
+
+    protected void setY(int y) {
+        position = new Point((int) position.getX(), y);
+        allNotify();
     }
 
     /* Entity Abstract Functionalities */
