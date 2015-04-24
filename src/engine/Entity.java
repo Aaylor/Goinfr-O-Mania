@@ -37,6 +37,6 @@ public abstract class Entity extends Observable {
     /**
      * Apply the effect of the Entity.
      */
-    public abstract void effect();
+    public abstract void effect(Entity e);
 
 }

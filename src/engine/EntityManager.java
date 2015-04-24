@@ -1,5 +1,6 @@
 package engine;
 
+import java.awt.*;
 import java.util.LinkedList;
 
 
@@ -8,21 +9,15 @@ import java.util.LinkedList;
  */
 public class EntityManager {
 
-    LinkedList<Entity> entities;
+    private final Glutton player;
+    private LinkedList<Nutritionist> nutritionists;
+    private LinkedList<Entity> others;
 
     /**
      *  Create an empty manager.
      */
-    public EntityManager(){
-        entities = new LinkedList<>();
-    }
-
-    /**
-     *  Create a new manager with a number of default Entities.
-     *  @param defaultEntities Default entities to add.
-     */
-    public EntityManager(LinkedList<Entity> defaultEntities) {
-        entities = (LinkedList<Entity>) defaultEntities.clone();
+    public EntityManager(Glutton player){
+        this.player = player;
     }
 
     /**
@@ -30,12 +25,19 @@ public class EntityManager {
      *  (Movable, Destruction, ...).
      */
     public void entityLoop() {
-        for (Entity e1 : entities) {
-            for (Entity e2 : entities) {
-                if (e1 == e2) continue;
+        for (Nutritionist nutritionist : nutritionists) {
+            nutritionist.move();
+        }
 
-                if (collision(e1, e2)) {
-                    /* Do something here */
+        for (Entity entity : others) {
+            if (collision(player, entity)) {
+                player.effect(entity);
+            } else {
+                for (Nutritionist nutritionist : nutritionists) {
+                    if (collision(nutritionist, entity)) {
+                        nutritionist.effect(entity);
+                        break;
+                    }
                 }
             }
         }
@@ -56,7 +58,7 @@ public class EntityManager {
      *  @param e The entity to add.
      */
     public void addEntity(Entity e){
-        entities.addFirst(e);
+        others.addFirst(e);
     }
 
     /**
@@ -66,7 +68,25 @@ public class EntityManager {
      *  @return True if entity has been removed correctly.
      */
     public boolean removeEntity(Entity e){
-        return entities.remove(e);
+        return others.remove(e);
+    }
+
+    /**
+     *  Add a new nutritionist into the manager.
+     *  @param n The new nutritionist.
+     */
+    public void addNutritionist(Nutritionist n) {
+        nutritionists.addFirst(n);
+    }
+
+    /**
+     *  Remove the nutritionist of the manager.
+     *  If the nutritionist doesn't exists, the function returns false.
+     *  @param n The nutritionist to remove.
+     *  @return True if nutritionist has been remove correctly.
+     */
+    public boolean removeNutritionist(Nutritionist n) {
+        return nutritionists.remove(n);
     }
 
 }
