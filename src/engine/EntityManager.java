@@ -1,5 +1,7 @@
 package engine;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -25,6 +27,12 @@ public class EntityManager {
         this.player = player;
         this.gluttonView = view;
         view.setEntity(player);
+
+        nutritionists = new LinkedList<>();
+        others = new LinkedList<>();
+
+        nutritionistsView = new HashMap<>();
+        othersView = new HashMap<>();
     }
 
     /**
@@ -110,4 +118,16 @@ public class EntityManager {
         return false;
     }
 
+
+    public EntityView getGluttonView() {
+        return gluttonView;
+    }
+
+    public Collection<EntityView> getNutritionistsView() {
+        return nutritionistsView.values();
+    }
+
+    public Collection<EntityView> getOthersView() {
+        return othersView.values();
+    }
 }

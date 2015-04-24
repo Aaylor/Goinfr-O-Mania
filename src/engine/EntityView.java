@@ -1,5 +1,6 @@
 package engine;
 
+import java.awt.image.BufferedImage;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -27,6 +28,14 @@ public class EntityView implements Observer {
 
     public Skin getSkin() {
         return skin;
+    }
+
+    public Entity getEntity() {
+        return entity;
+    }
+
+    public BufferedImage getCurrentDrawing() {
+        return skin.test();
     }
 
     @Override

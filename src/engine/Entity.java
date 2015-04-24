@@ -32,6 +32,18 @@ public abstract class Entity extends Observable {
                 (int)size.getWidth(), (int)size.getHeight());
     }
 
+    public Point getPoint() {
+        return position;
+    }
+
+    public int getX() {
+        return (int)position.getX();
+    }
+
+    public int getY() {
+        return (int)position.getY();
+    }
+
     /* Entity Abstract Functionalities */
 
     /**
