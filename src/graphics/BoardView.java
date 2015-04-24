@@ -23,11 +23,13 @@ public class BoardView extends JPanel implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         this.repaint();
+        System.out.println("Board view: update()");
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        System.out.println("repaint");
 
         Graphics2D graphics2D = (Graphics2D)g;
 

@@ -1,6 +1,7 @@
 package graphics;
 
 import engine.Entity;
+import engine.Glutton;
 import engine.Level;
 import engine.Player;
 import sound.MSound;
@@ -30,6 +31,13 @@ public class Board extends Observable {
 
     public Level getLevel() {
         return currentLevel;
+    }
+
+    public void gluttonTranslate(int dx, int dy) {
+        Glutton glutton = currentLevel.getEntityManager().getGlutton();
+        glutton.translate(dx, dy);
+        setChanged();
+        notifyObservers();
     }
 
 }

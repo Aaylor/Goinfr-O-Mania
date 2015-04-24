@@ -1,9 +1,12 @@
 package graphics;
 
+import engine.*;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Collection;
 
 
 public class BoardController implements MouseListener, KeyListener {
@@ -25,6 +28,7 @@ public class BoardController implements MouseListener, KeyListener {
         this.board = board;
         this.boardView = view;
         boardView.addKeyListener(this);
+        board.addObserver(boardView);
     }
 
 
@@ -34,8 +38,6 @@ public class BoardController implements MouseListener, KeyListener {
     public Board getBoard() {
         return board;
     }
-
-
 
 
     /* Override Methods from MouseListener */
@@ -67,16 +69,25 @@ public class BoardController implements MouseListener, KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        System.out.println("MWAHAHAHAHAHAHAHA");
+
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println("pressed");
+        KeyConfiguration keyConfiguration = board.getPlayer().getKeyConfiguration();
+        if (e.getKeyCode() == keyConfiguration.getUp()) {
+            board.gluttonTranslate(0, -1);
+        } else if (e.getKeyCode() == keyConfiguration.getDown()) {
+            board.gluttonTranslate(0, 1);
+        } else if (e.getKeyCode() == keyConfiguration.getLeft()) {
+            board.gluttonTranslate(-1, 0);
+        } else if (e.getKeyCode() == keyConfiguration.getRight()) {
+            board.gluttonTranslate(1, 0);
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        System.out.println("released");
+
     }
 }

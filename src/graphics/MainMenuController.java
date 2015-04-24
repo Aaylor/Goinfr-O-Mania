@@ -1,6 +1,6 @@
 package graphics;
 
-import engine.LevelController;
+import engine.Level;
 
 /**
  * Created by Aaylor, Tratost, PixelMan on 15/04/15.
@@ -17,7 +17,7 @@ public class MainMenuController {
     /**
      * The controller of the actual level
      */
-    private LevelController levelController;
+    private Level level;
 
     /* TODO : Add those attributes :
         - Difficulty controller
@@ -29,9 +29,9 @@ public class MainMenuController {
 
     /* Constructors */
 
-    public MainMenuController(MainMenu mainMenu, LevelController levelController) {
+    public MainMenuController(MainMenu mainMenu, Level level) {
         this.mainMenu = mainMenu;
-        this.levelController = levelController;
+        this.level = level;
     }
 
 
@@ -42,8 +42,8 @@ public class MainMenuController {
         return mainMenu;
     }
 
-    public LevelController getLevelController() {
-        return levelController;
+    public Level getLevel() {
+        return level;
     }
 
 

@@ -53,6 +53,8 @@ public class MainFrame extends JFrame {
 
         BoardView view = new BoardView(board);
         addPanel(view);
+        BoardController controller = new BoardController(board, view);
+
         view.setFocusable(true);
 
         setVisible(true);
