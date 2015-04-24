@@ -54,6 +54,10 @@ public class Player extends Observable {
         return name;
     }
 
+    public KeyConfiguration getKeyConfiguration() {
+        return keyConfiguration;
+    }
+
 
     public void saveProfile() {
         // TODO

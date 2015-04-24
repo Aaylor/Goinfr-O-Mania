@@ -10,4 +10,8 @@ public interface Movable {
      */
     public void move();
 
+    public void translate(int dx, int dy);
+
+    public void moveTo(int x, int y);
+
 }

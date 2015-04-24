@@ -29,6 +29,16 @@ public class Nutritionist extends AbstractMovableEntity {
     }
 
     @Override
+    public void translate(int dx, int dy) {
+
+    }
+
+    @Override
+    public void moveTo(int x, int y) {
+
+    }
+
+    @Override
     public void effect(Entity e) {
 
     }

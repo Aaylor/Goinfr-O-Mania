@@ -10,7 +10,6 @@ public class Level {
     private Goal goal;
     private EntityManager em;
     private SoundManager sm;
-    private MSound actualMusic;
 
     public Level(Score actualScore, Goal goal, EntityManager em, SoundManager sm) {
         this.actualScore = actualScore;
@@ -25,6 +24,7 @@ public class Level {
 
     public void gameLoop() {
         em.entityLoop();
+
     }
 
 }
