@@ -103,6 +103,16 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
     public abstract void move();
 
     @Override
+    public void translate(int dx, int dy) {
+        setPoint(new Point(getX() + dx, getY() + dy));
+    }
+
+    @Override
+    public void moveTo(int x, int y) {
+        setPoint(new Point(x, y));
+    }
+
+    @Override
     public abstract void effect(Entity e);
 
 }

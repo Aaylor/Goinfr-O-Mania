@@ -36,14 +36,4 @@ public class Glutton extends AbstractMovableEntity {
 
     }
 
-    @Override
-    public void translate(int dx, int dy) {
-        setPoint(new Point(getX() + dx, getY() + dy));
-    }
-
-    @Override
-    public void moveTo(int x, int y) {
-
-    }
-
 }
