@@ -19,15 +19,15 @@ public class KeyConfiguration {
     private int menu;
 
     public KeyConfiguration() {
-        defaultConfiguration.up    = KeyEvent.VK_UP;
-        defaultConfiguration.down  = KeyEvent.VK_DOWN;
-        defaultConfiguration.left  = KeyEvent.VK_LEFT;
-        defaultConfiguration.right = KeyEvent.VK_RIGHT;
-        defaultConfiguration.quit  = KeyEvent.VK_Q;
-        defaultConfiguration.save  = KeyEvent.VK_S;
-        defaultConfiguration.load  = KeyEvent.VK_L;
-        defaultConfiguration.pause = KeyEvent.VK_P;
-        defaultConfiguration.menu  = KeyEvent.VK_ESCAPE;
+        up    = KeyEvent.VK_UP;
+        down  = KeyEvent.VK_DOWN;
+        left  = KeyEvent.VK_LEFT;
+        right = KeyEvent.VK_RIGHT;
+        quit  = KeyEvent.VK_Q;
+        save  = KeyEvent.VK_S;
+        load  = KeyEvent.VK_L;
+        pause = KeyEvent.VK_P;
+        menu  = KeyEvent.VK_ESCAPE;
     }
 
 
