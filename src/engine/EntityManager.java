@@ -1,7 +1,7 @@
 package engine;
 
-import java.awt.*;
 import java.util.LinkedList;
+import java.util.Map;
 
 
 /**
@@ -10,14 +10,21 @@ import java.util.LinkedList;
 public class EntityManager {
 
     private final Glutton player;
+    private final EntityView gluttonView;
+
     private LinkedList<Nutritionist> nutritionists;
+    private Map<Nutritionist, EntityView> nutritionistsView;
+
     private LinkedList<Entity> others;
+    private Map<Entity, EntityView> othersView;
 
     /**
      *  Create an empty manager.
      */
-    public EntityManager(Glutton player){
+    public EntityManager(Glutton player, EntityView view){
         this.player = player;
+        this.gluttonView = view;
+        view.setEntity(player);
     }
 
     /**
@@ -57,8 +64,10 @@ public class EntityManager {
      *  Add a new entity into the manager.
      *  @param e The entity to add.
      */
-    public void addEntity(Entity e){
+    public void addEntity(Entity e, EntityView view){
         others.addFirst(e);
+        othersView.put(e, view);
+        view.setEntity(e);
     }
 
     /**
@@ -68,15 +77,22 @@ public class EntityManager {
      *  @return True if entity has been removed correctly.
      */
     public boolean removeEntity(Entity e){
-        return others.remove(e);
+        if (others.remove(e)) {
+            othersView.remove(e);
+            return true;
+        }
+
+        return false;
     }
 
     /**
      *  Add a new nutritionist into the manager.
      *  @param n The new nutritionist.
      */
-    public void addNutritionist(Nutritionist n) {
+    public void addNutritionist(Nutritionist n, EntityView view) {
         nutritionists.addFirst(n);
+        nutritionistsView.put(n, view);
+        view.setEntity(n);
     }
 
     /**
@@ -86,7 +102,12 @@ public class EntityManager {
      *  @return True if nutritionist has been remove correctly.
      */
     public boolean removeNutritionist(Nutritionist n) {
-        return nutritionists.remove(n);
+        if (nutritionists.remove(n)) {
+            nutritionistsView.remove(n);
+            return true;
+        }
+
+        return false;
     }
 
 }
