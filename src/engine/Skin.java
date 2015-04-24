@@ -101,4 +101,8 @@ public class Skin {
     public void reinit() {
         leftCpt = rightCpt = topCpt = downCpt = onDestructCpt = onAppearsCpt = 0;
     }
+
+    public BufferedImage test() {
+        return left[0];
+    }
 }
