@@ -1,6 +1,9 @@
 package graphics;
 
+import engine.*;
 import log.IGLog;
+import sound.MSound;
+import sound.SoundManager;
 import sun.applet.Main;
 
 import javax.swing.*;
@@ -30,17 +33,37 @@ public class MainFrame extends JFrame {
         ToolbarView bar = new ToolbarView(bundle);
         setJMenuBar(bar);
 
+        /*
         MainMenuView menuView = new MainMenuView();
         addPanel(menuView);
+        */
+        EntityManager manager = new EntityManager(
+                new Glutton(new Point(30, 30), new Dimension(50, 75), 1f, 1f, 5),
+                new EntityView(new Skin(50, 75))
+        );
+
+        Level level = new Level(
+                new Score(),
+                new Goal(),
+                manager,
+                new SoundManager()
+        );
+
+        Board board = new Board(new Player("Test"), level);
+
+        BoardView view = new BoardView(board);
+        addPanel(view);
+        view.setFocusable(true);
 
         setVisible(true);
+
         pack();
     }
 
     private static void setSystemProperties() {
         final String os = System.getProperty("os.name");
 
-        if (os.indexOf("Mac") >= 0) {
+        if (os.contains("Mac")) {
 
             IGLog.info("OSX detected. Changed some properties.");
 
