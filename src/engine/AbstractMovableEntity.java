@@ -103,6 +103,6 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
     public abstract void move();
 
     @Override
-    public abstract void effect();
+    public abstract void effect(Entity e);
 
 }

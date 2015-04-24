@@ -29,7 +29,7 @@ public class Nutritionist extends AbstractMovableEntity {
     }
 
     @Override
-    public void effect() {
+    public void effect(Entity e) {
 
     }
 
