@@ -1,12 +1,12 @@
 package graphics;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-/**
- * Created by Aaylor, Tratost, PixelMan on 15/04/15.
- */
-public class BoardController implements MouseListener {
+
+public class BoardController implements MouseListener, KeyListener {
 
     /* Attributes */
 
@@ -15,12 +15,16 @@ public class BoardController implements MouseListener {
      */
     private Board board;
 
+    private BoardView boardView;
+
 
 
     /* Constructors */
 
-    public BoardController(Board board) {
+    public BoardController(Board board, BoardView view) {
         this.board = board;
+        this.boardView = view;
+        boardView.addKeyListener(this);
     }
 
 
@@ -59,5 +63,20 @@ public class BoardController implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
         /* TODO : mouseExited */
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        System.out.println("MWAHAHAHAHAHAHAHA");
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        System.out.println("pressed");
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        System.out.println("released");
     }
 }
