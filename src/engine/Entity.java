@@ -1,12 +1,13 @@
 package engine;
 
-import javax.swing.text.Position;
 import java.awt.*;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.Observable;
 
 public abstract class Entity extends Observable {
 
-    private Point position;
+    private Point2D position;
     private Dimension size;
 
     /* Constructors */
@@ -19,7 +20,7 @@ public abstract class Entity extends Observable {
      * @param startPosition
      * @param size
      */
-    public Entity(Point startPosition, Dimension size) {
+    public Entity(Point2D startPosition, Dimension size) {
         this.position = startPosition;
         this.size     = size;
     }
@@ -33,35 +34,35 @@ public abstract class Entity extends Observable {
      *  Give the bounds of an Entity.
      *  @return the rectangle of the entity.
      */
-    public Rectangle getBounds() {
-        return new Rectangle(position.x, position.y,
-                (int)size.getWidth(), (int)size.getHeight());
+    public Rectangle2D getBounds() {
+        return new Rectangle2D.Double(position.getX(), position.getY(),
+                size.getWidth(), size.getHeight());
     }
 
-    public Point getPoint() {
+    public Point2D getPoint() {
         return position;
     }
 
-    public int getX() {
-        return (int)position.getX();
+    public double getX() {
+        return position.getX();
     }
 
-    public int getY() {
-        return (int)position.getY();
+    public double getY() {
+        return position.getY();
     }
 
-    protected void setPoint(Point p) {
+    protected void setPoint(Point2D p) {
         position = p;
         allNotify();
     }
 
-    protected void setX(int x) {
-        position = new Point(x, (int) position.getY());
+    protected void setX(double x) {
+        position = new Point2D.Double(x, position.getY());
         allNotify();
     }
 
-    protected void setY(int y) {
-        position = new Point((int) position.getX(), y);
+    protected void setY(double y) {
+        position = new Point2D.Double(position.getX(), y);
         allNotify();
     }
 

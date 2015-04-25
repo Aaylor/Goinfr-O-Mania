@@ -1,6 +1,7 @@
 package engine;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 
 /**
  *  An entity which allow to have movements.
@@ -88,8 +89,9 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
      *  @param direction
      */
     public void setDirection(float direction) {
-        direction %= 360;
-        this.direction = (direction < 0 ? 360 - direction : direction);
+        this.direction = direction;
+        while (this.direction < 0) this.direction += 360;
+        while (this.direction >= 360) this.direction -= 360;
     }
 
     /**
@@ -98,22 +100,20 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
      *  @param direction
      */
     public void addDirection(float direction) {
-        this.direction += direction;
-        this.direction =
-                (this.direction < 0 ? 360 - this.direction : this.direction);
+        setDirection(getDirection() + direction);
     }
 
     @Override
     public abstract void move(Direction d);
 
     @Override
-    public void translate(int dx, int dy) {
-        setPoint(new Point(getX() + dx, getY() + dy));
+    public void translate(double dx, double dy) {
+        setPoint(new Point2D.Double(getX() + dx, getY() + dy));
     }
 
     @Override
-    public void moveTo(int x, int y) {
-        setPoint(new Point(x, y));
+    public void moveTo(double x, double y) {
+        setPoint(new Point2D.Double(x, y));
     }
 
     @Override

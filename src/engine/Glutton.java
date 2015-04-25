@@ -2,8 +2,8 @@ package engine;
 
 import log.IGLog;
 
-import javax.swing.text.Position;
 import java.awt.*;
+import java.awt.geom.Point2D;
 
 /**
  * Created by tratost on 13/04/15.
@@ -31,29 +31,32 @@ public class Glutton extends AbstractMovableEntity {
 
     @Override
     public void move(Direction d) {
-        int nextX, nextY;
-        Point position = getPoint();
+        double nextX, nextY;
+        Point2D position = getPoint();
         double angle = getDirectionRadian();
-        System.out.println("angle: " +getDirection() + "\nradian: " + getDirectionRadian());
         switch (d) {
             case FRONT:
-                nextX = (int) (position.getX() + (getSpeed() * Math.cos(angle)));
-                nextY = (int) (position.getY() + (getSpeed() * Math.sin(angle)));
-                setPoint(new Point(nextX, nextY));
+                nextX = position.getX() + (getSpeed() * Math.cos(angle));
+                nextY = position.getY() + (getSpeed() * Math.sin(angle));
+                setPoint(new Point2D.Double(nextX, nextY));
                 break;
 
             case BELOW:
-                nextX = (int) (position.getX() - ((getSpeed() / 2) * Math.cos(angle)));
-                nextY = (int) (position.getY() - ((getSpeed() / 2) * Math.sin(angle)));
-                setPoint(new Point(nextX, nextY));
+                nextX = position.getX() - (getSpeed() * Math.cos(angle));
+                nextY = position.getY() - (getSpeed() * Math.sin(angle));
+                setPoint(new Point2D.Double(nextX, nextY));
                 break;
 
             case LEFT:
-                setDirection(getDirection() + (1f * getSpeed()));
+                System.out.println("direction: " + getDirection());
+                System.out.println("new direction: " + (getDirection() - 1f));
+                addDirection(-1f);
                 break;
 
             case RIGHT:
-                setDirection(getDirection() - (1f * getSpeed()));
+                System.out.println("direction: " + getDirection());
+                System.out.println("new direction: " + (getDirection() + 1f));
+                addDirection(1f);
                 break;
 
             default:
