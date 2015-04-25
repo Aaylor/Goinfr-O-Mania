@@ -38,7 +38,7 @@ public class MainFrame extends JFrame {
         addPanel(menuView);
         */
         EntityManager manager = new EntityManager(
-                new Glutton(new Point(30, 30), new Dimension(50, 75), 1f, 1f, 5),
+                new Glutton(new Point(30, 30), new Dimension(50, 75), 2f, 0f, 5),
                 new EntityView(new Skin(50, 75))
         );
 

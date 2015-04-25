@@ -76,13 +76,13 @@ public class BoardController implements MouseListener, KeyListener {
     public void keyPressed(KeyEvent e) {
         KeyConfiguration keyConfiguration = board.getPlayer().getKeyConfiguration();
         if (e.getKeyCode() == keyConfiguration.getUp()) {
-            board.gluttonTranslate(0, -1);
+            board.sendGluttonMovement(Movable.Direction.FRONT);
         } else if (e.getKeyCode() == keyConfiguration.getDown()) {
-            board.gluttonTranslate(0, 1);
+            board.sendGluttonMovement(Movable.Direction.BELOW);
         } else if (e.getKeyCode() == keyConfiguration.getLeft()) {
-            board.gluttonTranslate(-1, 0);
+            board.sendGluttonMovement(Movable.Direction.LEFT);
         } else if (e.getKeyCode() == keyConfiguration.getRight()) {
-            board.gluttonTranslate(1, 0);
+            board.sendGluttonMovement(Movable.Direction.RIGHT);
         }
     }
 

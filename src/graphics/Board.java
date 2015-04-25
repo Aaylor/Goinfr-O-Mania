@@ -1,9 +1,6 @@
 package graphics;
 
-import engine.Entity;
-import engine.Glutton;
-import engine.Level;
-import engine.Player;
+import engine.*;
 import sound.MSound;
 
 import java.util.LinkedList;
@@ -33,9 +30,9 @@ public class Board extends Observable {
         return currentLevel;
     }
 
-    public void gluttonTranslate(int dx, int dy) {
+    public void sendGluttonMovement(Movable.Direction d) {
         Glutton glutton = currentLevel.getEntityManager().getGlutton();
-        glutton.translate(dx, dy);
+        glutton.move(d);
         setChanged();
         notifyObservers();
     }
