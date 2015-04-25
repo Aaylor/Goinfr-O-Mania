@@ -5,10 +5,14 @@ package engine;
  */
 public interface Movable {
 
+    public enum Direction {
+        FRONT, BELOW, LEFT, RIGHT
+    };
+
     /**
      *  Movement effects.
      */
-    public void move();
+    public void move(Direction d);
 
     public void translate(int dx, int dy);
 

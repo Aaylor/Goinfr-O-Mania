@@ -41,7 +41,7 @@ public class EntityManager {
      */
     public void entityLoop() {
         for (Nutritionist nutritionist : nutritionists) {
-            nutritionist.move();
+            /*nutritionist.move();*/ //TODO: what to do here ?
         }
 
         for (Entity entity : others) {

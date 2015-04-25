@@ -77,6 +77,10 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
         return direction;
     }
 
+    public double getDirectionRadian() {
+        return Math.toRadians(direction);
+    }
+
     /**
      *  Set the new entity's direction.
      *  If the direction is not between 0 and 360, it will be recalculate.
@@ -100,7 +104,7 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
     }
 
     @Override
-    public abstract void move();
+    public abstract void move(Direction d);
 
     @Override
     public void translate(int dx, int dy) {
