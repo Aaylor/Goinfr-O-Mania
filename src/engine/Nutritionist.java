@@ -2,11 +2,15 @@ package engine;
 
 import java.awt.*;
 
+/**
+ *  The nutritionist entity.
+ */
 public class Nutritionist extends AbstractMovableEntity {
 
+    /**
+     *  The number of life.
+     */
     int nbLifes;
-
-    //CONSTRUCTORS
 
     public Nutritionist(int nbLifes) {
         super();

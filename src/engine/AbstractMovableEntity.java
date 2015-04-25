@@ -71,13 +71,17 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
     }
 
     /**
-     *  Return entity's direction.
+     *  Return entity's direction in Radian.
      *  @return entity's direction
      */
     public float getDirection() {
         return direction;
     }
 
+    /**
+     *  Return entity's direction in Radian.
+     *  @return entity's direction in Radian.
+     */
     public double getDirectionRadian() {
         return Math.toRadians(direction);
     }
