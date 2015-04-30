@@ -59,23 +59,26 @@ public class BoardController extends Thread implements MouseListener, KeyListene
 
     /* Override Methods from MouseListener */
 
-    @Override
-    public void run() {
-        int i = 0;
-        while (true) {
-            synchronized (this) {
-                while (!gameState) {
-                    try {
-                        IGLog.info("BoardController, waiting for notification.");
-                        wait();
-                    } catch (InterruptedException e) {
-                        IGLog.info("BoardController, wait interruption. Continuing.");
-                        continue;
-                    }
+    private void waitForResume() {
+        synchronized (this) {
+            while (!gameState) {
+                try {
+                    IGLog.info("BoardController, waiting for notification.");
+                    wait();
+                } catch (InterruptedException e) {
+                    IGLog.info("BoardController, wait interruption. Continuing.");
+                    continue;
                 }
             }
+        }
+    }
 
-            /* Do something here */
+    @Override
+    public void run() {
+        while (true) {
+            waitForResume();
+
+            board.getLevel().getEntityManager().entityLoop();
         }
     }
 

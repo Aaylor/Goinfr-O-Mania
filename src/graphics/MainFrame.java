@@ -8,6 +8,7 @@ import sun.applet.Main;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.util.ResourceBundle;
 import java.util.Stack;
 
@@ -47,6 +48,11 @@ public class MainFrame extends JFrame {
                 new Goal(),
                 manager,
                 new SoundManager()
+        );
+
+        manager.addEntity(
+                new Cake(new Point2D.Double(130, 70), new Dimension(20, 20), null),
+                new EntityView(new Skin(20, 20))
         );
 
         Board board = new Board(new Player("Test"), level);
