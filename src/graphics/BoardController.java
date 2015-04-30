@@ -1,6 +1,7 @@
 package graphics;
 
 import engine.*;
+import log.IGLog;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -9,7 +10,7 @@ import java.awt.event.MouseListener;
 import java.util.Collection;
 
 
-public class BoardController implements MouseListener, KeyListener {
+public class BoardController extends Thread implements MouseListener, KeyListener {
 
     /* Attributes */
 
@@ -20,6 +21,8 @@ public class BoardController implements MouseListener, KeyListener {
 
     private BoardView boardView;
 
+    private boolean gameState;
+
 
 
     /* Constructors */
@@ -29,8 +32,8 @@ public class BoardController implements MouseListener, KeyListener {
         this.boardView = view;
         boardView.addKeyListener(this);
         board.addObserver(boardView);
+        gameState = true;
     }
-
 
 
     /* Getters */
@@ -40,7 +43,41 @@ public class BoardController implements MouseListener, KeyListener {
     }
 
 
+    /* Others */
+
+    public void pauseGame() {
+        IGLog.info("BoardController, gamed paused.");
+        gameState = false;
+    }
+
+    public synchronized void resumeGame() {
+        IGLog.info("BoardController, game resumed.");
+        gameState = true;
+        notify();
+    }
+
+
     /* Override Methods from MouseListener */
+
+    @Override
+    public void run() {
+        int i = 0;
+        while (true) {
+            synchronized (this) {
+                while (!gameState) {
+                    try {
+                        IGLog.info("BoardController, waiting for notification.");
+                        wait();
+                    } catch (InterruptedException e) {
+                        IGLog.info("BoardController, wait interruption. Continuing.");
+                        continue;
+                    }
+                }
+            }
+
+            /* Do something here */
+        }
+    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -74,6 +111,16 @@ public class BoardController implements MouseListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        if (!gameState) return;
+
+        /*
+         *  Use for any actions on the character :
+         *      - up
+         *      - down
+         *      - left
+         *      - right
+         */
+
         KeyConfiguration keyConfiguration = board.getPlayer().getKeyConfiguration();
         if (e.getKeyCode() == keyConfiguration.getUp()) {
             board.sendGluttonMovement(Movable.Direction.FRONT);
@@ -88,6 +135,27 @@ public class BoardController implements MouseListener, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
+
+        /*
+         *  Used for any options keys :
+         *      - load
+         *      - save
+         *      - pause
+         *      - quit
+         */
+
+        KeyConfiguration keyConfiguration = board.getPlayer().getKeyConfiguration();
+        if (e.getKeyCode() == keyConfiguration.getPause()) {
+            /* TODO : show the pause panel */
+            if (gameState) {
+                pauseGame();
+            } else {
+                resumeGame();
+            }
+        } else if (e.getKeyCode() == keyConfiguration.getQuit()) {
+            /* TODO: Maybe ask to save ?? */
+            System.exit(0);
+        }
 
     }
 }
