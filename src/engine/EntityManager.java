@@ -1,5 +1,7 @@
 package engine;
 
+import log.IGLog;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -27,6 +29,7 @@ public class EntityManager {
         this.player = player;
         this.gluttonView = view;
         view.setEntity(player);
+        player.setManager(this);
 
         nutritionists = new LinkedList<>();
         others = new LinkedList<>();
@@ -74,6 +77,7 @@ public class EntityManager {
      */
     public void addEntity(Entity e, EntityView view){
         others.addFirst(e);
+        e.setManager(this);
         othersView.put(e, view);
         view.setEntity(e);
     }
@@ -86,6 +90,7 @@ public class EntityManager {
      */
     public boolean removeEntity(Entity e){
         if (others.remove(e)) {
+            e.setManager(null);
             othersView.remove(e);
             return true;
         }
@@ -99,6 +104,7 @@ public class EntityManager {
      */
     public void addNutritionist(Nutritionist n, EntityView view) {
         nutritionists.addFirst(n);
+        n.setManager(this);
         nutritionistsView.put(n, view);
         view.setEntity(n);
     }
@@ -111,6 +117,7 @@ public class EntityManager {
      */
     public boolean removeNutritionist(Nutritionist n) {
         if (nutritionists.remove(n)) {
+            n.setManager(null);
             nutritionistsView.remove(n);
             return true;
         }

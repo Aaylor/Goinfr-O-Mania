@@ -10,6 +10,8 @@ public abstract class Entity extends Observable {
     private Point2D position;
     private Dimension size;
 
+    private EntityManager manager = null;
+
     /* Constructors */
 
     public Entity() {}
@@ -64,6 +66,14 @@ public abstract class Entity extends Observable {
     protected void setY(double y) {
         position = new Point2D.Double(position.getX(), y);
         allNotify();
+    }
+
+    public EntityManager getManager() {
+        return manager;
+    }
+
+    public void setManager(EntityManager manager) {
+        this.manager = manager;
     }
 
     /* Entity Abstract Functionalities */

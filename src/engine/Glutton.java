@@ -86,7 +86,10 @@ public class Glutton extends AbstractMovableEntity {
 
     @Override
     public void effect(Entity e) {
-
+        if (e instanceof Cake) {
+            IGLog.info("Glutton, effect: cake.");
+            getManager().removeEntity(e);
+        }
     }
 
 }
