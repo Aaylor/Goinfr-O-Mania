@@ -22,6 +22,7 @@ public class Glutton extends AbstractMovableEntity {
     public Glutton(int nbLifes) {
         super();
         this.nbLifes = nbLifes;
+        setCrossable(false);
     }
 
     /**
@@ -33,6 +34,7 @@ public class Glutton extends AbstractMovableEntity {
     public Glutton(float speed, float direction, int nbLifes) {
         super(speed, direction);
         this.nbLifes = nbLifes;
+        setCrossable(false);
     }
 
     /**
@@ -46,6 +48,7 @@ public class Glutton extends AbstractMovableEntity {
     public Glutton(Point startPosition, Dimension size, float speed, float direction, int nbLifes) {
         super(startPosition, size, speed, direction);
         this.nbLifes = nbLifes;
+        setCrossable(false);
     }
 
     @Override

@@ -9,6 +9,7 @@ public abstract class Entity extends Observable {
 
     private Point2D position;
     private Dimension size;
+    private boolean crossable;
 
     private EntityManager manager = null;
 
@@ -19,12 +20,26 @@ public abstract class Entity extends Observable {
     /**
      * Construct an Entity with its start position (in x,y coordinates) and
      * its box size (as a rectangular shape).
-     * @param startPosition
-     * @param size
+     * @param startPosition the start position
+     * @param size the size
      */
     public Entity(Point2D startPosition, Dimension size) {
         this.position = startPosition;
         this.size     = size;
+        crossable     = true;
+    }
+
+    /**
+     * Construct an Entity with its start position (in x,y coordinates),
+     * its box size (as a rectangular shape) and the crossable state.
+     * @param position the start position
+     * @param size the size
+     * @param crossable the crossable state
+     */
+    public Entity(Point2D position, Dimension size, boolean crossable) {
+        this.position = position;
+        this.size = size;
+        this.crossable = crossable;
     }
 
     private void allNotify() {
@@ -82,6 +97,14 @@ public abstract class Entity extends Observable {
 
     public void setManager(EntityManager manager) {
         this.manager = manager;
+    }
+
+    public boolean isCrossable() {
+        return crossable;
+    }
+
+    public void setCrossable(boolean crossable) {
+        this.crossable = crossable;
     }
 
     /* Entity Abstract Functionalities */
