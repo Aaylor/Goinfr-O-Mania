@@ -4,10 +4,7 @@ import log.IGLog;
 
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -78,16 +75,25 @@ public class EntityManager {
         }
     }
 
-    public boolean hasCollision(Entity e1, Rectangle2D position) {
-        if (e1 != player && collision(position, player))
-            return true;
+    private boolean checkCrossCollision(List<? extends Entity> entities, Entity e1,
+                                        Rectangle2D position) {
+        if (e1.isCrossable())
+            return false;
 
-        for (Entity entity : nutritionists) {
-            if (e1 != entity && collision(position, entity))
+        for (Entity e2 : entities) {
+            if (e1 != e2 && !e2.isCrossable() && collision(position, e2))
                 return true;
         }
 
         return false;
+    }
+
+    public boolean hasCrossCollision(Entity e1, Rectangle2D position) {
+        LinkedList<Entity> lp = new LinkedList<>();
+        lp.add(player);
+        return checkCrossCollision(lp, e1, position) ||
+               checkCrossCollision(nutritionists, e1, position) ||
+               checkCrossCollision(others, e1, position);
     }
 
     /**

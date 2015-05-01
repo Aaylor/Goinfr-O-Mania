@@ -129,7 +129,7 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
                 newRectangle = new Rectangle2D.Double(nextX, nextY,
                         entitySize.getWidth(), entitySize.getHeight());
 
-                if (!getManager().hasCollision(this, newRectangle))
+                if (!getManager().hasCrossCollision(this, newRectangle))
                     setPoint(newPoint);
 
                 break;
@@ -142,20 +142,20 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
                 newRectangle = new Rectangle2D.Double(nextX, nextY,
                         entitySize.getWidth(), entitySize.getHeight());
 
-                if (!getManager().hasCollision(this, newRectangle))
+                if (!getManager().hasCrossCollision(this, newRectangle))
                     setPoint(newPoint);
 
                 break;
 
             case LEFT:
                 System.out.println("direction: " + getDirection());
-                System.out.println("new direction: " + (getDirection() - 1f));
+                System.out.println("new direction: " + (getDirection() - (1f * getSpeed())));
                 addDirection(-1f);
                 break;
 
             case RIGHT:
                 System.out.println("direction: " + getDirection());
-                System.out.println("new direction: " + (getDirection() + 1f));
+                System.out.println("new direction: " + (getDirection() + (1f * getSpeed())));
                 addDirection(1f);
                 break;
 
