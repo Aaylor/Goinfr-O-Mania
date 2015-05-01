@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Collection;
+import java.util.Date;
 
 
 public class BoardController extends Thread implements MouseListener, KeyListener {
@@ -73,12 +74,34 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         }
     }
 
+    private void sleepFor(long time) {
+        Date wanted = new Date(new Date().getTime() +  time);
+        do {
+            try {
+                Thread.sleep(time);
+                break;
+            } catch (InterruptedException e) {
+                if (new Date().after(wanted))
+                    break;
+            }
+        } while (true);
+    }
+
     @Override
     public void run() {
+        EntityManager manager = board.getLevel().getEntityManager();
         while (true) {
-            waitForResume();
 
-            board.getLevel().getEntityManager().entityLoop();
+            /* Entities move */
+            waitForResume();
+            manager.entityLoop();
+
+
+            /* Entity creation */
+            // waitForResume();
+
+            board.notification();
+            sleepFor(15);
         }
     }
 

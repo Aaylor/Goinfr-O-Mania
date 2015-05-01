@@ -37,4 +37,10 @@ public class Board extends Observable {
         notifyObservers();
     }
 
+    /* XXX: Remove this. */
+    public void notification() {
+        setChanged();
+        notifyObservers();
+    }
+
 }

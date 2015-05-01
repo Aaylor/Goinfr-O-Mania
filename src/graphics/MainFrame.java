@@ -51,8 +51,13 @@ public class MainFrame extends JFrame {
         );
 
         manager.addEntity(
-                new Cake(new Point2D.Double(130, 70), new Dimension(20, 20), null),
+                new Cake(new Point(130, 70), new Dimension(20, 20), null),
                 new EntityView(new Skin(20, 20))
+        );
+
+        manager.addNutritionist(
+                new Nutritionist(new Point(300, 234), new Dimension(30, 45), 2f, 0f, 5),
+                new EntityView(new Skin(30, 45))
         );
 
         Board board = new Board(new Player("Test"), level);
