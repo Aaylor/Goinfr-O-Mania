@@ -1,5 +1,7 @@
 package engine;
 
+import log.IGLog;
+
 import java.awt.*;
 import java.awt.geom.Point2D;
 
@@ -108,7 +110,40 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
     }
 
     @Override
-    public abstract void move(Direction d);
+    public void move(Direction d) {
+        double nextX, nextY;
+        Point2D position = getPoint();
+        double angle = getDirectionRadian();
+        switch (d) {
+            case FRONT:
+                nextX = position.getX() + (getSpeed() * Math.cos(angle));
+                nextY = position.getY() + (getSpeed() * Math.sin(angle));
+                setPoint(new Point2D.Double(nextX, nextY));
+                break;
+
+            case BELOW:
+                nextX = position.getX() - (getSpeed() * Math.cos(angle));
+                nextY = position.getY() - (getSpeed() * Math.sin(angle));
+                setPoint(new Point2D.Double(nextX, nextY));
+                break;
+
+            case LEFT:
+                System.out.println("direction: " + getDirection());
+                System.out.println("new direction: " + (getDirection() - 1f));
+                addDirection(-1f);
+                break;
+
+            case RIGHT:
+                System.out.println("direction: " + getDirection());
+                System.out.println("new direction: " + (getDirection() + 1f));
+                addDirection(1f);
+                break;
+
+            default:
+                IGLog.error("Glutton::move -> Unknown direction.");
+                break;
+        }
+    }
 
     @Override
     public void translate(double dx, double dy) {
