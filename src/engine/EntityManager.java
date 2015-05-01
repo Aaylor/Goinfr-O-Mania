@@ -2,6 +2,7 @@ package engine;
 
 import log.IGLog;
 
+import java.awt.geom.Point2D;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -38,14 +39,29 @@ public class EntityManager {
         othersView = new HashMap<>();
     }
 
+    private void nutritionistsMove() {
+
+        /* First step : get the player position. */
+        Point2D playerPosition = player.getPoint();
+
+        /* Second step : iterate on every nutritionists. */
+        for (Nutritionist nutritionist : nutritionists) {
+
+            Point2D nutritionistPosition = nutritionist.getPoint();
+            double  nutritionistAngle    = nutritionist.getDirection();
+
+            nutritionist.move(Movable.Direction.FRONT);
+
+        }
+
+    }
+
     /**
      *  Entity loop. Does every operations needed by entities.
      *  (Movable, Destruction, ...).
      */
     public void entityLoop() {
-        for (Nutritionist nutritionist : nutritionists) {
-            /*nutritionist.move();*/ //TODO: what to do here ?
-        }
+        nutritionistsMove();
 
         for (Entity entity : others) {
             if (collision(player, entity)) {
