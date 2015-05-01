@@ -68,6 +68,14 @@ public abstract class Entity extends Observable {
         allNotify();
     }
 
+    public Dimension getSize() {
+        return size;
+    }
+
+    public void setSize(Dimension size) {
+        this.size = size;
+    }
+
     public EntityManager getManager() {
         return manager;
     }

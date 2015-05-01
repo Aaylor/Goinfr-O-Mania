@@ -4,6 +4,7 @@ import log.IGLog;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 
 /**
  *  An entity which allow to have movements.
@@ -112,19 +113,38 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
     @Override
     public void move(Direction d) {
         double nextX, nextY;
+
         Point2D position = getPoint();
         double angle = getDirectionRadian();
+        Dimension entitySize = getSize();
+
+        Point2D newPoint = null;
+        Rectangle2D newRectangle = null;
         switch (d) {
             case FRONT:
                 nextX = position.getX() + (getSpeed() * Math.cos(angle));
                 nextY = position.getY() + (getSpeed() * Math.sin(angle));
-                setPoint(new Point2D.Double(nextX, nextY));
+                newPoint = new Point2D.Double(nextX, nextY);
+
+                newRectangle = new Rectangle2D.Double(nextX, nextY,
+                        entitySize.getWidth(), entitySize.getHeight());
+
+                if (!getManager().hasCollision(this, newRectangle))
+                    setPoint(newPoint);
+
                 break;
 
             case BELOW:
                 nextX = position.getX() - (getSpeed() * Math.cos(angle));
                 nextY = position.getY() - (getSpeed() * Math.sin(angle));
-                setPoint(new Point2D.Double(nextX, nextY));
+                newPoint = new Point2D.Double(nextX, nextY);
+
+                newRectangle = new Rectangle2D.Double(nextX, nextY,
+                        entitySize.getWidth(), entitySize.getHeight());
+
+                if (!getManager().hasCollision(this, newRectangle))
+                    setPoint(newPoint);
+
                 break;
 
             case LEFT:

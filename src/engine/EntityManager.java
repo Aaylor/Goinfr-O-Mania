@@ -3,6 +3,7 @@ package engine;
 import log.IGLog;
 
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -50,7 +51,7 @@ public class EntityManager {
             Point2D nutritionistPosition = nutritionist.getPoint();
             double  nutritionistAngle    = nutritionist.getDirection();
 
-            nutritionist.move(Movable.Direction.FRONT);
+//            nutritionist.move(Movable.Direction.FRONT);
 
         }
 
@@ -77,6 +78,18 @@ public class EntityManager {
         }
     }
 
+    public boolean hasCollision(Entity e1, Rectangle2D position) {
+        if (e1 != player && collision(position, player))
+            return true;
+
+        for (Entity entity : nutritionists) {
+            if (e1 != entity && collision(position, entity))
+                return true;
+        }
+
+        return false;
+    }
+
     /**
      *  Check if two entities are in collision.
      *  @param e1 The first entity.
@@ -84,7 +97,11 @@ public class EntityManager {
      *  @return True if they collided.
      */
     public boolean collision(Entity e1, Entity e2) {
-        return e1.getBounds().intersects(e2.getBounds());
+        return collision(e1.getBounds(), e2);
+    }
+
+    public boolean collision(Rectangle2D r, Entity e) {
+        return r.intersects(e.getBounds());
     }
 
     /**
