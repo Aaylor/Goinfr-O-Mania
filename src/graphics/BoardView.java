@@ -23,7 +23,6 @@ public class BoardView extends JPanel implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         this.repaint();
-        System.out.println("Board view: update()");
     }
 
     @Override
