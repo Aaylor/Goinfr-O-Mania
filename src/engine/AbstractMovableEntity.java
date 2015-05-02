@@ -150,13 +150,13 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
             case LEFT:
                 System.out.println("direction: " + getDirection());
                 System.out.println("new direction: " + (getDirection() - (1f * getSpeed())));
-                addDirection(-1f);
+                addDirection(-1f * getSpeed());
                 break;
 
             case RIGHT:
                 System.out.println("direction: " + getDirection());
                 System.out.println("new direction: " + (getDirection() + (1f * getSpeed())));
-                addDirection(1f);
+                addDirection(1f * getSpeed());
                 break;
 
             default:
