@@ -37,6 +37,14 @@ public class EntityManager {
         othersView = new HashMap<>();
     }
 
+    private double addToAngle(double angle, double add) {
+        double r = angle + add;
+        while (r < 0) r += 360;
+        while (r >= 360) r -= 360;
+
+        return r;
+    }
+
     private void nutritionistsMove() {
 
         /* First step : get the player position. */
@@ -47,6 +55,32 @@ public class EntityManager {
 
             Point2D nutritionistPosition = nutritionist.getPoint();
             double  nutritionistAngle    = nutritionist.getDirection();
+            
+            double  oppositeAngle = addToAngle(nutritionistAngle, 180);
+
+            double dx = playerPosition.getX() - nutritionistPosition.getX();
+            double dy = playerPosition.getY() - nutritionistPosition.getY();
+            double nextAngle = addToAngle(Math.toDegrees(Math.atan2(dy, dx)), 360);
+
+            if (nextAngle >= nutritionistAngle - 5 && nextAngle <= nutritionistAngle + 5) {
+                nutritionist.move(Movable.Direction.FRONT);
+            } else {
+
+                if (nutritionistAngle >= 180) {
+                    if (nextAngle <= nutritionistAngle && nextAngle >= oppositeAngle) {
+                        nutritionist.move(Movable.Direction.LEFT);
+                    } else {
+                        nutritionist.move(Movable.Direction.RIGHT);
+                    }
+                } else {
+                    if (nextAngle >= nutritionistAngle && nextAngle <= oppositeAngle) {
+                        nutritionist.move(Movable.Direction.RIGHT);
+                    } else {
+                        nutritionist.move(Movable.Direction.LEFT);
+                    }
+                }
+
+            }
 
 //            nutritionist.move(Movable.Direction.FRONT);
 
