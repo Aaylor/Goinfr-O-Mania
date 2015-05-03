@@ -7,6 +7,14 @@ public abstract class AbstractWeapon {
 
     private double damage;
 
+    private Skin skin;
+
+    public AbstractWeapon(double damage) {
+        this.damage = damage;
+        this.owner = null;
+        this.skin = new Skin(20, 20);
+    }
+
     public abstract void attack();
 
     public Entity getOwner() {
@@ -25,4 +33,11 @@ public abstract class AbstractWeapon {
         this.damage = damage;
     }
 
+    public Skin getSkin() {
+        return skin;
+    }
+
+    public void setSkin(Skin skin) {
+        this.skin = skin;
+    }
 }
