@@ -103,6 +103,8 @@ public class BoardController extends Thread implements MouseListener, KeyListene
                     board.sendGluttonMovement(Movable.Direction.LEFT);
                 } else if (pressedKey == keyConfiguration.getRight()) {
                     board.sendGluttonMovement(Movable.Direction.RIGHT);
+                } else if (pressedKey == keyConfiguration.getAttack()) {
+                    System.out.println("Attack !");
                 }
             }
         }
@@ -161,7 +163,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
     }
 
     @Override
-    public synchronized void keyPressed(KeyEvent e) {
+    public void keyPressed(KeyEvent e) {
         Integer code = e.getKeyCode();
         KeyConfiguration kc = getBoard().getPlayer().getKeyConfiguration();
 
@@ -176,22 +178,26 @@ public class BoardController extends Thread implements MouseListener, KeyListene
             /* TODO: Maybe ask to save ?? */
             System.exit(0);
         } else {
-            if (code == kc.getUp() && pressedKeys.contains(kc.getDown())) {
-                pressedKeys.remove(kc.getDown());
-            } else if (code == kc.getDown() && pressedKeys.contains(kc.getUp())) {
-                pressedKeys.remove(kc.getUp());
-            } else if (code == kc.getLeft() && pressedKeys.contains(kc.getRight())) {
-                pressedKeys.remove(kc.getRight());
-            } else if (code == kc.getRight() && pressedKeys.contains(kc.getLeft())) {
-                pressedKeys.remove(kc.getLeft());
-            } else {
-                pressedKeys.add(code);
+            synchronized (pressedKeys) {
+                if (code == kc.getUp() && pressedKeys.contains(kc.getDown())) {
+                    pressedKeys.remove(kc.getDown());
+                } else if (code == kc.getDown() && pressedKeys.contains(kc.getUp())) {
+                    pressedKeys.remove(kc.getUp());
+                } else if (code == kc.getLeft() && pressedKeys.contains(kc.getRight())) {
+                    pressedKeys.remove(kc.getRight());
+                } else if (code == kc.getRight() && pressedKeys.contains(kc.getLeft())) {
+                    pressedKeys.remove(kc.getLeft());
+                } else {
+                    pressedKeys.add(code);
+                }
             }
         }
     }
 
     @Override
-    public synchronized void keyReleased(KeyEvent e) {
-        pressedKeys.remove(e.getKeyCode());
+    public void keyReleased(KeyEvent e) {
+        synchronized (pressedKeys) {
+            pressedKeys.remove(e.getKeyCode());
+        }
     }
 }

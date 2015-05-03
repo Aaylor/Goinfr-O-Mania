@@ -10,6 +10,7 @@ public abstract class Entity extends Observable {
     private Point2D position;
     private Dimension size;
     private boolean crossable;
+    private AbstractWeapon weapon;
 
     private EntityManager manager = null;
 
@@ -105,6 +106,14 @@ public abstract class Entity extends Observable {
 
     public void setCrossable(boolean crossable) {
         this.crossable = crossable;
+    }
+
+    public AbstractWeapon getWeapon() {
+        return weapon;
+    }
+
+    public void setWeapon(AbstractWeapon weapon) {
+        this.weapon = weapon;
     }
 
     /* Entity Abstract Functionalities */
