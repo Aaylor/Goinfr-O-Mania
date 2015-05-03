@@ -18,11 +18,24 @@ public class BoardView extends JPanel implements Observer {
     public BoardView(Board board) {
         super();
         this.board = board;
+
+        setDoubleBuffered(true);
     }
 
     @Override
     public void update(Observable o, Object arg) {
         this.repaint();
+    }
+
+    private void drawEntity(Graphics2D g2d, EntityView ev) {
+        Entity glutton = ev.getEntity();
+
+        AffineTransform t = new AffineTransform();
+        t.translate(glutton.getX(), glutton.getY());
+        t.scale(1, 1);
+
+        g2d.drawImage(ev.getCurrentDrawing(), t, null);
+        Toolkit.getDefaultToolkit().sync();
     }
 
     @Override
@@ -32,35 +45,15 @@ public class BoardView extends JPanel implements Observer {
 
         EntityManager manager = board.getLevel().getEntityManager();
 
-        EntityView gluttonView = manager.getGluttonView();
-        Entity glutton = gluttonView.getEntity();
+        /* Draw the glutton */
+        drawEntity(graphics2D, manager.getGluttonView());
 
-        AffineTransform t = new AffineTransform();
-        t.translate(glutton.getX(), glutton.getY());
-        t.scale(1, 1);
+        /* Draw nutritionists */
+        for (EntityView e : manager.getNutritionistsView())
+            drawEntity(graphics2D, e);
 
-        graphics2D.drawImage(gluttonView.getCurrentDrawing(), t, null);
-
-        Collection<EntityView> nutritionists = manager.getNutritionistsView();
-        for (EntityView e : nutritionists) {
-            Entity entity = e.getEntity();
-
-            AffineTransform nt = new AffineTransform();
-            nt.translate(entity.getX(), entity.getY());
-            nt.scale(1, 1);
-
-            graphics2D.drawImage(e.getCurrentDrawing(), nt, null);
-        }
-
-        Collection<EntityView> others = manager.getOthersView();
-        for (EntityView e : others) {
-            Entity entity = e.getEntity();
-
-            AffineTransform ot = new AffineTransform();
-            ot.translate(entity.getX(), entity.getY());
-            ot.scale(1, 1);
-
-            graphics2D.drawImage(e.getCurrentDrawing(), ot, null);
-        }
+        /* Draw other entities */
+        for (EntityView e : manager.getOthersView())
+            drawEntity(graphics2D, e);
     }
 }
