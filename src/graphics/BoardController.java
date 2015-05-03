@@ -93,15 +93,17 @@ public class BoardController extends Thread implements MouseListener, KeyListene
     private void movePlayer() {
         KeyConfiguration keyConfiguration = board.getPlayer().getKeyConfiguration();
 
-        for (Integer pressedKey : pressedKeys) {
-            if (pressedKey == keyConfiguration.getUp()) {
-                board.sendGluttonMovement(Movable.Direction.FRONT);
-            } else if (pressedKey == keyConfiguration.getDown()) {
-                board.sendGluttonMovement(Movable.Direction.BELOW);
-            } else if (pressedKey == keyConfiguration.getLeft()) {
-                board.sendGluttonMovement(Movable.Direction.LEFT);
-            } else if (pressedKey == keyConfiguration.getRight()) {
-                board.sendGluttonMovement(Movable.Direction.RIGHT);
+        synchronized (pressedKeys) {
+            for (Integer pressedKey : pressedKeys) {
+                if (pressedKey == keyConfiguration.getUp()) {
+                    board.sendGluttonMovement(Movable.Direction.FRONT);
+                } else if (pressedKey == keyConfiguration.getDown()) {
+                    board.sendGluttonMovement(Movable.Direction.BELOW);
+                } else if (pressedKey == keyConfiguration.getLeft()) {
+                    board.sendGluttonMovement(Movable.Direction.LEFT);
+                } else if (pressedKey == keyConfiguration.getRight()) {
+                    board.sendGluttonMovement(Movable.Direction.RIGHT);
+                }
             }
         }
     }
