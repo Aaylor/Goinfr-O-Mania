@@ -38,8 +38,14 @@ public class MainFrame extends JFrame {
         MainMenuView menuView = new MainMenuView();
         addPanel(menuView);
         */
+
+        Glutton glutton = new Glutton(new Point(30, 30),
+                new Dimension(50, 75), 2f, 0f, 5);
+
+        glutton.setWeapon(new RangedWeapon(10));
+
         EntityManager manager = new EntityManager(
-                new Glutton(new Point(30, 30), new Dimension(50, 75), 2f, 0f, 5),
+                glutton,
                 new EntityView(new Skin(50, 75))
         );
 

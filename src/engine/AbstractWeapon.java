@@ -1,6 +1,8 @@
 package engine;
 
 
+import java.awt.*;
+
 public abstract class AbstractWeapon {
 
     private Entity owner;
@@ -9,10 +11,13 @@ public abstract class AbstractWeapon {
 
     private Skin skin;
 
+    private Dimension dimension;
+
     public AbstractWeapon(double damage) {
         this.damage = damage;
         this.owner = null;
         this.skin = new Skin(20, 20);
+        this.dimension = new Dimension(20, 20);
     }
 
     public abstract void attack();
@@ -39,5 +44,13 @@ public abstract class AbstractWeapon {
 
     public void setSkin(Skin skin) {
         this.skin = skin;
+    }
+
+    public Dimension getDimension() {
+        return dimension;
+    }
+
+    public void setDimension(Dimension dimension) {
+        this.dimension = dimension;
     }
 }

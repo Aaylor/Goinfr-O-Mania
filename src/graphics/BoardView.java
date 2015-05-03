@@ -1,5 +1,6 @@
 package graphics;
 
+import engine.AbstractWeapon;
 import engine.Entity;
 import engine.EntityManager;
 import engine.EntityView;
@@ -7,6 +8,7 @@ import engine.EntityView;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.util.Collection;
 import java.util.Observable;
 import java.util.Observer;
@@ -35,6 +37,20 @@ public class BoardView extends JPanel implements Observer {
         t.scale(1, 1);
 
         g2d.drawImage(ev.getCurrentDrawing(), t, null);
+
+        AbstractWeapon weapon = glutton.getWeapon();
+        if (weapon != null) {
+            AffineTransform wt = new AffineTransform();
+            Dimension gSize = glutton.getSize();
+            Dimension wSize = weapon.getDimension();
+            wt.translate(
+                    glutton.getX() + (gSize.getWidth() - wSize.getWidth()),
+                    glutton.getY() + ((gSize.getHeight() / 2) - (wSize.getHeight() / 2))
+            );
+            wt.scale(1, 1);
+            g2d.drawImage(weapon.getSkin().test(), wt, null);
+        }
+
         Toolkit.getDefaultToolkit().sync();
     }
 
