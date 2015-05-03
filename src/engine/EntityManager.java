@@ -55,17 +55,19 @@ public class EntityManager {
 
             Point2D nutritionistPosition = nutritionist.getPoint();
             double  nutritionistAngle    = nutritionist.getDirection();
-            
+
+            /* Third step : calculate the opposite angle */
             double  oppositeAngle = addToAngle(nutritionistAngle, 180);
 
+            /* Fourth step : calculate the new needed angle to face the player. */
             double dx = playerPosition.getX() - nutritionistPosition.getX();
             double dy = playerPosition.getY() - nutritionistPosition.getY();
             double nextAngle = addToAngle(Math.toDegrees(Math.atan2(dy, dx)), 360);
 
-            if (nextAngle >= nutritionistAngle - 5 && nextAngle <= nutritionistAngle + 5) {
-                nutritionist.move(Movable.Direction.FRONT);
-            } else {
-
+            /* Fifth step : if the nutritionist doesn't face the glutton,
+             * then turn to the right side
+             */
+            if (nextAngle <= nutritionistAngle - 2 || nextAngle >= nutritionistAngle + 2) {
                 if (nutritionistAngle >= 180) {
                     if (nextAngle <= nutritionistAngle && nextAngle >= oppositeAngle) {
                         nutritionist.move(Movable.Direction.LEFT);
@@ -79,7 +81,14 @@ public class EntityManager {
                         nutritionist.move(Movable.Direction.LEFT);
                     }
                 }
+            }
 
+            /* Sixth step : if the nutritionist face quite correctly the player,
+             * then he moves.
+             *
+             */
+            if (nextAngle >= nutritionistAngle - 20 && nextAngle <= nutritionistAngle + 20) {
+                nutritionist.move(Movable.Direction.FRONT);
             }
         }
 
