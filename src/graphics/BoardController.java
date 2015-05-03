@@ -178,6 +178,10 @@ public class BoardController extends Thread implements MouseListener, KeyListene
                 pressedKeys.remove(kc.getDown());
             } else if (code == kc.getDown() && pressedKeys.contains(kc.getUp())) {
                 pressedKeys.remove(kc.getUp());
+            } else if (code == kc.getLeft() && pressedKeys.contains(kc.getRight())) {
+                pressedKeys.remove(kc.getRight());
+            } else if (code == kc.getRight() && pressedKeys.contains(kc.getLeft())) {
+                pressedKeys.remove(kc.getLeft());
             } else {
                 pressedKeys.add(code);
             }
