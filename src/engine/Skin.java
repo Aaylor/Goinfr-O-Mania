@@ -4,6 +4,7 @@ import log.IGLog;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 /**
  *  The skin class is to handle every buffered image of a given skin.
@@ -84,11 +85,15 @@ public class Skin {
     }
 
     public Skin(int width, int height) {
-        int grey = new Color(170, 170, 170).getRGB();
+        Random random = new Random();
+        int r = random.nextInt(256);
+        int g = random.nextInt(256);
+        int b = random.nextInt(256);
+        int color = new Color(r, g, b).getRGB();
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                image.setRGB(i, j, grey);
+                image.setRGB(i, j, color);
             }
         }
 

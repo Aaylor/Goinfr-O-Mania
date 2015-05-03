@@ -85,7 +85,6 @@ public class EntityManager {
 
             /* Sixth step : if the nutritionist face quite correctly the player,
              * then he moves.
-             *
              */
             if (nextAngle >= nutritionistAngle - 20 && nextAngle <= nutritionistAngle + 20) {
                 nutritionist.move(Movable.Direction.FRONT);
