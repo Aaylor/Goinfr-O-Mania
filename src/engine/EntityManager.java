@@ -81,9 +81,6 @@ public class EntityManager {
                 }
 
             }
-
-//            nutritionist.move(Movable.Direction.FRONT);
-
         }
 
     }

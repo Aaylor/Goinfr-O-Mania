@@ -9,6 +9,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class BoardController extends Thread implements MouseListener, KeyListener {
@@ -24,7 +26,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
 
     private boolean gameState;
 
-
+    private final Set<Integer> pressedKeys;
 
     /* Constructors */
 
@@ -34,6 +36,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         boardView.addKeyListener(this);
         board.addObserver(boardView);
         gameState = true;
+        pressedKeys = new HashSet<>();
     }
 
 
@@ -87,10 +90,30 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         } while (true);
     }
 
+    private void movePlayer() {
+        KeyConfiguration keyConfiguration = board.getPlayer().getKeyConfiguration();
+
+        for (Integer pressedKey : pressedKeys) {
+            if (pressedKey == keyConfiguration.getUp()) {
+                board.sendGluttonMovement(Movable.Direction.FRONT);
+            } else if (pressedKey == keyConfiguration.getDown()) {
+                board.sendGluttonMovement(Movable.Direction.BELOW);
+            } else if (pressedKey == keyConfiguration.getLeft()) {
+                board.sendGluttonMovement(Movable.Direction.LEFT);
+            } else if (pressedKey == keyConfiguration.getRight()) {
+                board.sendGluttonMovement(Movable.Direction.RIGHT);
+            }
+        }
+    }
+
     @Override
     public void run() {
         EntityManager manager = board.getLevel().getEntityManager();
         while (true) {
+
+            /* Glutton move */
+            waitForResume();
+            movePlayer();
 
             /* Entities move */
             waitForResume();
@@ -136,52 +159,33 @@ public class BoardController extends Thread implements MouseListener, KeyListene
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
-        if (!gameState) return;
+    public synchronized void keyPressed(KeyEvent e) {
+        Integer code = e.getKeyCode();
+        KeyConfiguration kc = getBoard().getPlayer().getKeyConfiguration();
 
-        /*
-         *  Use for any actions on the character :
-         *      - up
-         *      - down
-         *      - left
-         *      - right
-         */
-
-        KeyConfiguration keyConfiguration = board.getPlayer().getKeyConfiguration();
-        if (e.getKeyCode() == keyConfiguration.getUp()) {
-            board.sendGluttonMovement(Movable.Direction.FRONT);
-        } else if (e.getKeyCode() == keyConfiguration.getDown()) {
-            board.sendGluttonMovement(Movable.Direction.BELOW);
-        } else if (e.getKeyCode() == keyConfiguration.getLeft()) {
-            board.sendGluttonMovement(Movable.Direction.LEFT);
-        } else if (e.getKeyCode() == keyConfiguration.getRight()) {
-            board.sendGluttonMovement(Movable.Direction.RIGHT);
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
-        /*
-         *  Used for any options keys :
-         *      - load
-         *      - save
-         *      - pause
-         *      - quit
-         */
-
-        KeyConfiguration keyConfiguration = board.getPlayer().getKeyConfiguration();
-        if (e.getKeyCode() == keyConfiguration.getPause()) {
+        if (code == kc.getPause()) {
             /* TODO : show the pause panel */
             if (gameState) {
                 pauseGame();
             } else {
                 resumeGame();
             }
-        } else if (e.getKeyCode() == keyConfiguration.getQuit()) {
+        } else if (code == kc.getQuit()) {
             /* TODO: Maybe ask to save ?? */
             System.exit(0);
+        } else {
+            if (code == kc.getUp() && pressedKeys.contains(kc.getDown())) {
+                pressedKeys.remove(kc.getDown());
+            } else if (code == kc.getDown() && pressedKeys.contains(kc.getUp())) {
+                pressedKeys.remove(kc.getUp());
+            } else {
+                pressedKeys.add(code);
+            }
         }
+    }
 
+    @Override
+    public synchronized void keyReleased(KeyEvent e) {
+        pressedKeys.remove(e.getKeyCode());
     }
 }
