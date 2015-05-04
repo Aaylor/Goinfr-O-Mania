@@ -48,12 +48,12 @@ public class EntityManager {
     private void nutritionistsMove() {
 
         /* First step : get the player position. */
-        Point2D playerPosition = player.getPoint();
+        Point2D playerPosition = player.getCenter();
 
         /* Second step : iterate on every nutritionists. */
         for (Nutritionist nutritionist : nutritionists) {
 
-            Point2D nutritionistPosition = nutritionist.getPoint();
+            Point2D nutritionistPosition = nutritionist.getCenter();
             double  nutritionistAngle    = nutritionist.getDirection();
 
             /* Third step : calculate the opposite angle */

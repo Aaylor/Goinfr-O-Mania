@@ -1,5 +1,6 @@
 package engine;
 
+import graphics.Circle;
 import log.IGLog;
 
 import java.awt.*;
@@ -22,7 +23,7 @@ public class Skin {
 
     private BufferedImage[] down;
     private int downCpt;
-    
+
     private BufferedImage[] onDestruct;
     private int onDestructCpt;
 
@@ -84,6 +85,7 @@ public class Skin {
          */
     }
 
+    /*
     public Skin(int width, int height) {
         Random random = new Random();
         int r = random.nextInt(256);
@@ -96,6 +98,28 @@ public class Skin {
                 image.setRGB(i, j, color);
             }
         }
+
+        right = top = down = onDestruct = onAppears = left =
+                new BufferedImage[] { image };
+    }
+    */
+
+
+    public Skin(int width, int height) {
+        Random random = new Random();
+        int r = random.nextInt(256);
+        int g = random.nextInt(256);
+        int b = random.nextInt(256);
+        //BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = image.createGraphics();
+
+
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        g2d.setColor(new Color(r, g, b));
+        g2d.fill(new Circle(0, 0, width / 2).getShape());
+        g2d.setBackground(new Color(0.5f, 0.5f, 0.5f, 1f));
 
         right = top = down = onDestruct = onAppears = left =
                 new BufferedImage[] { image };

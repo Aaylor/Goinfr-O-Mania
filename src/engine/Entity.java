@@ -69,6 +69,18 @@ public abstract class Entity extends Observable {
         return position.getY();
     }
 
+    public Point2D getCenter() {
+        return new Point2D.Double(getCenterX(), getCenterY());
+    }
+
+    public double getCenterX() {
+        return getX() + getSize().getWidth() / 2;
+    }
+
+    public double getCenterY() {
+        return getY() + getSize().getHeight() / 2;
+    }
+
     protected void setPoint(Point2D p) {
         position = p;
         allNotify();
