@@ -1,13 +1,13 @@
 package graphics;
 
-import engine.AbstractWeapon;
-import engine.Entity;
-import engine.EntityManager;
-import engine.EntityView;
+import engine.*;
+import org.hamcrest.Matchers;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.Collection;
 import java.util.Observable;
@@ -30,23 +30,35 @@ public class BoardView extends JPanel implements Observer {
     }
 
     private void drawEntity(Graphics2D g2d, EntityView ev) {
-        Entity glutton = ev.getEntity();
+        Entity entity = ev.getEntity();
 
         AffineTransform t = new AffineTransform();
-        t.translate(glutton.getX(), glutton.getY());
+        t.translate(entity.getX(), entity.getY());
         t.scale(1, 1);
 
         g2d.drawImage(ev.getCurrentDrawing(), t, null);
 
+        if (entity instanceof AbstractMovableEntity) {
+            AbstractMovableEntity ame = (AbstractMovableEntity) entity;
+            Circle c = ame.getBoundsCircle();
+
+            double dx = entity.getCenterX() +
+                    (c.getRadius() * Math.cos(ame.getDirectionRadian()));
+            double dy = entity.getCenterY() +
+                    (c.getRadius() * Math.sin(ame.getDirectionRadian()));
+
+            g2d.draw(new Line2D.Double(entity.getCenter(), new Point2D.Double(dx, dy)));
+        }
+
         /*
-        AbstractWeapon weapon = glutton.getWeapon();
+        AbstractWeapon weapon = entity.getWeapon();
         if (weapon != null) {
             AffineTransform wt = new AffineTransform();
-            Dimension gSize = glutton.getSize();
+            Dimension gSize = entity.getSize();
             Dimension wSize = weapon.getDimension();
             wt.translate(
-                    glutton.getX() + (gSize.getWidth() - wSize.getWidth()),
-                    glutton.getY() + ((gSize.getHeight() / 2) - (wSize.getHeight() / 2))
+                    entity.getX() + (gSize.getWidth() - wSize.getWidth()),
+                    entity.getY() + ((gSize.getHeight() / 2) - (wSize.getHeight() / 2))
             );
             wt.scale(1, 1);
             g2d.drawImage(weapon.getSkin().test(), wt, null);
