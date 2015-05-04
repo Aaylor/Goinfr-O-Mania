@@ -40,13 +40,13 @@ public class MainFrame extends JFrame {
         */
 
         Glutton glutton = new Glutton(new Point(30, 30),
-                new Dimension(50, 75), 2f, 0f, 5);
+                new Dimension(30, 30), 3f, 0f, 5);
 
         glutton.setWeapon(new RangedWeapon(10));
 
         EntityManager manager = new EntityManager(
                 glutton,
-                new EntityView(new Skin(50, 75))
+                new EntityView(new Skin(30, 30))
         );
 
         Level level = new Level(
@@ -62,8 +62,8 @@ public class MainFrame extends JFrame {
         );
 
         manager.addNutritionist(
-                new Nutritionist(new Point(300, 234), new Dimension(30, 45), 2f, 0f, 5),
-                new EntityView(new Skin(30, 45))
+                new Nutritionist(new Point(300, 234), new Dimension(30, 30), 2f, 0f, 5),
+                new EntityView(new Skin(30, 30))
         );
 
         Board board = new Board(new Player("Test"), level);
