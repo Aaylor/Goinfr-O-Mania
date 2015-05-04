@@ -1,5 +1,6 @@
 package engine;
 
+import graphics.Circle;
 import log.IGLog;
 
 import java.awt.*;
@@ -119,17 +120,17 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
         Dimension entitySize = getSize();
 
         Point2D newPoint = null;
-        Rectangle2D newRectangle = null;
+        Circle newCircle = null;
         switch (d) {
             case FRONT:
                 nextX = position.getX() + (getSpeed() * Math.cos(angle));
                 nextY = position.getY() + (getSpeed() * Math.sin(angle));
                 newPoint = new Point2D.Double(nextX, nextY);
 
-                newRectangle = new Rectangle2D.Double(nextX, nextY,
-                        entitySize.getWidth(), entitySize.getHeight());
+                newCircle = new Circle(nextX, nextY, entitySize.getWidth() / 2);
 
-                if (!getManager().hasCrossCollision(this, newRectangle))
+
+                if (!getManager().hasCrossCollision(this, newCircle))
                     setPoint(newPoint);
 
                 break;
@@ -139,10 +140,9 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
                 nextY = position.getY() - (getSpeed() * Math.sin(angle));
                 newPoint = new Point2D.Double(nextX, nextY);
 
-                newRectangle = new Rectangle2D.Double(nextX, nextY,
-                        entitySize.getWidth(), entitySize.getHeight());
+                newCircle = new Circle(nextX, nextY, entitySize.getWidth() / 2);
 
-                if (!getManager().hasCrossCollision(this, newRectangle))
+                if (!getManager().hasCrossCollision(this, newCircle))
                     setPoint(newPoint);
 
                 break;

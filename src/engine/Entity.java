@@ -1,6 +1,9 @@
 package engine;
 
+import graphics.Circle;
+
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Observable;
@@ -55,6 +58,10 @@ public abstract class Entity extends Observable {
     public Rectangle2D getBounds() {
         return new Rectangle2D.Double(position.getX(), position.getY(),
                 size.getWidth(), size.getHeight());
+    }
+
+    public Circle getBoundsCircle() {
+        return new Circle(getX(), getY(), size.getWidth() / 2);
     }
 
     public Point2D getPoint() {

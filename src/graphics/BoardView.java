@@ -38,6 +38,7 @@ public class BoardView extends JPanel implements Observer {
 
         g2d.drawImage(ev.getCurrentDrawing(), t, null);
 
+        /*
         AbstractWeapon weapon = glutton.getWeapon();
         if (weapon != null) {
             AffineTransform wt = new AffineTransform();
@@ -50,6 +51,7 @@ public class BoardView extends JPanel implements Observer {
             wt.scale(1, 1);
             g2d.drawImage(weapon.getSkin().test(), wt, null);
         }
+        */
 
         Toolkit.getDefaultToolkit().sync();
     }

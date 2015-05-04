@@ -1,5 +1,6 @@
 package engine;
 
+import graphics.Circle;
 import log.IGLog;
 
 import java.awt.geom.Point2D;
@@ -115,7 +116,7 @@ public class EntityManager {
     }
 
     private boolean checkCrossCollision(List<? extends Entity> entities, Entity e1,
-                                        Rectangle2D position) {
+                                        Circle position) {
         if (e1.isCrossable())
             return false;
 
@@ -127,13 +128,14 @@ public class EntityManager {
         return false;
     }
 
-    public boolean hasCrossCollision(Entity e1, Rectangle2D position) {
+    public boolean hasCrossCollision(Entity e1, Circle position) {
         LinkedList<Entity> lp = new LinkedList<>();
         lp.add(player);
         return checkCrossCollision(lp, e1, position) ||
-               checkCrossCollision(nutritionists, e1, position) ||
-               checkCrossCollision(others, e1, position);
+                checkCrossCollision(nutritionists, e1, position) ||
+                checkCrossCollision(others, e1, position);
     }
+
 
     /**
      *  Check if two entities are in collision.
@@ -142,11 +144,11 @@ public class EntityManager {
      *  @return True if they collided.
      */
     public boolean collision(Entity e1, Entity e2) {
-        return collision(e1.getBounds(), e2);
+        return collision(e1.getBoundsCircle(), e2);
     }
 
-    public boolean collision(Rectangle2D r, Entity e) {
-        return r.intersects(e.getBounds());
+    public boolean collision(Circle circle, Entity entity) {
+        return circle.intersects(entity.getBoundsCircle());
     }
 
     /**
