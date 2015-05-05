@@ -13,6 +13,7 @@ public abstract class Entity extends Observable {
     private Point2D position;
     private Dimension size;
     private boolean crossable;
+    private int life;
     private Weapon weapon;
 
     private EntityManager manager = null;
@@ -31,6 +32,7 @@ public abstract class Entity extends Observable {
         this.position = startPosition;
         this.size     = size;
         crossable     = true;
+        life = 0;
     }
 
     /**
@@ -44,6 +46,7 @@ public abstract class Entity extends Observable {
         this.position = position;
         this.size = size;
         this.crossable = crossable;
+        life = 0;
     }
 
     private void allNotify() {
@@ -126,6 +129,7 @@ public abstract class Entity extends Observable {
     public void setCrossable(boolean crossable) {
         this.crossable = crossable;
     }
+
 
     public Weapon getWeapon() {
         return weapon;

@@ -1,5 +1,6 @@
 package engine;
 
+import engine.weapons.Attackable;
 import log.IGLog;
 
 import java.awt.*;
@@ -8,7 +9,7 @@ import java.awt.geom.Point2D;
 /**
  *  The player entity.
  */
-public class Glutton extends AbstractMovableEntity {
+public class Glutton extends AbstractMovableEntity implements Attackable {
 
     /**
      *  The number of life of the glutton.
@@ -59,4 +60,16 @@ public class Glutton extends AbstractMovableEntity {
         }
     }
 
+    @Override
+    public void takeDamage(int damage) {
+        nbLifes -= damage;
+
+        IGLog.info(this + " a pris " + damage + " dommages. " + nbLifes + " pv restants.");
+
+        if (nbLifes <= 0) {
+            IGLog.info("I'm invicible mwahahahahaha !");
+
+            /* TODO: killed character */
+        }
+    }
 }

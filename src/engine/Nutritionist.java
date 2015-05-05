@@ -1,11 +1,14 @@
 package engine;
 
+import engine.weapons.Attackable;
+import log.IGLog;
+
 import java.awt.*;
 
 /**
  *  The nutritionist entity.
  */
-public class Nutritionist extends AbstractMovableEntity {
+public class Nutritionist extends AbstractMovableEntity implements Attackable {
 
     /**
      *  The number of life.
@@ -35,4 +38,14 @@ public class Nutritionist extends AbstractMovableEntity {
 
     }
 
+    @Override
+    public void takeDamage(int damage) {
+        nbLifes -= damage;
+
+        IGLog.info(this + " a pris " + damage + " dommages. " + nbLifes + " pv restants.");
+
+        if (nbLifes <= 0) {
+            getManager().removeNutritionist(this);
+        }
+    }
 }
