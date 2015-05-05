@@ -185,6 +185,7 @@ public class EntityManager {
         if (abstractWeapon instanceof MeleeWeapon) {
 
             MeleeWeapon melee = (MeleeWeapon) abstractWeapon;
+            if (!melee.ready()) return;
 
             /* Now check if there is anyone on the range. */
             Point2D center = e.getCenter();

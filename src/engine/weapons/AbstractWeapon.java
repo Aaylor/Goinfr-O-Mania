@@ -23,12 +23,18 @@ public abstract class AbstractWeapon implements Soundable {
     private List<MSound> sounds;
     private int soundsCpt;
 
+    private int cooldownTime;
+    private volatile boolean cooldownReady;
+
     public AbstractWeapon(double damage, List<MSound> sounds) {
         this.damage = damage;
         this.owner = null;
         this.skin = new Skin(10, 10);
         this.dimension = new Dimension(10, 10);
         this.sounds = sounds;
+
+        cooldownTime  = 1000;
+        cooldownReady = true;
     }
 
     protected List<MSound> getSounds() {
@@ -44,6 +50,32 @@ public abstract class AbstractWeapon implements Soundable {
             return sounds.get(soundsCpt);
 
         return null;
+    }
+
+    protected void launchCooldown() {
+        if (cooldownReady) {
+            new Thread() {
+                @Override
+                public void run() {
+                    cooldownReady = false;
+                    Date wanted = new Date(new Date().getTime() + cooldownTime);
+                    do {
+                        try {
+                            Thread.sleep(cooldownTime);
+                            break;
+                        } catch (InterruptedException e) {
+                            if (new Date().after(wanted))
+                                break;
+                        }
+                    } while (true);
+                    cooldownReady = true;
+                }
+            }.start();
+        }
+    }
+
+    public boolean ready() {
+        return cooldownReady;
     }
 
     public abstract void attack();

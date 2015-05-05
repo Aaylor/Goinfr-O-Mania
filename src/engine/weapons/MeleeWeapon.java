@@ -15,7 +15,10 @@ public class MeleeWeapon extends AbstractWeapon {
 
     @Override
     public void attack() {
-        playSound();
+        if (ready()) {
+            playSound();
+            launchCooldown();
+        }
     }
 
     @Override
