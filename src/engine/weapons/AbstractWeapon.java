@@ -1,9 +1,16 @@
-package engine;
+package engine.weapons;
 
+
+import engine.Entity;
+import engine.Skin;
+import sound.MSound;
+import sound.Soundable;
 
 import java.awt.*;
+import java.util.*;
+import java.util.List;
 
-public abstract class AbstractWeapon {
+public abstract class AbstractWeapon implements Soundable {
 
     private Entity owner;
 
@@ -13,11 +20,30 @@ public abstract class AbstractWeapon {
 
     private Dimension dimension;
 
-    public AbstractWeapon(double damage) {
+    private List<MSound> sounds;
+    private int soundsCpt;
+
+    public AbstractWeapon(double damage, List<MSound> sounds) {
         this.damage = damage;
         this.owner = null;
-        this.skin = new Skin(20, 20);
-        this.dimension = new Dimension(20, 20);
+        this.skin = new Skin(10, 10);
+        this.dimension = new Dimension(10, 10);
+        this.sounds = sounds;
+    }
+
+    protected List<MSound> getSounds() {
+        return sounds;
+    }
+
+    protected MSound nextSound() {
+        ++soundsCpt;
+        if (soundsCpt >= sounds.size())
+            soundsCpt = 0;
+
+        if (soundsCpt < sounds.size())
+            return sounds.get(soundsCpt);
+
+        return null;
     }
 
     public abstract void attack();
@@ -53,4 +79,5 @@ public abstract class AbstractWeapon {
     public void setDimension(Dimension dimension) {
         this.dimension = dimension;
     }
+
 }
