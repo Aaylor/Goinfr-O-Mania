@@ -1,6 +1,6 @@
 package engine;
 
-import engine.weapons.AbstractWeapon;
+import engine.weapons.Weapon;
 import graphics.Circle;
 
 import java.awt.*;
@@ -13,7 +13,7 @@ public abstract class Entity extends Observable {
     private Point2D position;
     private Dimension size;
     private boolean crossable;
-    private AbstractWeapon weapon;
+    private Weapon weapon;
 
     private EntityManager manager = null;
 
@@ -127,12 +127,13 @@ public abstract class Entity extends Observable {
         this.crossable = crossable;
     }
 
-    public AbstractWeapon getWeapon() {
+    public Weapon getWeapon() {
         return weapon;
     }
 
-    public void setWeapon(AbstractWeapon weapon) {
+    public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
+        weapon.setOwner(this);
     }
 
 

@@ -1,8 +1,6 @@
 package engine;
 
-import engine.weapons.AbstractWeapon;
-import engine.weapons.MeleeWeapon;
-import engine.weapons.RangedWeapon;
+import engine.weapons.Weapon;
 import graphics.Circle;
 import log.IGLog;
 
@@ -71,10 +69,10 @@ public class EntityManager {
             double nextAngle = addToAngle(Math.toDegrees(Math.atan2(dy, dx)), 360);
 
             /* If the nutritionist can attack the player, then he does. */
-            if (nutritionist.getWeapon() instanceof MeleeWeapon) {
-                MeleeWeapon melee = (MeleeWeapon) nutritionist.getWeapon();
+            if (nutritionist.getWeapon() != null) {
+                Weapon w = nutritionist.getWeapon();
 
-                double weaponRadius = melee.getRange() + nutritionistCircle.getRadius();
+                double weaponRadius = w.getRange() + nutritionistCircle.getRadius();
                 Circle weaponCircle = new Circle(
                         nutritionist.getCenterX() - weaponRadius,
                         nutritionist.getCenterY() - weaponRadius,
@@ -175,22 +173,24 @@ public class EntityManager {
     }
 
     public void attack(AbstractMovableEntity e) {
-        AbstractWeapon abstractWeapon = e.getWeapon();
+        Weapon w = e.getWeapon();
+
+        if (w == null)
+            return;
+
+        if (!w.ready())
+            return;
 
         LinkedList<Entity> all = new LinkedList<>();
         all.add(player);
         all.addAll(nutritionists);
         all.addAll(others);
 
-        if (abstractWeapon instanceof MeleeWeapon) {
-
-            MeleeWeapon melee = (MeleeWeapon) abstractWeapon;
-            if (!melee.ready()) return;
-
+        if (w.isMelee()) {
             /* Now check if there is anyone on the range. */
             Point2D center = e.getCenter();
 
-            double weaponRadius = melee.getRange() + e.getBoundsCircle().getRadius();
+            double weaponRadius = w.getRange() + e.getBoundsCircle().getRadius();
             Circle attackRange = new Circle(
                     e.getCenterX() - weaponRadius,
                     e.getCenterY() - weaponRadius,
@@ -214,12 +214,12 @@ public class EntityManager {
                     (llimit > hlimit && (nextAngle >= llimit || nextAngle <= hlimit))) &&
                     attackRange.intersects(attackedEntity.getBoundsCircle())) {
                     System.out.println("L'entité (" + attackedEntity + ") a été touché.");
-                    melee.attack();
+                    w.attack(attackedEntity);
                 }
 
             }
 
-        } else if (abstractWeapon instanceof RangedWeapon) {
+        } else if (w.isRanged()) {
 
 
         } else {

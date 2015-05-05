@@ -1,19 +1,14 @@
 package graphics;
 
 import engine.*;
-import engine.weapons.AbstractWeapon;
-import engine.weapons.MeleeWeapon;
+import engine.weapons.Weapon;
 import log.IGLog;
-import sound.MSound;
 import sound.SoundManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 
-/**
- * Created by tratost on 15/04/15.
- */
 public class MainFrame extends JFrame {
 
     Stack<JPanel> stackPanel;
@@ -38,16 +33,17 @@ public class MainFrame extends JFrame {
         addPanel(menuView);
         */
 
+        HashMap<String, String> punchSounds = new HashMap<>();
+        punchSounds.put("left-punch", "sounds/left-punch.mp3");
+        punchSounds.put("right-punch", "sounds/right-punch.mp3");
+        Weapon.register("punch", Weapon.MELEE, punchSounds, 10, 1, 2, 1000);
+
         Glutton glutton = new Glutton(new Point(30, 30),
                 new Dimension(30, 30), 3f, 0f, 5);
 
-        java.util.List<MSound> ms = new LinkedList<>();
-        ms.add(new MSound("left-punch", "sounds/left-punch.mp3"));
-        ms.add(new MSound("right-punch", "sounds/right-punch.mp3"));
-        AbstractWeapon w = new MeleeWeapon(10, ms, 5);
 
-        glutton.setWeapon(w);
-        w.setOwner(glutton);
+        glutton.setWeapon(Weapon.make("punch"));
+
 
         EntityManager manager = new EntityManager(
                 glutton,
@@ -67,12 +63,7 @@ public class MainFrame extends JFrame {
         );
 
         Nutritionist n = new Nutritionist(new Point(300, 234), new Dimension(30, 30), 2f, 0f, 5);
-        java.util.List<MSound> msnut = new LinkedList<>();
-        msnut.add(new MSound("left-punch", "sounds/left-punch.mp3"));
-        msnut.add(new MSound("right-punch", "sounds/right-punch.mp3"));
-        AbstractWeapon weapon = new MeleeWeapon(10, msnut, 5);
-        n.setWeapon(weapon);
-        weapon.setOwner(n);
+        n.setWeapon(Weapon.make("punch"));
 
 
         manager.addNutritionist(
