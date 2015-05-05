@@ -4,6 +4,7 @@ import javafx.scene.media.AudioClip;
 
 import java.io.File;
 import java.util.Hashtable;
+import java.util.List;
 
 /**
  *  Class to handle sound, with memory.
@@ -80,6 +81,15 @@ public class MSound {
         } else {
             return prefix + path;
         }
+    }
+
+    public static boolean soundCurrentlyPlayed(List<MSound> sounds) {
+        for (MSound m : sounds) {
+            if (m.isPlaying())
+                return true;
+        }
+
+        return false;
     }
 
     /**
