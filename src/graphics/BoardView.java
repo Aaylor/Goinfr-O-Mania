@@ -39,6 +39,7 @@ public class BoardView extends JPanel implements Observer {
         g2d.drawImage(ev.getCurrentDrawing(), t, null);
 
         if (entity instanceof AbstractMovableEntity) {
+
             AbstractMovableEntity ame = (AbstractMovableEntity) entity;
             Circle c = ame.getBoundsCircle();
 
@@ -48,22 +49,8 @@ public class BoardView extends JPanel implements Observer {
                     (c.getRadius() * Math.sin(ame.getDirectionRadian()));
 
             g2d.draw(new Line2D.Double(entity.getCenter(), new Point2D.Double(dx, dy)));
-        }
 
-        /*
-        AbstractWeapon weapon = entity.getWeapon();
-        if (weapon != null) {
-            AffineTransform wt = new AffineTransform();
-            Dimension gSize = entity.getSize();
-            Dimension wSize = weapon.getDimension();
-            wt.translate(
-                    entity.getX() + (gSize.getWidth() - wSize.getWidth()),
-                    entity.getY() + ((gSize.getHeight() / 2) - (wSize.getHeight() / 2))
-            );
-            wt.scale(1, 1);
-            g2d.drawImage(weapon.getSkin().test(), wt, null);
         }
-        */
 
         Toolkit.getDefaultToolkit().sync();
     }

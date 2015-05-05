@@ -37,6 +37,11 @@ public class Board extends Observable {
         notifyObservers();
     }
 
+    public void sendGluttonAttack() {
+        Glutton glutton = currentLevel.getEntityManager().getGlutton();
+        glutton.getManager().attack(glutton);
+    }
+
     /* XXX: Remove this. */
     public void notification() {
         setChanged();

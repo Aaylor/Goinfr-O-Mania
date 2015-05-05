@@ -104,7 +104,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
                 } else if (pressedKey == keyConfiguration.getRight()) {
                     board.sendGluttonMovement(Movable.Direction.RIGHT);
                 } else if (pressedKey == keyConfiguration.getAttack()) {
-                    System.out.println("Attack !");
+                    board.sendGluttonAttack();
                 }
             }
         }
@@ -164,6 +164,8 @@ public class BoardController extends Thread implements MouseListener, KeyListene
 
     @Override
     public void keyPressed(KeyEvent e) {
+        e.consume();
+
         Integer code = e.getKeyCode();
         KeyConfiguration kc = getBoard().getPlayer().getKeyConfiguration();
 
@@ -196,6 +198,8 @@ public class BoardController extends Thread implements MouseListener, KeyListene
 
     @Override
     public void keyReleased(KeyEvent e) {
+        e.consume();
+
         synchronized (pressedKeys) {
             pressedKeys.remove(e.getKeyCode());
         }

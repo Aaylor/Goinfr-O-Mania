@@ -1,7 +1,9 @@
 package graphics;
 
+import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 
 public class Circle {
 
@@ -71,7 +73,20 @@ public class Circle {
         return distance <= getRadius() + circle.getRadius();
     }
 
+    public boolean intersects(Shape shape) {
+        throw new UnsupportedOperationException(); /* TODO */
+    }
+
     public Ellipse2D getShape() {
         return new Ellipse2D.Double(getX(), getY(), getDiameter(), getDiameter());
+    }
+
+
+    public static boolean intersects(Circle c1, Circle c2) {
+        return c1.intersects(c2);
+    }
+
+    public static boolean intersects(Circle c1, Shape sh) {
+        return c1.intersects(sh);
     }
 }
