@@ -13,6 +13,9 @@ import java.awt.geom.Rectangle2D;
  */
 public abstract class AbstractMovableEntity extends Entity implements Movable {
 
+    private final static double BACKWARD_MODIFIER = 0.5;
+
+
     /**
      *  Entity's speed.
      */
@@ -136,8 +139,8 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
                 break;
 
             case BELOW:
-                nextX = position.getX() - (getSpeed() * Math.cos(angle));
-                nextY = position.getY() - (getSpeed() * Math.sin(angle));
+                nextX = position.getX() - ((getSpeed() * BACKWARD_MODIFIER) * Math.cos(angle));
+                nextY = position.getY() - ((getSpeed() * BACKWARD_MODIFIER) * Math.sin(angle));
                 newPoint = new Point2D.Double(nextX, nextY);
 
                 newCircle = new Circle(nextX, nextY, entitySize.getWidth() / 2);
@@ -148,14 +151,10 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
                 break;
 
             case LEFT:
-                System.out.println("direction: " + getDirection());
-                System.out.println("new direction: " + (getDirection() - (1f * getSpeed())));
                 addDirection(-1f * getSpeed());
                 break;
 
             case RIGHT:
-                System.out.println("direction: " + getDirection());
-                System.out.println("new direction: " + (getDirection() + (1f * getSpeed())));
                 addDirection(1f * getSpeed());
                 break;
 

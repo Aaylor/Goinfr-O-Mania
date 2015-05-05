@@ -1,9 +1,9 @@
 package engine;
 
+import engine.weapons.AbstractWeapon;
 import graphics.Circle;
 
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Observable;
@@ -134,6 +134,7 @@ public abstract class Entity extends Observable {
     public void setWeapon(AbstractWeapon weapon) {
         this.weapon = weapon;
     }
+
 
     /* Entity Abstract Functionalities */
 

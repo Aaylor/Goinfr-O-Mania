@@ -1,5 +1,8 @@
 package engine;
 
+import engine.weapons.AbstractWeapon;
+import engine.weapons.MeleeWeapon;
+import engine.weapons.RangedWeapon;
 import graphics.Circle;
 import log.IGLog;
 
@@ -50,12 +53,14 @@ public class EntityManager {
 
         /* First step : get the player position. */
         Point2D playerPosition = player.getCenter();
+        Circle  playerCircle   = player.getBoundsCircle();
 
         /* Second step : iterate on every nutritionists. */
         for (Nutritionist nutritionist : nutritionists) {
 
             Point2D nutritionistPosition = nutritionist.getCenter();
             double  nutritionistAngle    = nutritionist.getDirection();
+            Circle  nutritionistCircle   = nutritionist.getBoundsCircle();
 
             /* Third step : calculate the opposite angle */
             double  oppositeAngle = addToAngle(nutritionistAngle, 180);
@@ -64,6 +69,23 @@ public class EntityManager {
             double dx = playerPosition.getX() - nutritionistPosition.getX();
             double dy = playerPosition.getY() - nutritionistPosition.getY();
             double nextAngle = addToAngle(Math.toDegrees(Math.atan2(dy, dx)), 360);
+
+            /* If the nutritionist can attack the player, then he does. */
+            if (nutritionist.getWeapon() instanceof MeleeWeapon) {
+                MeleeWeapon melee = (MeleeWeapon) nutritionist.getWeapon();
+
+                double weaponRadius = melee.getRange() + nutritionistCircle.getRadius();
+                Circle weaponCircle = new Circle(
+                        nutritionist.getCenterX() - weaponRadius,
+                        nutritionist.getCenterY() - weaponRadius,
+                        weaponRadius
+                );
+
+                if (weaponCircle.intersects(playerCircle)) {
+                    attack(nutritionist);
+                    continue;
+                }
+            }
 
             /* Fifth step : if the nutritionist doesn't face the glutton,
              * then turn to the right side
@@ -90,6 +112,7 @@ public class EntityManager {
             if (nextAngle >= nutritionistAngle - 20 && nextAngle <= nutritionistAngle + 20) {
                 nutritionist.move(Movable.Direction.FRONT);
             }
+
         }
 
     }
@@ -149,6 +172,59 @@ public class EntityManager {
 
     public boolean collision(Circle circle, Entity entity) {
         return circle.intersects(entity.getBoundsCircle());
+    }
+
+    public void attack(AbstractMovableEntity e) {
+        AbstractWeapon abstractWeapon = e.getWeapon();
+
+        LinkedList<Entity> all = new LinkedList<>();
+        all.add(player);
+        all.addAll(nutritionists);
+        all.addAll(others);
+
+        if (abstractWeapon instanceof MeleeWeapon) {
+
+            MeleeWeapon melee = (MeleeWeapon) abstractWeapon;
+
+            /* Now check if there is anyone on the range. */
+            Point2D center = e.getCenter();
+
+            double weaponRadius = melee.getRange() + e.getBoundsCircle().getRadius();
+            Circle attackRange = new Circle(
+                    e.getCenterX() - weaponRadius,
+                    e.getCenterY() - weaponRadius,
+                    weaponRadius
+            );
+
+            for (Entity attackedEntity : all) {
+
+                if (attackedEntity == e)
+                    continue;
+
+                double llimit = addToAngle(e.getDirection(), -90);
+                double hlimit = addToAngle(e.getDirection(), 90);
+
+                /* Fourth step : calculate the new needed angle to face the player. */
+                double dx = attackedEntity.getCenterX() - center.getX();
+                double dy = attackedEntity.getCenterY() - center.getY();
+                double nextAngle = addToAngle(Math.toDegrees(Math.atan2(dy, dx)), 360);
+
+                if (((llimit < hlimit && nextAngle >= llimit && nextAngle <= hlimit) ||
+                    (llimit > hlimit && (nextAngle >= llimit || nextAngle <= hlimit))) &&
+                    attackRange.intersects(attackedEntity.getBoundsCircle())) {
+                    System.out.println("L'entité (" + attackedEntity + ") a été touché.");
+                    melee.attack();
+                }
+
+            }
+
+        } else if (abstractWeapon instanceof RangedWeapon) {
+
+
+        } else {
+            /* Do nothing here */
+        }
+
     }
 
     /**
