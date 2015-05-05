@@ -24,15 +24,15 @@ public class Weapon {
 
     private double range;
 
-    private double minDamage;
+    private int minDamage;
 
-    private double maxDamage;
+    private int maxDamage;
 
     private long cooldown;
     private boolean cooldownReady;
 
     private Weapon(String name, int type, List<MSound> sounds, double range,
-                  double minDamage, double maxDamage, long cooldown) {
+                  int minDamage, int maxDamage, long cooldown) {
         this.name = name;
         owner = null;
         this.type = type;
@@ -59,7 +59,7 @@ public class Weapon {
     }
 
     public static void register(String name, int type, Map<String, String> sounds, double range,
-                                double minDamage, double maxDamage, long cooldown) {
+                                int minDamage, int maxDamage, long cooldown) {
         if (map.containsKey(name)) {
             throw new IllegalArgumentException("Weapon::register -> " +
                     name + " already registered.");
@@ -159,17 +159,28 @@ public class Weapon {
         return range;
     }
 
-    public double getMinDamage() {
+    public int getMinDamage() {
         return minDamage;
     }
 
-    public double getMaxDamage() {
+    public int getMaxDamage() {
         return maxDamage;
     }
 
     public void attack(Entity entity) {
         playNextSound();
         launchCooldown();
+
+        if (entity instanceof Attackable) {
+            Random random = new Random();
+            Attackable a = (Attackable)entity;
+
+            int damage =
+                    random.nextInt(
+                            (getMaxDamage() - getMinDamage()) + 1
+                    ) + getMinDamage();
+            a.takeDamage(damage);
+        }
     }
 
 
