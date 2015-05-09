@@ -21,8 +21,12 @@ public class Background extends JPanel {
 
         width  = icon.getIconWidth();
         height = icon.getIconHeight();
+
+        this.setVisible(true);
+        this.setOpaque(true);
     }
 
+    //Still utils ?
     public Background(String path, JComponent parentComponent) {
         this.path = path;
         image = new ImageIcon(path).getImage();
@@ -30,6 +34,14 @@ public class Background extends JPanel {
 
         width  = parentComponent.getWidth();
         height = parentComponent.getHeight();
+    }
+
+    protected void sizeOfPictures(){
+        Dimension size = new Dimension(width, height);
+        setPreferredSize(size);
+        setMaximumSize(size);
+        setMinimumSize(size);
+        setSize(size);
     }
 
     private void updateParentComponent() {

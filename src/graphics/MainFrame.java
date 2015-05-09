@@ -22,16 +22,16 @@ public class MainFrame extends JFrame {
 
     private void defaultFrameConfiguration(ResourceBundle bundle) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(500, 500));
+        //setPreferredSize(new Dimension(500, 500));
         setLocationByPlatform(true);
 
         ToolbarView bar = new ToolbarView(bundle);
         setJMenuBar(bar);
 
-        /*
+
         MainMenuView menuView = new MainMenuView();
         addPanel(menuView);
-        */
+        /*
 
         HashMap<String, String> punchSounds = new HashMap<>();
         punchSounds.put("left-punch", "sounds/left-punch.mp3");
@@ -79,7 +79,7 @@ public class MainFrame extends JFrame {
         controller.start();
 
         view.setFocusable(true);
-
+*/
         setVisible(true);
 
         pack();
