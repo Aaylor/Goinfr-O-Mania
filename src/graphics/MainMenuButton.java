@@ -1,5 +1,7 @@
 package graphics;
 
+import sound.MSound;
+
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -9,21 +11,21 @@ import java.awt.event.MouseEvent;
  */
 public class MainMenuButton extends JButton {
 
-    private String text;
     private ImageIcon imgOnClick;
     private ImageIcon imgFocus;
     private ImageIcon imgOnSleep;
+    private MSound transition;
+    private MSound selection;
 
-    public MainMenuButton() {
-    }
-
-    public MainMenuButton(String text) {
+    public MainMenuButton(String imgOnSleep, String imgOnClick, String imgFocus) {
         super();
-        this.text = text;
-        this.imgFocus = new ImageIcon("pictures/index2.jpeg");
-        this.imgOnClick = new ImageIcon("pictures/index.jpeg");
-        this.imgOnSleep = new ImageIcon( "pictures/images.png");
-        this.setIcon(imgOnSleep);
+        this.imgFocus = new ImageIcon(imgFocus);
+        this.imgOnClick = new ImageIcon(imgOnClick);
+        this.imgOnSleep = new ImageIcon(imgOnSleep);
+        this.setIcon(this.imgOnSleep);
+        this.transition = new MSound("menu1", "music/menu001.mp3");
+        this.selection = new MSound("menu2", "music/menu011.mp3");
+        this.setBackground(null);
         this.setFocusPainted(false);
         this.setBorderPainted(false);
         this.setOpaque(false);
@@ -46,16 +48,42 @@ public class MainMenuButton extends JButton {
         @Override
         public void mouseEntered(MouseEvent event){
             mb.setIcon(imgFocus);
+            transition.play();
+            mb.setBackground(null);
+            mb.setFocusPainted(false);
+            mb.setBorderPainted(false);
+            mb.setOpaque(false);
+            mb.setContentAreaFilled(false);
         }
 
         @Override
         public void mouseExited(MouseEvent event){
             mb.setIcon(imgOnSleep);
+            mb.setBackground(null);
+            mb.setFocusPainted(false);
+            mb.setBorderPainted(false);
+            mb.setOpaque(false);
+            mb.setContentAreaFilled(false);
         }
 
         @Override
         public void mousePressed(MouseEvent event){
             mb.setIcon(imgOnClick);
+            mb.setBackground(null);
+            mb.setFocusPainted(false);
+            mb.setBorderPainted(false);
+            mb.setOpaque(false);
+            mb.setContentAreaFilled(false);
+        }
+
+        public void mouseClicked(MouseEvent event){
+            mb.setIcon(imgFocus);
+            selection.play();
+            mb.setBackground(null);
+            mb.setFocusPainted(false);
+            mb.setBorderPainted(false);
+            mb.setOpaque(false);
+            mb.setContentAreaFilled(false);
         }
     }
 }

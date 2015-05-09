@@ -1,7 +1,11 @@
 package graphics;
 
+import sound.MSound;
+
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.InputStream;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -11,12 +15,17 @@ import java.util.Observer;
 public class MainMenuView extends Background implements Observer {
 
     private MainMenuButton play;
+    private MainMenuButton load;
+    private MainMenuButton options;
     private GridBagConstraints gbc;
+    private MSound mainMusic;
 
     //CONSTRUCTOR
 
     public MainMenuView() {
         super("pictures/cake.jpg");
+        mainMusic = new MSound("erza","music/erza.mp3");
+        mainMusic.play(0.35);
         instantiateGridBagConstraints();
         instantiateTitle();
         instantiateButtons();
@@ -43,15 +52,26 @@ public class MainMenuView extends Background implements Observer {
     }
 
     private void instantiateTitle(){
-        JLabel title = new JLabel("Main Menu");
-        title.setSize(20,20);
-        this.add(title, gbc);
+        try {
+            File file = new File("font/newyorkescape.ttf");
+            Font fontTitle = Font.createFont(Font.TRUETYPE_FONT, file).deriveFont(Font.PLAIN, 60);
+            JLabel title = new JLabel("Main Menu");
+            title.setFont(fontTitle);
+            this.add(title);
+        }
+        catch(Exception e){
+            JLabel title = new JLabel("Main Menu");
+            this.add(title);
+        }
     }
 
     private void instantiateButtons() {
-        play = new MainMenuButton("Play Game");
-        play.setOpaque(true);
+        play = new MainMenuButton("pictures/En/buttonSleepNewGame2.png", "pictures/En/medButtonNewGameActif.png", "pictures/En/medButtonNewGame.png");
+        load = new MainMenuButton("pictures/En/buttonSleepLoad2.png", "pictures/En/medButtonLoadActif.png", "pictures/En/medButtonLoad.png");
+        options = new MainMenuButton("pictures/En/buttonSleepOptions2.png", "pictures/En/medButtonOptionsenActif.png", "pictures/En/medButtonOptions.png");
         this.add(play, gbc);
+        this.add(load, gbc);
+        this.add(options, gbc);
         //play.setVisible(true);
     }
 

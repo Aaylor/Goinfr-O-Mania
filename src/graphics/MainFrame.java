@@ -27,6 +27,8 @@ public class MainFrame extends JFrame {
 
         ToolbarView bar = new ToolbarView(bundle);
         setJMenuBar(bar);
+        //Modification Later ?
+        setResizable(false);
 
 
         MainMenuView menuView = new MainMenuView();
