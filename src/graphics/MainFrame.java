@@ -31,8 +31,7 @@ public class MainFrame extends JFrame {
         setResizable(false);
 
 
-        MainMenuView menuView = new MainMenuView();
-        addPanel(menuView);
+        new MainMenuController(this, null, null);
         /*
 
         HashMap<String, String> punchSounds = new HashMap<>();
@@ -112,6 +111,7 @@ public class MainFrame extends JFrame {
         this.setVisible(false);
         stackPanel.add(j);
         this.setContentPane(j);
+        j.requestFocus();
         this.pack();
         this.setVisible(true);
     }

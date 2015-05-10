@@ -10,22 +10,22 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * Created by tratost on 15/04/15.
+ * Created by Aaylor, Tratost, Pixelman on 15/04/15.
  */
 public class MainMenuView extends Background implements Observer {
 
+    private MainFrame framep;
     private MainMenuButton play;
     private MainMenuButton load;
     private MainMenuButton options;
     private GridBagConstraints gbc;
-    private MSound mainMusic;
+
 
     //CONSTRUCTOR
 
-    public MainMenuView() {
+    public MainMenuView(MainFrame framep) {
         super("pictures/cake.jpg");
-        mainMusic = new MSound("erza","music/erza.mp3");
-        mainMusic.play(0.35);
+        this.framep = framep;
         instantiateGridBagConstraints();
         instantiateTitle();
         instantiateButtons();
@@ -66,7 +66,7 @@ public class MainMenuView extends Background implements Observer {
     }
 
     private void instantiateButtons() {
-        play = new MainMenuButton("pictures/En/buttonSleepNewGame2.png", "pictures/En/medButtonNewGameActif.png", "pictures/En/medButtonNewGame.png");
+        play = new MainMenuButton("pictures/En/buttonSleepNewGame2.png", "pictures/En/medButtonNewGameActif2.png", "pictures/En/medButtonNewGame.png");
         load = new MainMenuButton("pictures/En/buttonSleepLoad2.png", "pictures/En/medButtonLoadActif.png", "pictures/En/medButtonLoad.png");
         options = new MainMenuButton("pictures/En/buttonSleepOptions2.png", "pictures/En/medButtonOptionsenActif.png", "pictures/En/medButtonOptions.png");
         this.add(play, gbc);
@@ -79,6 +79,14 @@ public class MainMenuView extends Background implements Observer {
 
     public MainMenuButton getPlay() {
         return play;
+    }
+
+    public MainMenuButton getLoad() {
+        return load;
+    }
+
+    public MainMenuButton getOptions() {
+        return options;
     }
 
     //UPDATE

@@ -7,7 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
- * Created by tratost on 16/04/15.
+ * Created by Aaylor, Tratost, Pixelman on 16/04/15.
  */
 public class MainMenuButton extends JButton {
 
@@ -69,6 +69,7 @@ public class MainMenuButton extends JButton {
         @Override
         public void mousePressed(MouseEvent event){
             mb.setIcon(imgOnClick);
+            selection.play();
             mb.setBackground(null);
             mb.setFocusPainted(false);
             mb.setBorderPainted(false);
@@ -78,7 +79,6 @@ public class MainMenuButton extends JButton {
 
         public void mouseClicked(MouseEvent event){
             mb.setIcon(imgFocus);
-            selection.play();
             mb.setBackground(null);
             mb.setFocusPainted(false);
             mb.setBorderPainted(false);
