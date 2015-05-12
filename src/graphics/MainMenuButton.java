@@ -40,8 +40,8 @@ public class MainMenuButton extends JButton {
         this.fontColorFocus = new Color(0xF5F5F5);
         this.fontColorPressed = new Color(0xCDCDCD);
 
-        int rightPaddingSleep = 100;
-        int rightPaddingFocus = 120;
+        int rightPaddingSleep = 70;
+        int rightPaddingFocus = 110;
 
         if(font != null) {
             this.fontSleep = font.deriveFont(Font.PLAIN, 20);

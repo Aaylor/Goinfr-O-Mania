@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.ResourceBundle;
 
 /**
  * Created by Aaylor, Tratost, Pixelman on 15/04/15.
@@ -60,30 +61,33 @@ public class MainMenuView extends Background implements Observer {
     }
 
     private void instantiateTitle(){
-        JLabel title = new JLabel("Main Menu");
+        ResourceBundle bundle = framep.getBundle();
+        JLabel title = new JLabel(bundle.getString("gameMenuTitle"));
         if(this.font != null)
             title.setFont(font);
+        title.setForeground(new Color(0x3B3B3B));
         this.add(title);
     }
 
     private void instantiateButtons() {
+        ResourceBundle bundle = framep.getBundle();
         play = new MainMenuButton(
                 "pictures/GameMenuSleepButton.png",
                 "pictures/GameMenuPressedButton.png",
                 "pictures/GameMenuFocusButton.png",
-                "NEW GAME",
+                bundle.getString("gameMenuPlayButton"),
                 font);
         load = new MainMenuButton(
                 "pictures/GameMenuSleepButton.png",
                 "pictures/GameMenuPressedButton.png",
                 "pictures/GameMenuFocusButton.png",
-                "LOAD",
+                bundle.getString("gameMenuLoadButton"),
                 font);
         options = new MainMenuButton(
                 "pictures/GameMenuSleepButton.png",
                 "pictures/GameMenuPressedButton.png",
                 "pictures/GameMenuFocusButton.png",
-                "OPTIONS",
+                bundle.getString("gameMenuOptionsButton"),
                 font);
         this.add(play, gbc);
         this.add(load, gbc);

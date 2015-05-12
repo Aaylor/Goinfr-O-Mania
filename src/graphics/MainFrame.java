@@ -11,13 +11,19 @@ import java.util.*;
 
 public class MainFrame extends JFrame {
 
-    Stack<JPanel> stackPanel;
+    private Stack<JPanel> stackPanel;
+    private ResourceBundle bundle;
 
     public MainFrame(ResourceBundle bundle) throws HeadlessException {
         super(bundle.getString("title"));
+        this.bundle = bundle;
         IGLog.write("Main frame creation.");
         stackPanel = new Stack<>();
         defaultFrameConfiguration(bundle);
+    }
+
+    public ResourceBundle getBundle() {
+        return bundle;
     }
 
     private void defaultFrameConfiguration(ResourceBundle bundle) {
