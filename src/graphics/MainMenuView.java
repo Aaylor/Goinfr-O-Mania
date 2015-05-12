@@ -19,6 +19,7 @@ public class MainMenuView extends Background implements Observer {
     private MainMenuButton load;
     private MainMenuButton options;
     private GridBagConstraints gbc;
+    private Font font;
 
 
     //CONSTRUCTOR
@@ -26,6 +27,13 @@ public class MainMenuView extends Background implements Observer {
     public MainMenuView(MainFrame framep) {
         super("pictures/cake.jpg");
         this.framep = framep;
+        try {
+            File file = new File("font/newyorkescape.ttf");
+            font = Font.createFont(Font.TRUETYPE_FONT, file).deriveFont(Font.PLAIN, 60);
+        }
+        catch(Exception e){
+            font = null;
+        }
         instantiateGridBagConstraints();
         instantiateTitle();
         instantiateButtons();
@@ -52,23 +60,31 @@ public class MainMenuView extends Background implements Observer {
     }
 
     private void instantiateTitle(){
-        try {
-            File file = new File("font/newyorkescape.ttf");
-            Font fontTitle = Font.createFont(Font.TRUETYPE_FONT, file).deriveFont(Font.PLAIN, 60);
-            JLabel title = new JLabel("Main Menu");
-            title.setFont(fontTitle);
-            this.add(title);
-        }
-        catch(Exception e){
-            JLabel title = new JLabel("Main Menu");
-            this.add(title);
-        }
+        JLabel title = new JLabel("Main Menu");
+        if(this.font != null)
+            title.setFont(font);
+        this.add(title);
     }
 
     private void instantiateButtons() {
-        play = new MainMenuButton("pictures/En/buttonSleepNewGame2.png", "pictures/En/medButtonNewGameActif2.png", "pictures/En/medButtonNewGame.png");
-        load = new MainMenuButton("pictures/En/buttonSleepLoad2.png", "pictures/En/medButtonLoadActif.png", "pictures/En/medButtonLoad.png");
-        options = new MainMenuButton("pictures/En/buttonSleepOptions2.png", "pictures/En/medButtonOptionsenActif.png", "pictures/En/medButtonOptions.png");
+        play = new MainMenuButton(
+                "pictures/GameMenuSleepButton.png",
+                "pictures/GameMenuPressedButton.png",
+                "pictures/GameMenuFocusButton.png",
+                "NEW GAME",
+                font);
+        load = new MainMenuButton(
+                "pictures/GameMenuSleepButton.png",
+                "pictures/GameMenuPressedButton.png",
+                "pictures/GameMenuFocusButton.png",
+                "LOAD",
+                font);
+        options = new MainMenuButton(
+                "pictures/GameMenuSleepButton.png",
+                "pictures/GameMenuPressedButton.png",
+                "pictures/GameMenuFocusButton.png",
+                "OPTIONS",
+                font);
         this.add(play, gbc);
         this.add(load, gbc);
         this.add(options, gbc);
