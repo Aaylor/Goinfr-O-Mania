@@ -13,9 +13,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 
-/**
- * Created by Aaylor, Tratost, PixelMan on 15/04/15.
- */
 public class MainMenuController implements ActionListener {
 
     /* Attributes */

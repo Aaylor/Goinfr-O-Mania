@@ -55,7 +55,7 @@ public class EndGameView extends Background {
         if (scoreFont != null)
             score.setFont(scoreFont);
         score.setForeground(new Color(255, 0, 0));
-        this.add(score, BorderLayout.CENTER);
+        this.add(score, BorderLayout.WEST);
     }
 
     private void instantiateButtons() {
@@ -94,7 +94,7 @@ public class EndGameView extends Background {
         buttonPanel.add(score);
         buttonPanel.add(menu);
         buttonPanel.add(quit);
-        this.add(buttonPanel, BorderLayout.SOUTH);
+        this.add(buttonPanel, BorderLayout.EAST);
     }
 
     //GETTER
