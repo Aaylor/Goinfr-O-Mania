@@ -117,6 +117,13 @@ public class BoardController extends Thread implements MouseListener, KeyListene
     public void run() {
         EntityManager manager = board.getLevel().getEntityManager();
         while (true) {
+            waitForResume();
+            if (board.getLevel().getEntityManager().getGlutton().getLife() <= 0) {
+                IGLog.info("Glutton is dead.");
+                MainFrame.getCurrentInstance().popPanel();
+                new EndGameController();
+                return;
+            }
 
             /* Glutton move */
             waitForResume();
