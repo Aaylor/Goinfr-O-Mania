@@ -13,6 +13,7 @@ public abstract class Entity extends Observable {
     private Point2D position;
     private Dimension size;
     private boolean crossable;
+    private int maxLife;
     private int life;
     private Weapon weapon;
 
@@ -32,6 +33,7 @@ public abstract class Entity extends Observable {
         this.position = startPosition;
         this.size     = size;
         crossable     = true;
+        maxLife = 0;
         life = 0;
     }
 
@@ -46,6 +48,7 @@ public abstract class Entity extends Observable {
         this.position = position;
         this.size = size;
         this.crossable = crossable;
+        maxLife = 0;
         life = 0;
     }
 
@@ -135,7 +138,14 @@ public abstract class Entity extends Observable {
     }
 
     public void setLife(int life) {
+        if (this.life == 0)
+            this.maxLife = life;
+
         this.life = life;
+    }
+
+    public int getMaxLife() {
+        return maxLife;
     }
 
     public Weapon getWeapon() {

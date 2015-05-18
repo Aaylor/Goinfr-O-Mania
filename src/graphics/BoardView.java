@@ -48,6 +48,14 @@ public class BoardView extends JPanel implements Observer {
         this.repaint();
     }
 
+    private void drawUI(Graphics2D g2d) {
+        EntityManager em = board.getLevel().getEntityManager();
+
+        g2d.setBackground(new Color(0, 0, 0));
+        g2d.drawRect(0, getHeight() - 30, getWidth(), getHeight());
+        g2d.drawString(em.getGlutton().getLife() + "/" + em.getGlutton().getMaxLife(), 10, getHeight() - 15);
+    }
+
     private void drawEntity(Graphics2D g2d, EntityView ev) {
         Entity entity = ev.getEntity();
 
@@ -80,6 +88,8 @@ public class BoardView extends JPanel implements Observer {
         Graphics2D graphics2D = (Graphics2D)g;
 
         EntityManager manager = board.getLevel().getEntityManager();
+
+        drawUI(graphics2D);
 
         /* Draw the glutton */
         drawEntity(graphics2D, manager.getGluttonView());
