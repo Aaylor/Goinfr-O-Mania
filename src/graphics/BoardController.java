@@ -51,11 +51,14 @@ public class BoardController extends Thread implements MouseListener, KeyListene
 
     public void pauseGame() {
         IGLog.info("BoardController, gamed paused.");
+        boardView.setPaused(true);
+        board.notification();
         gameState = false;
     }
 
     public synchronized void resumeGame() {
         IGLog.info("BoardController, game resumed.");
+        boardView.setPaused(false);
         gameState = true;
         notify();
     }
@@ -170,12 +173,10 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         KeyConfiguration kc = getBoard().getPlayer().getKeyConfiguration();
 
         if (code == kc.getPause()) {
-            /* TODO : show the pause panel */
-            if (gameState) {
+            if (gameState)
                 pauseGame();
-            } else {
+            else
                 resumeGame();
-            }
         } else if (code == kc.getQuit()) {
             /* TODO: Maybe ask to save ?? */
             System.exit(0);

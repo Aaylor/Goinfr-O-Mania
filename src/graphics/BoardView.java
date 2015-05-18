@@ -7,6 +7,9 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.io.File;
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -14,11 +17,30 @@ public class BoardView extends JPanel implements Observer {
 
     private Board board;
 
+    private boolean paused;
+
+    private Font font;
+
     public BoardView(Board board) {
         super();
         this.board = board;
 
+        try {
+            font = Font.createFont(Font.TRUETYPE_FONT,
+                    new File("fonts/LearningCurve.ttf")).deriveFont(Font.PLAIN, 60);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         setDoubleBuffered(true);
+    }
+
+    public boolean isPaused() {
+        return paused;
+    }
+
+    public void setPaused(boolean paused) {
+        this.paused = paused;
     }
 
     @Override
@@ -69,5 +91,19 @@ public class BoardView extends JPanel implements Observer {
         /* Draw other entities */
         for (EntityView e : manager.getOthersView())
             drawEntity(graphics2D, e);
+
+        if (isPaused()) {
+            String pause = "Pause";
+            graphics2D.setFont(font);
+            graphics2D.setColor(new Color(200, 14, 32));
+
+            Rectangle2D rect = graphics2D.getFontMetrics(font)
+                    .getStringBounds(pause, null);
+
+            double x = getWidth()  - rect.getWidth() - 20;
+            double y = getHeight() - rect.getHeight();
+
+            graphics2D.drawString(pause, (int) x, (int) y);
+        }
     }
 }
