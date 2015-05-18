@@ -1,11 +1,12 @@
 package graphics;
 
 import engine.*;
+import engine.nutritionists.AbstractNutritionist;
+import engine.nutritionists.GluttonChaserNutritionist;
 import engine.weapons.Weapon;
 import sound.MSound;
 import sound.SoundManager;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -107,7 +108,7 @@ public class MainMenuController implements ActionListener {
                 new EntityView(new Skin(20, 20))
         );
 
-        Nutritionist n = new Nutritionist(new Point(300, 234), new Dimension(30, 30), 2f, 0f, 5);
+        AbstractNutritionist n = new GluttonChaserNutritionist(new Point(300, 234), new Dimension(30, 30), 2f, 0f, 5);
         n.setWeapon(Weapon.make("punch"));
 
 

@@ -1,11 +1,11 @@
 package engine;
 
+import engine.nutritionists.AbstractNutritionist;
 import engine.weapons.Weapon;
 import graphics.Circle;
-import log.IGLog;
+import helpers.ExtMath;
 
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.util.*;
 
 
@@ -17,8 +17,8 @@ public class EntityManager {
     private final Glutton player;
     private final EntityView gluttonView;
 
-    private LinkedList<Nutritionist> nutritionists;
-    private Map<Nutritionist, EntityView> nutritionistsView;
+    private LinkedList<AbstractNutritionist> nutritionists;
+    private Map<AbstractNutritionist, EntityView> nutritionistsView;
 
     private LinkedList<Entity> others;
     private Map<Entity, EntityView> othersView;
@@ -39,80 +39,10 @@ public class EntityManager {
         othersView = new HashMap<>();
     }
 
-    private double addToAngle(double angle, double add) {
-        double r = angle + add;
-        while (r < 0) r += 360;
-        while (r >= 360) r -= 360;
-
-        return r;
-    }
-
     private void nutritionistsMove() {
-
-        /* First step : get the player position. */
-        Point2D playerPosition = player.getCenter();
-        Circle  playerCircle   = player.getBoundsCircle();
-
-        /* Second step : iterate on every nutritionists. */
-        for (Nutritionist nutritionist : nutritionists) {
-
-            Point2D nutritionistPosition = nutritionist.getCenter();
-            double  nutritionistAngle    = nutritionist.getDirection();
-            Circle  nutritionistCircle   = nutritionist.getBoundsCircle();
-
-            /* Third step : calculate the opposite angle */
-            double  oppositeAngle = addToAngle(nutritionistAngle, 180);
-
-            /* Fourth step : calculate the new needed angle to face the player. */
-            double dx = playerPosition.getX() - nutritionistPosition.getX();
-            double dy = playerPosition.getY() - nutritionistPosition.getY();
-            double nextAngle = addToAngle(Math.toDegrees(Math.atan2(dy, dx)), 360);
-
-            /* If the nutritionist can attack the player, then he does. */
-            if (nutritionist.getWeapon() != null) {
-                Weapon w = nutritionist.getWeapon();
-
-                double weaponRadius = w.getRange() + nutritionistCircle.getRadius();
-                Circle weaponCircle = new Circle(
-                        nutritionist.getCenterX() - weaponRadius,
-                        nutritionist.getCenterY() - weaponRadius,
-                        weaponRadius
-                );
-
-                if (weaponCircle.intersects(playerCircle)) {
-                    attack(nutritionist);
-                    continue;
-                }
-            }
-
-            /* Fifth step : if the nutritionist doesn't face the glutton,
-             * then turn to the right side
-             */
-            if (nextAngle <= nutritionistAngle - 2 || nextAngle >= nutritionistAngle + 2) {
-                if (nutritionistAngle >= 180) {
-                    if (nextAngle <= nutritionistAngle && nextAngle >= oppositeAngle) {
-                        nutritionist.move(Movable.Direction.LEFT);
-                    } else {
-                        nutritionist.move(Movable.Direction.RIGHT);
-                    }
-                } else {
-                    if (nextAngle >= nutritionistAngle && nextAngle <= oppositeAngle) {
-                        nutritionist.move(Movable.Direction.RIGHT);
-                    } else {
-                        nutritionist.move(Movable.Direction.LEFT);
-                    }
-                }
-            }
-
-            /* Sixth step : if the nutritionist face quite correctly the player,
-             * then he moves.
-             */
-            if (nextAngle >= nutritionistAngle - 20 && nextAngle <= nutritionistAngle + 20) {
-                nutritionist.move(Movable.Direction.FRONT);
-            }
-
+        for (AbstractNutritionist nutritionist : nutritionists) {
+            nutritionist.nextStep(this);
         }
-
     }
 
     /**
@@ -126,7 +56,7 @@ public class EntityManager {
             if (collision(player, entity)) {
                 player.effect(entity);
             } else {
-                for (Nutritionist nutritionist : nutritionists) {
+                for (AbstractNutritionist nutritionist : nutritionists) {
                     if (collision(nutritionist, entity)) {
                         nutritionist.effect(entity);
                         break;
@@ -202,13 +132,13 @@ public class EntityManager {
                 if (attackedEntity == e)
                     continue;
 
-                double llimit = addToAngle(e.getDirection(), -90);
-                double hlimit = addToAngle(e.getDirection(), 90);
+                double llimit = ExtMath.addToAngle(e.getDirection(), -90);
+                double hlimit = ExtMath.addToAngle(e.getDirection(), 90);
 
                 /* Fourth step : calculate the new needed angle to face the player. */
                 double dx = attackedEntity.getCenterX() - center.getX();
                 double dy = attackedEntity.getCenterY() - center.getY();
-                double nextAngle = addToAngle(Math.toDegrees(Math.atan2(dy, dx)), 360);
+                double nextAngle = ExtMath.addToAngle(Math.toDegrees(Math.atan2(dy, dx)), 360);
 
                 if (((llimit < hlimit && nextAngle >= llimit && nextAngle <= hlimit) ||
                     (llimit > hlimit && (nextAngle >= llimit || nextAngle <= hlimit))) &&
@@ -259,7 +189,7 @@ public class EntityManager {
      *  Add a new nutritionist into the manager.
      *  @param n The new nutritionist.
      */
-    public void addNutritionist(Nutritionist n, EntityView view) {
+    public void addNutritionist(AbstractNutritionist n, EntityView view) {
         nutritionists.addFirst(n);
         n.setManager(this);
         nutritionistsView.put(n, view);
@@ -272,7 +202,7 @@ public class EntityManager {
      *  @param n The nutritionist to remove.
      *  @return True if nutritionist has been remove correctly.
      */
-    public boolean removeNutritionist(Nutritionist n) {
+    public boolean removeNutritionist(AbstractNutritionist n) {
         if (nutritionists.remove(n)) {
             n.setManager(null);
             nutritionistsView.remove(n);
