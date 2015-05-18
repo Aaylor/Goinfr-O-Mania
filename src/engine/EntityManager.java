@@ -212,6 +212,17 @@ public class EntityManager {
         return false;
     }
 
+    public List<Entity> getCakes() {
+        List<Entity> cakes = new LinkedList<>();
+
+        for (Entity entity : others) {
+            if (entity instanceof Cake)
+                cakes.add(entity);
+        }
+
+        return cakes;
+    }
+
 
     public EntityView getGluttonView() {
         return gluttonView;

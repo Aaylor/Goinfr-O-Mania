@@ -1,12 +1,12 @@
 package engine.nutritionists;
 
 
+import engine.Entity;
+
 import java.awt.*;
 
 
 public class GluttonChaserNutritionist extends AbstractNutritionist {
-
-
     public GluttonChaserNutritionist(int nbLifes) {
         super(nbLifes);
     }
@@ -23,5 +23,10 @@ public class GluttonChaserNutritionist extends AbstractNutritionist {
     public void nextStep() {
         attackIfPossible(getManager().getGlutton());
         moveToEntity(getManager().getGlutton());
+    }
+
+    @Override
+    public void effect(Entity e) {
+
     }
 }
