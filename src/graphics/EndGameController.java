@@ -9,13 +9,16 @@ import java.awt.event.ActionListener;
 public class EndGameController implements ActionListener {
 
     private EndGameView endGameView;
-    private MSound mainMusic;
+    private MSound endGameMusic;
 
     public EndGameController(Board currentState) {
         endGameView = new EndGameView();
 
+        endGameMusic = new MSound("endGame", "music/endgame00.mp3");
+
         MainFrame.getCurrentInstance().addPanel(endGameView);
         registerListening();
+        endGameMusic.play();
     }
 
     private void registerListening() {
@@ -27,6 +30,7 @@ public class EndGameController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        endGameMusic.stop();
         if (e.getSource() == endGameView.getReplay()) {
             IGLog.write("EndGameController::actionPerformed -> getReplay()");
         } else if (e.getSource() == endGameView.getScore()) {
