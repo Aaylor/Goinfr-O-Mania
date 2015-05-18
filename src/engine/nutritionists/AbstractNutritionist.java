@@ -11,6 +11,8 @@ import log.IGLog;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.util.*;
+import java.util.List;
 
 /**
  *  The nutritionist entity.
@@ -19,7 +21,7 @@ public abstract class AbstractNutritionist extends AbstractMovableEntity
         implements Attackable, ArtificialIntelligence {
 
     /**
-     *  The number of life.
+     * The number of life.
      */
     int nbLifes;
 
@@ -42,11 +44,6 @@ public abstract class AbstractNutritionist extends AbstractMovableEntity
     }
 
     @Override
-    public void effect(Entity e) {
-
-    }
-
-    @Override
     public void takeDamage(int damage) {
         nbLifes -= damage;
 
@@ -58,14 +55,8 @@ public abstract class AbstractNutritionist extends AbstractMovableEntity
     }
 
 
-
     /* Default algorithm */
     public double calculateNextAngle(Entity entity) {
-        Point2D entityPosition = entity.getCenter();
-        Circle  entityCircle   = entity.getBoundsCircle();
-
-        double opposite_angle = ExtMath.addToAngle(getDirection(), 180);
-
         double dx = entity.getCenterX() - getCenterX();
         double dy = entity.getCenterY() - getCenterY();
 
@@ -73,9 +64,9 @@ public abstract class AbstractNutritionist extends AbstractMovableEntity
     }
 
     public void moveToEntity(Entity entity) {
-        double angle         = getDirection();
+        double angle = getDirection();
         double oppositeAngle = ExtMath.addToAngle(angle, 180);
-        double nextAngle     = calculateNextAngle(entity);
+        double nextAngle = calculateNextAngle(entity);
 
         if (nextAngle <= angle - 2 || nextAngle >= angle + 2) {
             if (angle >= 180) {
@@ -115,4 +106,22 @@ public abstract class AbstractNutritionist extends AbstractMovableEntity
             }
         }
     }
+
+    public Entity getClosestEntity(List<Entity> entities) {
+        double minDistance = 0;
+        Entity min = null;
+
+        Circle curCircle = getBoundsCircle();
+
+        for (Entity e : entities) {
+            double distance = ExtMath.circleDistance(curCircle, e.getBoundsCircle());
+            if (min == null || distance < minDistance) {
+                min = e;
+                minDistance = distance;
+            }
+        }
+
+        return min;
+    }
+
 }
