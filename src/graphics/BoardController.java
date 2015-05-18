@@ -1,8 +1,10 @@
 package graphics;
 
 import engine.*;
+import helpers.ExtMath;
 import log.IGLog;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -135,7 +137,15 @@ public class BoardController extends Thread implements MouseListener, KeyListene
 
 
             /* Entity creation */
-            // waitForResume();
+            waitForResume();
+
+            /* cake */
+            if (manager.getCakes().size() == 0) {
+                int x = ExtMath.getRandomBewteen(0, boardView.getWidth());
+                int y = ExtMath.getRandomBewteen(0, boardView.getHeight());
+                manager.addOther(new Cake(new Point(x, y), new Dimension(20, 20), null),
+                        new EntityView(new Skin(20, 20)));
+            }
 
             board.notification();
             sleepFor(15);

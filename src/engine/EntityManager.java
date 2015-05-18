@@ -212,6 +212,33 @@ public class EntityManager {
         return false;
     }
 
+    /**
+     *  Add a new other into the manager.
+     *  @param n The new other.
+     */
+    public void addOther(Entity n, EntityView view) {
+        others.addFirst(n);
+        n.setManager(this);
+        othersView.put(n, view);
+        view.setEntity(n);
+    }
+
+    /**
+     *  Remove the others of the manager.
+     *  If the others doesn't exists, the function returns false.
+     *  @param n The other to remove.
+     *  @return True if other has been remove correctly.
+     */
+    public boolean removeOther(Entity n) {
+        if (others.remove(n)) {
+            n.setManager(null);
+            othersView.remove(n);
+            return true;
+        }
+
+        return false;
+    }
+
     public List<Entity> getCakes() {
         List<Entity> cakes = new LinkedList<>();
 
@@ -222,6 +249,7 @@ public class EntityManager {
 
         return cakes;
     }
+
 
 
     public EntityView getGluttonView() {
