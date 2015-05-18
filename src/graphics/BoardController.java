@@ -121,7 +121,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
             if (board.getLevel().getEntityManager().getGlutton().getLife() <= 0) {
                 IGLog.info("Glutton is dead.");
                 MainFrame.getCurrentInstance().popPanel();
-                new EndGameController();
+                new EndGameController(getBoard());
                 return;
             }
 

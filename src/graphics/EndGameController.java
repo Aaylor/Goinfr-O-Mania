@@ -8,12 +8,10 @@ import java.awt.event.ActionListener;
 
 public class EndGameController implements ActionListener {
 
-    private EndGame endGame;
     private EndGameView endGameView;
     private MSound mainMusic;
 
-    public EndGameController() {
-        endGame = null;
+    public EndGameController(Board currentState) {
         endGameView = new EndGameView();
 
         MainFrame.getCurrentInstance().addPanel(endGameView);
@@ -30,10 +28,11 @@ public class EndGameController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == endGameView.getReplay()) {
-
+            IGLog.write("EndGameController::actionPerformed -> getReplay()");
         } else if (e.getSource() == endGameView.getScore()) {
-
+            IGLog.write("EndGameController::actionPerformed -> getScore()");
         } else if (e.getSource() == endGameView.getMenu()) {
+            IGLog.write("EndGameController::actionPerformed -> getMenu()");
             MainFrame.getCurrentInstance().popPanel();
         } else if (e.getSource() == endGameView.getQuit()) {
             IGLog.write("EndGameController::actionPerformed -> getQuit()");
