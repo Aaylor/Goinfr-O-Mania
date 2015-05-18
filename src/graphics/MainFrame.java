@@ -79,23 +79,20 @@ public class MainFrame extends JFrame {
      * @param j The panel that we wants to add
      */
     public void addPanel(JPanel j){
-        this.setVisible(false);
         stackPanel.add(j);
         this.setContentPane(j);
         j.requestFocus();
         this.pack();
-        this.setVisible(true);
     }
 
     /**
      * Pop the first panel of the stack and show the precedent.
      */
     public void popPanel(){
-        this.setVisible(false);
         stackPanel.pop();
         this.setContentPane(stackPanel.peek());
+        stackPanel.peek().requestFocus();
         this.pack();
-        this.setVisible(true);
     }
 
     public JPanel headPanel() {
@@ -108,7 +105,6 @@ public class MainFrame extends JFrame {
      * @param j the panel on which we want to return
      */
     public void returnToPanel(JPanel j){
-        this.setVisible(false);
         int pos = stackPanel.search(j);
         while(pos != 0){
             stackPanel.pop();
@@ -116,7 +112,6 @@ public class MainFrame extends JFrame {
         }
         this.setContentPane(stackPanel.peek());
         this.pack();
-        this.setVisible(true);
     }
 
     /**
