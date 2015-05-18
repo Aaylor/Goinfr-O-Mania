@@ -79,7 +79,7 @@ public class MainMenuController implements ActionListener {
      */
     public void run(){
         mainMusic.stop();
-        parent.setPreferredSize(new Dimension(500, 500));
+        parent.setPreferredSize(parent.getSize());
         HashMap<String, String> punchSounds = new HashMap<>();
         punchSounds.put("left-punch", "sounds/left-punch.mp3");
         punchSounds.put("right-punch", "sounds/right-punch.mp3");
@@ -130,6 +130,7 @@ public class MainMenuController implements ActionListener {
         Board board = new Board(new Player("Test"), level);
 
         BoardView view = new BoardView(board);
+        view.setSize(parent.getSize());
         parent.addPanel(view);
         BoardController controller = new BoardController(board, view);
         controller.start();

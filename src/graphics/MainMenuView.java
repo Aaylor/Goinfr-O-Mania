@@ -29,7 +29,7 @@ public class MainMenuView extends Background implements Observer {
         super("pictures/cake.jpg");
         this.framep = framep;
         try {
-            File file = new File("font/newyorkescape.ttf");
+            File file = new File("fonts/newyorkescape.ttf");
             font = Font.createFont(Font.TRUETYPE_FONT, file).deriveFont(Font.PLAIN, 60);
         }
         catch(Exception e){

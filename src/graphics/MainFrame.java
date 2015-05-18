@@ -6,7 +6,11 @@ import log.IGLog;
 import sound.SoundManager;
 
 import javax.swing.*;
+import javax.swing.plaf.metal.MetalIconFactory;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 public class MainFrame extends JFrame {
@@ -28,7 +32,6 @@ public class MainFrame extends JFrame {
 
     private void defaultFrameConfiguration(ResourceBundle bundle) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //setPreferredSize(new Dimension(500, 500));
         setLocationByPlatform(true);
 
         ToolbarView bar = new ToolbarView(bundle);
@@ -38,55 +41,6 @@ public class MainFrame extends JFrame {
 
 
         new MainMenuController(this, null, null);
-        /*
-
-        HashMap<String, String> punchSounds = new HashMap<>();
-        punchSounds.put("left-punch", "sounds/left-punch.mp3");
-        punchSounds.put("right-punch", "sounds/right-punch.mp3");
-        Weapon.register("punch", Weapon.MELEE, punchSounds, 10, 1, 2, 1000);
-
-        Glutton glutton = new Glutton(new Point(30, 30),
-                new Dimension(30, 30), 3f, 0f, 5);
-
-
-        glutton.setWeapon(Weapon.make("punch"));
-
-
-        EntityManager manager = new EntityManager(
-                glutton,
-                new EntityView(new Skin(30, 30))
-        );
-
-        Level level = new Level(
-                new Score(),
-                new Goal(),
-                manager,
-                new SoundManager()
-        );
-
-        manager.addEntity(
-                new Cake(new Point(130, 70), new Dimension(20, 20), null),
-                new EntityView(new Skin(20, 20))
-        );
-
-        Nutritionist n = new Nutritionist(new Point(300, 234), new Dimension(30, 30), 2f, 0f, 5);
-        n.setWeapon(Weapon.make("punch"));
-
-
-        manager.addNutritionist(
-                n,
-                new EntityView(new Skin(30, 30))
-        );
-
-        Board board = new Board(new Player("Test"), level);
-
-        BoardView view = new BoardView(board);
-        addPanel(view);
-        BoardController controller = new BoardController(board, view);
-        controller.start();
-
-        view.setFocusable(true);
-*/
         setVisible(true);
 
         pack();
@@ -107,6 +61,10 @@ public class MainFrame extends JFrame {
         } else {
 
         }
+    }
+
+    private static void loadExternalResources() {
+
     }
 
     /**
@@ -131,6 +89,10 @@ public class MainFrame extends JFrame {
         this.setContentPane(stackPanel.peek());
         this.pack();
         this.setVisible(true);
+    }
+
+    public JPanel headPanel() {
+        return stackPanel.peek();
     }
 
     /**
@@ -175,6 +137,7 @@ public class MainFrame extends JFrame {
                         ResourceBundle.getBundle("lang/bundle");
                 IGLog.info("Bundle loaded.");
                 setSystemProperties();
+                loadExternalResources();
                 new MainFrame(bundle);
             }
         });
