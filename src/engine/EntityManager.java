@@ -41,7 +41,7 @@ public class EntityManager {
 
     private void nutritionistsMove() {
         for (AbstractNutritionist nutritionist : nutritionists) {
-            nutritionist.nextStep(this);
+            nutritionist.nextStep();
         }
     }
 
