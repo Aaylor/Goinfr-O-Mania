@@ -43,6 +43,7 @@ public class MainMenuButton extends JButton {
         int rightPaddingSleep = 70;
         int rightPaddingFocus = 110;
 
+
         if(font != null) {
             this.fontSleep = font.deriveFont(Font.PLAIN, 20);
             this.fontFocus = font.deriveFont(Font.PLAIN, 25);

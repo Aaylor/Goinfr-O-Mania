@@ -10,9 +10,6 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 
-/**
- * Created by Aaylor, Tratost, Pixelman on 15/04/15.
- */
 public class MainMenuView extends Background implements Observer {
 
     private MainFrame framep;

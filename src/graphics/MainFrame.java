@@ -15,6 +15,8 @@ import java.util.*;
 
 public class MainFrame extends JFrame {
 
+    private static MainFrame instance;
+
     private Stack<JPanel> stackPanel;
     private ResourceBundle bundle;
 
@@ -24,6 +26,11 @@ public class MainFrame extends JFrame {
         IGLog.write("Main frame creation.");
         stackPanel = new Stack<>();
         defaultFrameConfiguration(bundle);
+        instance = this;
+    }
+
+    public static MainFrame getCurrentInstance() {
+        return instance;
     }
 
     public ResourceBundle getBundle() {
