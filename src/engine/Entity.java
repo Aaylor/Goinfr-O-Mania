@@ -130,6 +130,13 @@ public abstract class Entity extends Observable {
         this.crossable = crossable;
     }
 
+    public int getLife() {
+        return life;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
+    }
 
     public Weapon getWeapon() {
         return weapon;

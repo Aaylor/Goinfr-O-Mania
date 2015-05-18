@@ -20,36 +20,31 @@ import java.util.List;
 public abstract class AbstractNutritionist extends AbstractMovableEntity
         implements Attackable, ArtificialIntelligence {
 
-    /**
-     * The number of life.
-     */
-    int nbLifes;
-
     public AbstractNutritionist(int nbLifes) {
         super();
-        this.nbLifes = nbLifes;
+        setLife(nbLifes);
         setCrossable(false);
     }
 
     public AbstractNutritionist(float speed, float direction, int nbLifes) {
         super(speed, direction);
-        this.nbLifes = nbLifes;
+        setLife(nbLifes);
         setCrossable(false);
     }
 
     public AbstractNutritionist(Point startPosition, Dimension size, float speed, float direction, int nbLifes) {
         super(startPosition, size, speed, direction);
-        this.nbLifes = nbLifes;
+        setLife(nbLifes);
         setCrossable(false);
     }
 
     @Override
     public void takeDamage(int damage) {
-        nbLifes -= damage;
+        setLife(getLife() - damage);
 
-        IGLog.info(this + " a pris " + damage + " dommages. " + nbLifes + " pv restants.");
+        IGLog.info(this + " a pris " + damage + " dommages. " + getLife() + " pv restants.");
 
-        if (nbLifes <= 0) {
+        if (getLife() <= 0) {
             getManager().removeNutritionist(this);
         }
     }

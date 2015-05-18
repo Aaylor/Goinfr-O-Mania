@@ -12,17 +12,12 @@ import java.awt.geom.Point2D;
 public class Glutton extends AbstractMovableEntity implements Attackable {
 
     /**
-     *  The number of life of the glutton.
-     */
-    private int nbLifes;
-
-    /**
      *  Create the glutton with the given number of life.
      *  @param nbLifes the number of life.
      */
     public Glutton(int nbLifes) {
         super();
-        this.nbLifes = nbLifes;
+        setLife(nbLifes);
         setCrossable(false);
     }
 
@@ -34,7 +29,7 @@ public class Glutton extends AbstractMovableEntity implements Attackable {
      */
     public Glutton(float speed, float direction, int nbLifes) {
         super(speed, direction);
-        this.nbLifes = nbLifes;
+        setLife(nbLifes);
         setCrossable(false);
     }
 
@@ -48,7 +43,7 @@ public class Glutton extends AbstractMovableEntity implements Attackable {
      */
     public Glutton(Point startPosition, Dimension size, float speed, float direction, int nbLifes) {
         super(startPosition, size, speed, direction);
-        this.nbLifes = nbLifes;
+        setLife(nbLifes);
         setCrossable(false);
     }
 
@@ -62,14 +57,8 @@ public class Glutton extends AbstractMovableEntity implements Attackable {
 
     @Override
     public void takeDamage(int damage) {
-        nbLifes -= damage;
+        setLife(getLife() - damage);
 
-        IGLog.info(this + " a pris " + damage + " dommages. " + nbLifes + " pv restants.");
-
-        if (nbLifes <= 0) {
-            IGLog.info("I'm invicible mwahahahahaha !");
-
-            /* TODO: killed character */
-        }
+        IGLog.info(this + " a pris " + damage + " dommages. " + getLife() + " pv restants.");
     }
 }
