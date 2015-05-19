@@ -1,6 +1,7 @@
 package graphics;
 
 import engine.*;
+import helpers.ExtDate;
 import helpers.ExtMath;
 import log.IGLog;
 
@@ -29,6 +30,9 @@ public class BoardController extends Thread implements MouseListener, KeyListene
     private boolean gameState;
 
     private final Set<Integer> pressedKeys;
+
+    private Date nextRandomPop;
+    private Date nextRandomNutritionists;
 
     /* Constructors */
 
@@ -115,9 +119,25 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         }
     }
 
+    private void randomPop() {
+        if (ExtDate.hasPassed(nextRandomPop)) {
+            IGLog.write("BoardController::run -> Next Random Pop has to be done.");
+            nextRandomPop = ExtDate.dateTo(10);
+        }
+    }
+
+    private void randomNutritionistsPop() {
+        if (ExtDate.hasPassed(nextRandomNutritionists)) {
+            IGLog.write("BoardController::run -> Next Random Nutritionists Pop has to be done.");
+            nextRandomPop = ExtDate.dateTo(20);
+        }
+    }
+
     @Override
     public void run() {
         EntityManager manager = board.getLevel().getEntityManager();
+        nextRandomPop = ExtDate.dateTo(10);
+        nextRandomNutritionists = ExtDate.dateTo(20);
         while (true) {
             waitForResume();
             if (board.getLevel().getEntityManager().getGlutton().getLife() <= 0) {
@@ -141,11 +161,17 @@ public class BoardController extends Thread implements MouseListener, KeyListene
 
             /* cake */
             if (manager.getCakes().size() == 0) {
+                IGLog.info("BoardController::run -> A new cake has to appear.");
                 int x = ExtMath.getRandomBewteen(0, boardView.getWidth());
                 int y = ExtMath.getRandomBewteen(0, boardView.getHeight());
                 manager.addOther(new Cake(new Point(x, y), new Dimension(20, 20), null),
                         new EntityView(new Skin(20, 20)));
             }
+
+            randomPop();
+            randomNutritionistsPop();
+
+
 
             board.notification();
             sleepFor(15);
