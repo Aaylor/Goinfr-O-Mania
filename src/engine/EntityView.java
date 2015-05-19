@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.util.Observable;
 import java.util.Observer;
 
-public class EntityView implements Observer {
+public class EntityView implements Cloneable, Observer {
 
     private Skin skin;
     private Entity entity;
@@ -15,6 +15,15 @@ public class EntityView implements Observer {
         this.skin = skin;
     }
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        EntityView ev = (EntityView) super.clone();
+
+        ev.skin = (Skin) skin.clone();
+        ev.entity = null;
+
+        return ev;
+    }
 
     /* Setters */
 

@@ -60,6 +60,17 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
         this.direction = direction;
     }
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        AbstractMovableEntity e = (AbstractMovableEntity) super.clone();
+
+        e.speed = getSpeed();
+        e.direction = getDirection();
+
+        return e;
+    }
+
+
     /**
      *  Return entity's speed.
      *  @return entity's speed.

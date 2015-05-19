@@ -10,7 +10,7 @@ import java.util.Random;
 /**
  *  The skin class is to handle every buffered image of a given skin.
  */
-public class Skin {
+public class Skin implements Cloneable {
 
     private BufferedImage[] left;
     private int leftCpt;
@@ -103,6 +103,22 @@ public class Skin {
                 new BufferedImage[] { image };
     }
 
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        Skin s = (Skin) super.clone();
+
+        s.left  = left.clone();
+        s.right = right.clone();
+        s.top   = top.clone();
+        s.down  = down.clone();
+
+        s.onDestruct = onDestruct.clone();
+        s.onAppears  = onAppears.clone();
+
+        s.reinit();
+
+        return s;
+    }
 
     /* TODO : add function to get the correct buffered image of a skin */
     public void reinit() {

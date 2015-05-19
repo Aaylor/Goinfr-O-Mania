@@ -8,7 +8,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Observable;
 
-public abstract class Entity extends Observable {
+public abstract class Entity extends Observable implements Cloneable {
 
     private Point2D position;
     private Dimension size;
@@ -57,6 +57,20 @@ public abstract class Entity extends Observable {
         notifyObservers();
     }
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        Entity e = (Entity) super.clone();
+
+        e.position  = null;
+        e.size      = (Dimension) e.getSize().clone();
+        e.maxLife   = getMaxLife();
+        e.life      = getMaxLife();
+        e.crossable = isCrossable();
+        e.weapon    = null;
+
+        return e;
+    }
+
     /**
      *  Give the bounds of an Entity.
      *  @return the rectangle of the entity.
@@ -94,17 +108,17 @@ public abstract class Entity extends Observable {
         return getY() + getSize().getHeight() / 2;
     }
 
-    protected void setPoint(Point2D p) {
+    public void setPoint(Point2D p) {
         position = p;
         allNotify();
     }
 
-    protected void setX(double x) {
+    public void setX(double x) {
         position = new Point2D.Double(x, position.getY());
         allNotify();
     }
 
-    protected void setY(double y) {
+    public void setY(double y) {
         position = new Point2D.Double(position.getX(), y);
         allNotify();
     }
