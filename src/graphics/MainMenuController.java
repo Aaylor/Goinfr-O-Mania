@@ -11,7 +11,6 @@ import sound.SoundManager;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
 
 public class MainMenuController implements ActionListener {
 
@@ -77,21 +76,14 @@ public class MainMenuController implements ActionListener {
     public void run(){
         mainMusic.stop();
         parent.setPreferredSize(parent.getSize());
-        HashMap<String, String> punchSounds = new HashMap<>();
-        punchSounds.put("left-punch", "sounds/left-punch.mp3");
-        punchSounds.put("right-punch", "sounds/right-punch.mp3");
-        Weapon.register("punch", Weapon.MELEE, punchSounds, 10, 1, 2, 1000);
 
-        Glutton glutton = new Glutton(new Point(30, 30),
-                new Dimension(30, 30), 3f, 0f, 5);
-
-
+        Entity glutton = EntityAssociation.getEntity("default_glutton");
         glutton.setWeapon(Weapon.make("punch"));
 
 
         EntityManager manager = new EntityManager(
-                glutton,
-                new EntityView(new Skin(30, 30))
+                (Glutton) glutton,
+                EntityAssociation.getEntityView("default_glutton")
         );
 
         Level level = new Level(
@@ -101,9 +93,10 @@ public class MainMenuController implements ActionListener {
                 new SoundManager()
         );
 
+        /*
         manager.addEntity(
-                new Cake(new Point(130, 70), new Dimension(20, 20), null),
-                new EntityView(new Skin(20, 20))
+                EntityAssociation.getEntity("default_cake"),
+                EntityAssociation.getEntityView("default_cake")
         );
 
         AbstractNutritionist n =
@@ -123,6 +116,7 @@ public class MainMenuController implements ActionListener {
                 n2,
                 new EntityView(new Skin(30, 30))
         );
+        */
 
         Board board = new Board(new Player("Test"), level);
 

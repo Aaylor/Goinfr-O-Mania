@@ -1,6 +1,7 @@
 package graphics;
 
 import engine.*;
+import engine.nutritionists.AbstractNutritionist;
 import helpers.ExtDate;
 import helpers.ExtMath;
 import helpers.PopTimer;
@@ -11,6 +12,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.geom.Point2D;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -124,6 +126,16 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         }
     }
 
+    private void initialization(EntityManager manager) {
+        /* Initialize every one. */
+        Glutton glutton = manager.getGlutton();
+        glutton.setPoint(new Point2D.Double(200, 200));
+
+        /* Initialize timer. */
+        nextRandomPop = new PopTimer(10);
+        nextRandomNutritionists = new PopTimer(20);
+    }
+
     private void randomPop() {
         if (nextRandomPop.hasPassed()) {
             IGLog.write("BoardController::run -> Next Random Pop has to be done.");
@@ -131,9 +143,26 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         }
     }
 
+    private void randomTrapPop() {
+
+
+    }
+
     private void randomNutritionistsPop() {
         if (nextRandomNutritionists.hasPassed()) {
             IGLog.write("BoardController::run -> Next Random Nutritionists Pop has to be done.");
+
+            int x = ExtMath.getRandomBewteen(0, boardView.getWidth());
+            int y = ExtMath.getRandomBewteen(0, boardView.getHeight());
+
+            Entity e = EntityAssociation.getEntity("default_cakechaser");
+
+            e.setPoint(new Point2D.Double(x, y));
+            board.getLevel().getEntityManager().addNutritionist(
+                    (AbstractNutritionist)e,
+                    EntityAssociation.getEntityView("default_cakechaser")
+            );
+
             nextRandomNutritionists = new PopTimer(20);
         }
     }
@@ -141,8 +170,10 @@ public class BoardController extends Thread implements MouseListener, KeyListene
     @Override
     public void run() {
         EntityManager manager = board.getLevel().getEntityManager();
-        nextRandomPop = new PopTimer(10);
-        nextRandomNutritionists = new PopTimer(20);
+
+        /* Game initialization */
+        initialization(manager);
+
         while (true) {
             waitForResume();
             if (board.getLevel().getEntityManager().getGlutton().getLife() <= 0) {
@@ -169,8 +200,10 @@ public class BoardController extends Thread implements MouseListener, KeyListene
                 IGLog.info("BoardController::run -> A new cake has to appear.");
                 int x = ExtMath.getRandomBewteen(0, boardView.getWidth());
                 int y = ExtMath.getRandomBewteen(0, boardView.getHeight());
-                manager.addOther(new Cake(new Point(x, y), new Dimension(20, 20), null),
-                        new EntityView(new Skin(20, 20)));
+
+                Entity entity = EntityAssociation.getEntity("default_cake");
+                entity.setPoint(new Point2D.Double(x, y));
+                manager.addOther(entity, EntityAssociation.getEntityView("default_cake"));
             }
 
             waitForResume();
