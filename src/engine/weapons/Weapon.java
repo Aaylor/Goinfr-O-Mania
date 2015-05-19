@@ -103,6 +103,16 @@ public class Weapon {
         return new Weapon(map.get(name));
     }
 
+    public static void defaults() {
+
+        /* Punch */
+        HashMap<String, String> punchSounds = new HashMap<>();
+        punchSounds.put("left-punch", "sounds/left-punch.mp3");
+        punchSounds.put("right-punch", "sounds/right-punch.mp3");
+        Weapon.register("punch", Weapon.MELEE, punchSounds, 10, 1, 2, 1000);
+
+    }
+
     private void playNextSound() {
         ++soundsCpt;
         if (soundsCpt >= sounds.size())
