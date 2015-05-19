@@ -3,6 +3,7 @@ package graphics;
 import engine.*;
 import helpers.ExtDate;
 import helpers.ExtMath;
+import helpers.PopTimer;
 import log.IGLog;
 
 import java.awt.*;
@@ -31,8 +32,8 @@ public class BoardController extends Thread implements MouseListener, KeyListene
 
     private final Set<Integer> pressedKeys;
 
-    private Date nextRandomPop;
-    private Date nextRandomNutritionists;
+    private PopTimer nextRandomPop;
+    private PopTimer nextRandomNutritionists;
 
     /* Constructors */
 
@@ -58,6 +59,8 @@ public class BoardController extends Thread implements MouseListener, KeyListene
     public void pauseGame() {
         IGLog.info("BoardController, gamed paused.");
         boardView.setPaused(true);
+        nextRandomPop.pauseTimer();
+        nextRandomNutritionists.pauseTimer();
         board.notification();
         gameState = false;
     }
@@ -65,6 +68,8 @@ public class BoardController extends Thread implements MouseListener, KeyListene
     public synchronized void resumeGame() {
         IGLog.info("BoardController, game resumed.");
         boardView.setPaused(false);
+        nextRandomPop.resumeTimer();
+        nextRandomNutritionists.resumeTimer();
         gameState = true;
         notify();
     }
@@ -120,24 +125,24 @@ public class BoardController extends Thread implements MouseListener, KeyListene
     }
 
     private void randomPop() {
-        if (ExtDate.hasPassed(nextRandomPop)) {
+        if (nextRandomPop.hasPassed()) {
             IGLog.write("BoardController::run -> Next Random Pop has to be done.");
-            nextRandomPop = ExtDate.dateTo(10);
+            nextRandomPop = new PopTimer(10);
         }
     }
 
     private void randomNutritionistsPop() {
-        if (ExtDate.hasPassed(nextRandomNutritionists)) {
+        if (nextRandomNutritionists.hasPassed()) {
             IGLog.write("BoardController::run -> Next Random Nutritionists Pop has to be done.");
-            nextRandomPop = ExtDate.dateTo(20);
+            nextRandomNutritionists = new PopTimer(20);
         }
     }
 
     @Override
     public void run() {
         EntityManager manager = board.getLevel().getEntityManager();
-        nextRandomPop = ExtDate.dateTo(10);
-        nextRandomNutritionists = ExtDate.dateTo(20);
+        nextRandomPop = new PopTimer(10);
+        nextRandomNutritionists = new PopTimer(20);
         while (true) {
             waitForResume();
             if (board.getLevel().getEntityManager().getGlutton().getLife() <= 0) {
@@ -168,7 +173,10 @@ public class BoardController extends Thread implements MouseListener, KeyListene
                         new EntityView(new Skin(20, 20)));
             }
 
+            waitForResume();
             randomPop();
+
+            waitForResume();
             randomNutritionistsPop();
 
 
