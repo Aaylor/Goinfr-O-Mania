@@ -70,6 +70,11 @@ public class MainFrame extends JFrame {
         }
     }
 
+    private static void loadInternalResources() {
+        EntityAssociation.defaults();
+        Weapon.defaults();
+    }
+
     private static void loadExternalResources() {
 
     }
@@ -139,6 +144,7 @@ public class MainFrame extends JFrame {
                         ResourceBundle.getBundle("lang/bundle");
                 IGLog.info("Bundle loaded.");
                 setSystemProperties();
+                loadInternalResources();
                 loadExternalResources();
                 new MainFrame(bundle);
             }
