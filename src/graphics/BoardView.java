@@ -16,6 +16,8 @@ import java.util.List;
 
 public class BoardView extends JPanel implements Observer {
 
+    private static final int UI_HEIGHT = 50;
+
     private Board board;
 
     private boolean paused;
@@ -45,6 +47,11 @@ public class BoardView extends JPanel implements Observer {
     }
 
     @Override
+    public Dimension getSize() {
+        return new Dimension(getWidth(), getHeight() - UI_HEIGHT);
+    }
+
+    @Override
     public void update(Observable o, Object arg) {
         this.repaint();
     }
@@ -53,7 +60,7 @@ public class BoardView extends JPanel implements Observer {
         EntityManager em = board.getLevel().getEntityManager();
 
         g2d.setBackground(new Color(0, 0, 0));
-        g2d.drawRect(0, getHeight() - 30, getWidth(), getHeight());
+        g2d.drawRect(0, getHeight() - UI_HEIGHT, getWidth(), getHeight());
 
         if (em.getGlutton() != null)
             g2d.drawString(em.getGlutton().getLife() + "/" + em.getGlutton().getMaxLife(),
