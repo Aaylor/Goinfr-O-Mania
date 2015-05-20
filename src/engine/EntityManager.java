@@ -1,5 +1,6 @@
 package engine;
 
+import engine.cake.AbstractCake;
 import engine.nutritionists.AbstractNutritionist;
 import engine.weapons.Weapon;
 import graphics.Circle;
@@ -50,6 +51,7 @@ public class EntityManager {
         for (Entity entity : others) {
             if (collision(player, entity)) {
                 player.effect(entity);
+                entity.effect(player);
             } else {
                 for (AbstractNutritionist nutritionist : nutritionists) {
                     if (collision(nutritionist, entity)) {
@@ -295,7 +297,7 @@ public class EntityManager {
         List<Entity> cakes = new LinkedList<>();
 
         for (Entity entity : others) {
-            if (entity instanceof Cake)
+            if (entity instanceof AbstractCake)
                 cakes.add(entity);
         }
 

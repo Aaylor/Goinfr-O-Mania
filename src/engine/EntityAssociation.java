@@ -1,7 +1,10 @@
 package engine;
 
+import engine.cake.AbstractCake;
+import engine.cake.LifeCake;
 import engine.nutritionists.CakeChaserNutritionist;
 import engine.nutritionists.GluttonChaserNutritionist;
+import sound.MSound;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -18,7 +21,7 @@ public final class EntityAssociation {
     public final static String DEFAULT_GLUTTONCHASER = "default_gluttonchaser";
 
     /* Cakes */
-    public final static String DEFAULT_CAKE          = "default_cake";
+    public final static String DEFAULT_LIFECAKE      = "default_lifecake";
 
     private static Map<String, Entity> entityMap   = new HashMap<>();
     private static Map<String, EntityView> viewMap = new HashMap<>();
@@ -85,9 +88,10 @@ public final class EntityAssociation {
 
 
         /* DefaultCake */
-        Cake cake = new Cake(null, new Dimension(15, 15), null);
-        EntityView cakeView = new EntityView(new Skin(30, 30));
-        register(DEFAULT_CAKE, cake, cakeView);
+        LifeCake cake = new LifeCake(null, new Dimension(15, 15),
+                new MSound(DEFAULT_LIFECAKE, "music/pickupitem00.wav"));
+        EntityView cakeView = new EntityView(new Skin(15, 15));
+        register(DEFAULT_LIFECAKE, cake, cakeView);
 
     }
 

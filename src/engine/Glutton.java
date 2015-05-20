@@ -1,10 +1,10 @@
 package engine;
 
+import engine.cake.AbstractCake;
 import engine.weapons.Attackable;
 import log.IGLog;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
 
 /**
  *  The player entity.
@@ -49,7 +49,7 @@ public class Glutton extends AbstractMovableEntity implements Attackable {
 
     @Override
     public void effect(Entity e) {
-        if (e instanceof Cake) {
+        if (e instanceof AbstractCake) {
             IGLog.info("Glutton, effect: cake.");
             getManager().removeEntity(e);
         }
