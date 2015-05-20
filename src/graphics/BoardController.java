@@ -262,6 +262,11 @@ public class BoardController extends Thread implements MouseListener, KeyListene
                 pauseGame();
             else
                 resumeGame();
+        } else if (code == kc.getMenu()) {
+            if (gameState)
+                pauseGame();
+
+            new PauseController(boardView, this, getBoard().getPlayer());
         } else if (code == kc.getQuit()) {
             /* TODO: Maybe ask to save ?? */
             System.exit(0);
