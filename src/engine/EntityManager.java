@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
@@ -36,8 +37,8 @@ public class EntityManager {
         nutritionists = new LinkedList<>();
         others = new LinkedList<>();
 
-        nutritionistsView = new HashMap<>();
-        othersView = new HashMap<>();
+        nutritionistsView = new ConcurrentHashMap<>();
+        othersView = new ConcurrentHashMap<>();
     }
 
     private void nutritionistsMove() {
