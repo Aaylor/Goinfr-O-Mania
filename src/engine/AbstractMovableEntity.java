@@ -143,8 +143,7 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
 
                 newCircle = new Circle(nextX, nextY, entitySize.getWidth() / 2);
 
-
-                if (!getManager().outOfBound(this) &&
+                if (!getManager().outOfBound(newCircle) &&
                         !getManager().hasCrossCollision(this, newCircle))
                     setPoint(newPoint);
 

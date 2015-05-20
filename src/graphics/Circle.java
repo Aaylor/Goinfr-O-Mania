@@ -89,4 +89,11 @@ public class Circle {
     public static boolean intersects(Circle c1, Shape sh) {
         return c1.intersects(sh);
     }
+
+    @Override
+    public String toString() {
+        return "Circle : \n  position = " + position + "\n  centered = "
+                + getCenter() + "\n  radius = " + radius + "\n";
+    }
+
 }
