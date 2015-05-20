@@ -218,9 +218,9 @@ public class BoardController extends Thread implements MouseListener, KeyListene
             /* cake */
             if (manager.getCakes().size() == 0) {
                 IGLog.info("BoardController::run -> A new cake has to appear.");
-                Entity entity = EntityAssociation.getEntity("default_cake");
+                Entity entity = EntityAssociation.getEntity(EntityAssociation.DEFAULT_LIFECAKE);
                 manager.setRandomPosition(entity, 0, boardView.getHeight(), 0, boardView.getHeight());
-                manager.addOther(entity, EntityAssociation.getEntityView("default_cake"));
+                manager.addOther(entity, EntityAssociation.getEntityView(EntityAssociation.DEFAULT_LIFECAKE));
             }
 
             waitForResume();
