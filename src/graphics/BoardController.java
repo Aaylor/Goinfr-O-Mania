@@ -2,6 +2,7 @@ package graphics;
 
 import engine.*;
 import engine.nutritionists.AbstractNutritionist;
+import engine.weapons.Weapon;
 import helpers.ExtDate;
 import helpers.ExtMath;
 import helpers.PopTimer;
@@ -128,8 +129,12 @@ public class BoardController extends Thread implements MouseListener, KeyListene
 
     private void initialization(EntityManager manager) {
         /* Initialize every one. */
-        Glutton glutton = manager.getGlutton();
-        glutton.setPoint(new Point2D.Double(200, 200));
+        manager.addAtRandomPosition(
+                EntityAssociation.getEntity("default_glutton"),
+                EntityAssociation.getEntityView("default_glutton"),
+                0, boardView.getHeight(), 0, boardView.getWidth()
+        );
+        manager.getGlutton().setWeapon(Weapon.make("punch"));
 
         /* Initialize timer. */
         nextRandomPop = new PopTimer(10);
@@ -152,12 +157,11 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         if (nextRandomNutritionists.hasPassed()) {
             IGLog.write("BoardController::run -> Next Random Nutritionists Pop has to be done.");
 
-            int x = ExtMath.getRandomBewteen(0, boardView.getWidth());
-            int y = ExtMath.getRandomBewteen(0, boardView.getHeight());
+            EntityManager manager = getBoard().getLevel().getEntityManager();
 
             Entity e = EntityAssociation.getEntity("default_cakechaser");
+            manager.setRandomPosition(e, 0, boardView.getHeight(), 0, boardView.getWidth());
 
-            e.setPoint(new Point2D.Double(x, y));
             board.getLevel().getEntityManager().addNutritionist(
                     (AbstractNutritionist)e,
                     EntityAssociation.getEntityView("default_cakechaser")
@@ -198,11 +202,8 @@ public class BoardController extends Thread implements MouseListener, KeyListene
             /* cake */
             if (manager.getCakes().size() == 0) {
                 IGLog.info("BoardController::run -> A new cake has to appear.");
-                int x = ExtMath.getRandomBewteen(0, boardView.getWidth());
-                int y = ExtMath.getRandomBewteen(0, boardView.getHeight());
-
                 Entity entity = EntityAssociation.getEntity("default_cake");
-                entity.setPoint(new Point2D.Double(x, y));
+                manager.setRandomPosition(entity, 0, boardView.getHeight(), 0, boardView.getHeight());
                 manager.addOther(entity, EntityAssociation.getEntityView("default_cake"));
             }
 

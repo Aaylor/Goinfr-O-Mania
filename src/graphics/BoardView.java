@@ -53,7 +53,10 @@ public class BoardView extends JPanel implements Observer {
 
         g2d.setBackground(new Color(0, 0, 0));
         g2d.drawRect(0, getHeight() - 30, getWidth(), getHeight());
-        g2d.drawString(em.getGlutton().getLife() + "/" + em.getGlutton().getMaxLife(), 10, getHeight() - 15);
+
+        if (em.getGlutton() != null)
+            g2d.drawString(em.getGlutton().getLife() + "/" + em.getGlutton().getMaxLife(),
+                    10, getHeight() - 15);
     }
 
     private void drawEntity(Graphics2D g2d, EntityView ev) {
@@ -92,7 +95,8 @@ public class BoardView extends JPanel implements Observer {
         drawUI(graphics2D);
 
         /* Draw the glutton */
-        drawEntity(graphics2D, manager.getGluttonView());
+        if (manager.getGlutton() != null)
+            drawEntity(graphics2D, manager.getGluttonView());
 
         /* Draw nutritionists */
         for (EntityView e : manager.getNutritionistsView())
