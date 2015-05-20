@@ -1,6 +1,7 @@
 package graphics;
 
 import engine.*;
+import engine.nutritionists.AbstractNutritionist;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,8 +11,8 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
+import java.util.List;
 
 public class BoardView extends JPanel implements Observer {
 
@@ -99,8 +100,11 @@ public class BoardView extends JPanel implements Observer {
             drawEntity(graphics2D, manager.getGluttonView());
 
         /* Draw nutritionists */
-        for (EntityView e : manager.getNutritionistsView())
-            drawEntity(graphics2D, e);
+        Collection<EntityView> ns = manager.getNutritionistsView();
+        synchronized (ns) {
+            for (EntityView e : manager.getNutritionistsView())
+                drawEntity(graphics2D, e);
+        }
 
         /* Draw other entities */
         for (EntityView e : manager.getOthersView())

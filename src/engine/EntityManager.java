@@ -231,9 +231,15 @@ public class EntityManager {
      *  @param n The new nutritionist.
      */
     public void addNutritionist(AbstractNutritionist n, EntityView view) {
-        nutritionists.addFirst(n);
+        synchronized (nutritionists) {
+            nutritionists.addFirst(n);
+        }
         n.setManager(this);
-        nutritionistsView.put(n, view);
+
+        synchronized (nutritionistsView) {
+            nutritionistsView.put(n, view);
+        }
+
         view.setEntity(n);
     }
 
@@ -244,10 +250,15 @@ public class EntityManager {
      *  @return True if nutritionist has been remove correctly.
      */
     public boolean removeNutritionist(AbstractNutritionist n) {
-        if (nutritionists.remove(n)) {
-            n.setManager(null);
-            nutritionistsView.remove(n);
-            return true;
+
+        synchronized (nutritionists) {
+            if (nutritionists.remove(n)) {
+                n.setManager(null);
+                synchronized (nutritionistsView) {
+                    nutritionistsView.remove(n);
+                }
+                return true;
+            }
         }
 
         return false;
