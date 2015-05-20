@@ -2,7 +2,6 @@ package engine;
 
 import engine.nutritionists.CakeChaserNutritionist;
 import engine.nutritionists.GluttonChaserNutritionist;
-import sun.util.resources.cldr.ebu.CalendarData_ebu_KE;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -10,8 +9,18 @@ import java.util.Map;
 
 public final class EntityAssociation {
 
-    private static Map<String, Entity>     entityMap = new HashMap<>();
-    private static Map<String, EntityView> viewMap   = new HashMap<>();
+    /* Gluttons */
+    public final static String DEFAULT_GLUTTON       = "default_glutton";
+
+    /* Nutritionists */
+    public final static String DEFAULT_CAKECHASER    = "default_cakechaser";
+    public final static String DEFAULT_GLUTTONCHASER = "default_gluttonchaser";
+
+    /* Cakes */
+    public final static String DEFAULT_CAKE          = "default_cake";
+
+    private static Map<String, Entity> entityMap   = new HashMap<>();
+    private static Map<String, EntityView> viewMap = new HashMap<>();
 
     public final static void register(String name, Entity e, EntityView ev) {
         if (entityMap.containsKey(name)) {
@@ -54,26 +63,26 @@ public final class EntityAssociation {
         /* Default Glutton */
         Glutton glutton = new Glutton(null, new Dimension(30, 30), 3f, 0f, 10);
         EntityView gluttonView = new EntityView(new Skin(30, 30));
-        register("default_glutton", glutton, gluttonView);
+        register(DEFAULT_GLUTTON, glutton, gluttonView);
 
 
         /* CakeChaser */
         CakeChaserNutritionist cakeChaser = new CakeChaserNutritionist(null, new Dimension(30, 30), 2f, 0f, 3);
         EntityView cakeChaserView = new EntityView(new Skin(30, 30));
-        register("default_cakechaser", cakeChaser, cakeChaserView);
+        register(DEFAULT_CAKECHASER, cakeChaser, cakeChaserView);
 
 
         /* GluttonChaser */
         GluttonChaserNutritionist gluttonChaser =
                 new GluttonChaserNutritionist(null, new Dimension(30, 30), 2f, 0f, 6);
         EntityView gluttonChaserView = new EntityView(new Skin(30, 30));
-        register("default_gluttonchaser", gluttonChaser, gluttonChaserView);
+        register(DEFAULT_GLUTTONCHASER, gluttonChaser, gluttonChaserView);
 
 
         /* DefaultCake */
         Cake cake = new Cake(null, new Dimension(15, 15), null);
         EntityView cakeView = new EntityView(new Skin(30, 30));
-        register("default_cake", cake, cakeView);
+        register(DEFAULT_CAKE, cake, cakeView);
 
     }
 
