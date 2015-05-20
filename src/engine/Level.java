@@ -27,4 +27,7 @@ public class Level {
 
     }
 
+    public Score getScore() {
+        return actualScore;
+    }
 }

@@ -12,8 +12,7 @@ public class EndGameController implements ActionListener {
     private MSound endGameMusic;
 
     public EndGameController(Board currentState) {
-        endGameView = new EndGameView();
-
+        endGameView  = new EndGameView(currentState.getLevel().getScore());
         endGameMusic = new MSound("endGame", "music/endgame00.mp3");
 
         MainFrame.getCurrentInstance().addPanel(endGameView);

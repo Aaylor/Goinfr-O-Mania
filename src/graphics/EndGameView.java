@@ -1,5 +1,8 @@
 package graphics;
 
+import engine.Player;
+import engine.Score;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -15,8 +18,10 @@ public class EndGameView extends Background {
     private MainMenuButton menu;
     private MainMenuButton quit;
 
+    private Score gameScore;
 
-    public EndGameView() {
+
+    public EndGameView(Score score) {
         super("pictures/cake.jpg");
 
         try {
@@ -35,6 +40,8 @@ public class EndGameView extends Background {
             scoreFont = null;
         }
 
+        this.gameScore = score;
+
         instantiateTitle();
         instantiateButtons();
         sizeOfPictures();
@@ -51,7 +58,10 @@ public class EndGameView extends Background {
         title.setForeground(new Color(255, 0, 0));
         this.add(title, BorderLayout.NORTH);
 
-        JLabel score = new JLabel("Score : " + 94);
+        JLabel score = new JLabel(
+                bundle.getString("endGameScoreLabel") +
+                " : " + gameScore.getValue()
+        );
         if (scoreFont != null)
             score.setFont(scoreFont);
         score.setForeground(new Color(255, 0, 0));
