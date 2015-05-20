@@ -7,6 +7,7 @@ import helpers.ExtDate;
 import helpers.ExtMath;
 import helpers.PopTimer;
 import log.IGLog;
+import sound.MSound;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -35,6 +36,8 @@ public class BoardController extends Thread implements MouseListener, KeyListene
 
     private final Set<Integer> pressedKeys;
 
+    private MSound gameSound;
+
     private PopTimer nextRandomPop;
     private PopTimer nextRandomNutritionists;
 
@@ -46,6 +49,9 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         boardView.addKeyListener(this);
         board.addObserver(boardView);
         gameState = true;
+
+        gameSound = new MSound("ingame", "music/ingame00.wav");
+
         pressedKeys = new HashSet<>();
     }
 
@@ -62,6 +68,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
     public void pauseGame() {
         IGLog.info("BoardController, gamed paused.");
         boardView.setPaused(true);
+        gameSound.stop();
         nextRandomPop.pauseTimer();
         nextRandomNutritionists.pauseTimer();
         board.notification();
@@ -71,6 +78,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
     public synchronized void resumeGame() {
         IGLog.info("BoardController, game resumed.");
         boardView.setPaused(false);
+        gameSound.play();
         nextRandomPop.resumeTimer();
         nextRandomNutritionists.resumeTimer();
         gameState = true;
@@ -128,6 +136,9 @@ public class BoardController extends Thread implements MouseListener, KeyListene
     }
 
     private void initialization(EntityManager manager) {
+        /* Music */
+        gameSound.playInfinite();
+
         /* Initialize every one. */
         manager.addAtRandomPosition(
                 EntityAssociation.getEntity("default_glutton"),
@@ -186,6 +197,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
             waitForResume();
             if (board.getLevel().getEntityManager().getGlutton().getLife() <= 0) {
                 IGLog.info("Glutton is dead.");
+                gameSound.stop();
                 MainFrame.getCurrentInstance().popPanel();
                 new EndGameController(getBoard());
                 return;
@@ -262,10 +274,11 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         KeyConfiguration kc = getBoard().getPlayer().getKeyConfiguration();
 
         if (code == kc.getPause()) {
-            if (gameState)
+            if (gameState) {
                 pauseGame();
-            else
+            } else {
                 resumeGame();
+            }
         } else if (code == kc.getMenu()) {
             if (gameState)
                 pauseGame();
