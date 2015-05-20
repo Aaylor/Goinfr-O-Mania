@@ -22,6 +22,8 @@ public final class EntityAssociation {
 
     /* Cakes */
     public final static String DEFAULT_LIFECAKE      = "default_lifecake";
+    public final static String SUPERLIFECAKE         = "superlifecake";
+    public final static String HYPERLIFECAKE         = "hyperlifecake";
 
     private static Map<String, Entity> entityMap   = new HashMap<>();
     private static Map<String, EntityView> viewMap = new HashMap<>();
@@ -87,11 +89,24 @@ public final class EntityAssociation {
         randomNutritionist.add(DEFAULT_GLUTTONCHASER, 60);
 
 
+        /* CAKES */
         /* DefaultCake */
         LifeCake cake = new LifeCake(null, new Dimension(15, 15),
-                new MSound(DEFAULT_LIFECAKE, "music/pickupitem00.wav"));
+                new MSound(DEFAULT_LIFECAKE, "music/pickupitem00.wav"), 1);
         EntityView cakeView = new EntityView(new Skin(15, 15));
         register(DEFAULT_LIFECAKE, cake, cakeView);
+
+        /* Super life cake */
+        LifeCake superLifeCake = new LifeCake(null, new Dimension(15, 15),
+                new MSound(SUPERLIFECAKE, "music/pickupitem00.wav"), 2);
+        EntityView superLifeCakeView = new EntityView(new Skin(15, 15));
+        register(SUPERLIFECAKE, superLifeCake, superLifeCakeView);
+
+        /* Hyper life cake */
+        LifeCake hyperLifeCake = new LifeCake(null, new Dimension(15, 15),
+                new MSound(HYPERLIFECAKE, "music/pickupitem00.wav"), 1);
+        EntityView hyperLifeCakeView = new EntityView(new Skin(15, 15));
+        register(HYPERLIFECAKE, hyperLifeCake, hyperLifeCakeView);
 
     }
 
