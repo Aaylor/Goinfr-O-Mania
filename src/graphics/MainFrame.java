@@ -85,9 +85,7 @@ public class MainFrame extends JFrame {
      */
     public void addPanel(JPanel j){
         stackPanel.add(j);
-        this.setContentPane(j);
-        j.requestFocus();
-        this.pack();
+        changePanel(j, false);
     }
 
     /**
@@ -95,9 +93,7 @@ public class MainFrame extends JFrame {
      */
     public void popPanel(){
         stackPanel.pop();
-        this.setContentPane(stackPanel.peek());
-        stackPanel.peek().requestFocus();
-        this.pack();
+        changePanel(headPanel(), true);
     }
 
     public JPanel headPanel() {
@@ -112,9 +108,7 @@ public class MainFrame extends JFrame {
     public void returnToPanel(JPanel j){
         while (stackPanel.size() > 0) {
             if (headPanel() == j) {
-                this.setContentPane(headPanel());
-                headPanel().requestFocus();
-                this.pack();
+                changePanel(headPanel(), true);
                 return;
             } else {
                 stackPanel.pop();
@@ -133,8 +127,8 @@ public class MainFrame extends JFrame {
             stackPanel.pop();
             i--;
         }
-        this.setContentPane(stackPanel.peek());
-        this.pack();
+
+        changePanel(headPanel(), true);
     }
 
     public void backToFirstPanel() {
@@ -142,8 +136,16 @@ public class MainFrame extends JFrame {
             stackPanel.pop();
         }
 
-        this.setContentPane(headPanel());
-        this.pack();
+        changePanel(headPanel(), true);
+    }
+
+    private void changePanel(JPanel p, boolean resume) {
+        setContentPane(p);
+        p.requestFocus();
+        if (resume && p instanceof Resumable) {
+            ((Resumable) p).resumeIt();
+        }
+        pack();
     }
 
     public static void main(String[] args) {

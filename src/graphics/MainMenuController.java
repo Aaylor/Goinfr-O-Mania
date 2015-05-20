@@ -5,6 +5,7 @@ import engine.nutritionists.AbstractNutritionist;
 import engine.nutritionists.CakeChaserNutritionist;
 import engine.nutritionists.GluttonChaserNutritionist;
 import engine.weapons.Weapon;
+import log.IGLog;
 import sound.MSound;
 import sound.SoundManager;
 
@@ -43,6 +44,7 @@ public class MainMenuController implements ActionListener {
     public MainMenuController(MainFrame parent, MainMenu mainMenu, Level level) {
         this.parent = parent;
         this.mainMenuView = new MainMenuView(parent);
+        mainMenuView.setController(this);
         parent.addPanel(mainMenuView);
 
         mainMusic = new MSound("erza","music/erza.mp3");
@@ -66,10 +68,11 @@ public class MainMenuController implements ActionListener {
         return level;
     }
 
+    public MSound getMainMusic() {
+        return mainMusic;
+    }
 
-
-
-    /* Main Menu Controller functionalities */
+/* Main Menu Controller functionalities */
 
     /**
      * Runs the main menu.

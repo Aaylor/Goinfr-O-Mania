@@ -64,6 +64,10 @@ public class MainMenuButton extends JButton {
         this.addMouseListener(new RolloverMainButtonListener(this));
     }
 
+    public void reinit() {
+        setIcon(imgOnSleep);
+    }
+
     private final class RolloverMainButtonListener extends MouseAdapter {
 
         MainMenuButton mb;

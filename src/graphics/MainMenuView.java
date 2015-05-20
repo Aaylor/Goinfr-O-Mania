@@ -1,5 +1,6 @@
 package graphics;
 
+import log.IGLog;
 import sound.MSound;
 
 import javax.swing.*;
@@ -10,9 +11,10 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 
-public class MainMenuView extends Background implements Observer {
+public class MainMenuView extends Background implements Observer, Resumable {
 
     private MainFrame framep;
+    private MainMenuController controller;
     private MainMenuButton play;
     private MainMenuButton load;
     private MainMenuButton options;
@@ -45,7 +47,11 @@ public class MainMenuView extends Background implements Observer {
         this.sizeOfPictures();
     }
 
-    public void instantiateGridBagConstraints(){
+    public void setController(MainMenuController controller) {
+        this.controller = controller;
+    }
+
+    private void instantiateGridBagConstraints(){
         this.setLayout(new GridBagLayout());
         gbc = new GridBagConstraints();
 
@@ -92,6 +98,12 @@ public class MainMenuView extends Background implements Observer {
         //play.setVisible(true);
     }
 
+    public void reinitializeButton() {
+        play.reinit();
+        load.reinit();
+        options.reinit();
+    }
+
     //GETTER
 
     public MainMenuButton getPlay() {
@@ -111,6 +123,16 @@ public class MainMenuView extends Background implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         //TODO
+    }
+
+    @Override
+    public void resumeIt() {
+        IGLog.write("MainMenuController::resumeIt()");
+        if (!controller.getMainMusic().isPlaying()) {
+            controller.getMainMusic().play();
+        }
+
+        reinitializeButton();
     }
 /*
     @Override
