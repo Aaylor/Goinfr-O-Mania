@@ -39,7 +39,7 @@ public class PauseController implements ActionListener {
             parentController.resumeGame();
         } else if (e.getSource() == view.getMenu()) {
             IGLog.write("PauseController::actionPerformed -> getMenu()");
-            /* FIXME : kill the game before jumping to main menu */
+            parentController.interrupt();
             MainFrame.getCurrentInstance().backToFirstPanel();
         } else if (e.getSource() == view.getQuit()) {
             IGLog.write("PauseController::actionPerformed -> getQuit()");
