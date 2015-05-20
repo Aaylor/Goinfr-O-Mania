@@ -8,6 +8,7 @@ import engine.weapons.Weapon;
 import sound.MSound;
 import sound.SoundManager;
 
+import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,7 +46,7 @@ public class MainMenuController implements ActionListener {
         parent.addPanel(mainMenuView);
 
         mainMusic = new MSound("erza","music/erza.mp3");
-        mainMusic.play(0.35);
+        mainMusic.playInfinite();
 
         addControllers();
 

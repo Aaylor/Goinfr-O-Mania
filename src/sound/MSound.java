@@ -107,6 +107,16 @@ public class MSound {
         clip.play(volume);
     }
 
+    public void playTimes(int cycle) {
+        clip.setCycleCount(cycle);
+        play();
+    }
+
+    public void playInfinite() {
+        clip.setCycleCount(AudioClip.INDEFINITE);
+        play();
+    }
+
     /**
      *  Check if the sound is already playing.
      *  @return true if the sound is already playing.
