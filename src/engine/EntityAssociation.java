@@ -21,6 +21,7 @@ public final class EntityAssociation {
     public final static String DEFAULT_GLUTTONCHASER = "default_gluttonchaser";
 
     /* Cakes */
+    public final static RandomCreation randomCakes   = new RandomCreation();
     public final static String DEFAULT_LIFECAKE      = "default_lifecake";
     public final static String SUPERLIFECAKE         = "superlifecake";
     public final static String HYPERLIFECAKE         = "hyperlifecake";
@@ -107,6 +108,10 @@ public final class EntityAssociation {
                 new MSound(HYPERLIFECAKE, "music/pickupitem00.wav"), 1);
         EntityView hyperLifeCakeView = new EntityView(new Skin(15, 15));
         register(HYPERLIFECAKE, hyperLifeCake, hyperLifeCakeView);
+
+        randomCakes.add(DEFAULT_LIFECAKE, 50);
+        randomCakes.add(SUPERLIFECAKE, 30);
+        randomCakes.add(HYPERLIFECAKE, 5);
 
     }
 

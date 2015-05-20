@@ -147,6 +147,11 @@ public class EntityManager {
         }
     }
 
+    public void setRandomPosition(Entity entity) {
+        setRandomPosition(entity, 0, (int)boardDimension.getHeight(),
+                0, (int)boardDimension.getWidth());
+    }
+
     public void addAtRandomPosition(Entity entity, EntityView view,
                                     int minHeight, int maxHeight,
                                     int minWidth, int maxWidth) {
@@ -162,6 +167,11 @@ public class EntityManager {
             addOther(entity, view);
         }
 
+    }
+
+    public void addAtRandomPosition(Entity e, EntityView v) {
+        addAtRandomPosition(e, v, 0, (int)boardDimension.getHeight(),
+                0, (int)boardDimension.getWidth());
     }
 
 

@@ -158,6 +158,13 @@ public class BoardController extends Thread implements MouseListener, KeyListene
     private void randomPop() {
         if (nextRandomPop.hasPassed()) {
             IGLog.write("BoardController::run -> Next Random Pop has to be done.");
+
+            String cakeName = EntityAssociation.randomCakes.getRandomlyName();
+            getBoard().getLevel().getEntityManager().addAtRandomPosition(
+                    EntityAssociation.getEntity(cakeName),
+                    EntityAssociation.getEntityView(cakeName)
+            );
+
             nextRandomPop = new PopTimer(10);
         }
     }
@@ -185,7 +192,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
                     EntityAssociation.getEntityView(who)
             );
 
-            nextRandomNutritionists = new PopTimer(1);
+            nextRandomNutritionists = new PopTimer(15);
         }
     }
 
@@ -221,9 +228,12 @@ public class BoardController extends Thread implements MouseListener, KeyListene
             /* cake */
             if (manager.getCakes().size() == 0) {
                 IGLog.info("BoardController::run -> A new cake has to appear.");
-                Entity entity = EntityAssociation.getEntity(EntityAssociation.DEFAULT_LIFECAKE);
-                manager.setRandomPosition(entity, 0, boardView.getHeight(), 0, boardView.getHeight());
-                manager.addOther(entity, EntityAssociation.getEntityView(EntityAssociation.DEFAULT_LIFECAKE));
+
+                String cakeName = EntityAssociation.randomCakes.getRandomlyName();
+                manager.addAtRandomPosition(
+                        EntityAssociation.getEntity(cakeName),
+                        EntityAssociation.getEntityView(cakeName)
+                );
             }
 
             waitForResume();
