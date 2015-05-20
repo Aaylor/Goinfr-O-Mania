@@ -77,14 +77,8 @@ public class MainMenuController implements ActionListener {
         mainMusic.stop();
         parent.setPreferredSize(parent.getSize());
 
-        Entity glutton = EntityAssociation.getEntity("default_glutton");
-        glutton.setWeapon(Weapon.make("punch"));
+        EntityManager manager = new EntityManager();
 
-
-        EntityManager manager = new EntityManager(
-                (Glutton) glutton,
-                EntityAssociation.getEntityView("default_glutton")
-        );
 
         Level level = new Level(
                 new Score(),
@@ -93,30 +87,6 @@ public class MainMenuController implements ActionListener {
                 new SoundManager()
         );
 
-        /*
-        manager.addEntity(
-                EntityAssociation.getEntity("default_cake"),
-                EntityAssociation.getEntityView("default_cake")
-        );
-
-        AbstractNutritionist n =
-                new GluttonChaserNutritionist(new Point(300, 234), new Dimension(30, 30), 2f, 0f, 5);
-        n.setWeapon(Weapon.make("punch"));
-
-        AbstractNutritionist n2 =
-                new CakeChaserNutritionist(new Point(100, 200), new Dimension(30, 30), 2f, 0f, 6);
-
-
-        manager.addNutritionist(
-                n,
-                new EntityView(new Skin(30, 30))
-        );
-
-        manager.addNutritionist(
-                n2,
-                new EntityView(new Skin(30, 30))
-        );
-        */
 
         Board board = new Board(new Player("Test"), level);
 
