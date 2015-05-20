@@ -1,11 +1,10 @@
 package engine.nutritionists;
 
-import engine.Cake;
+import engine.cake.AbstractCake;
 import engine.Entity;
 import log.IGLog;
 
 import java.awt.*;
-import java.util.*;
 import java.util.List;
 
 public class CakeChaserNutritionist extends AbstractNutritionist {
@@ -35,7 +34,7 @@ public class CakeChaserNutritionist extends AbstractNutritionist {
 
     @Override
     public void effect(Entity e) {
-        if (e instanceof Cake) {
+        if (e instanceof AbstractCake) {
             IGLog.info("CakeChaser, effect: cake.");
             getManager().removeEntity(e);
         }
