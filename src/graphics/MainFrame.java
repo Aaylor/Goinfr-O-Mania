@@ -110,13 +110,18 @@ public class MainFrame extends JFrame {
      * @param j the panel on which we want to return
      */
     public void returnToPanel(JPanel j){
-        int pos = stackPanel.search(j);
-        while(pos != 0){
-            stackPanel.pop();
-            pos--;
+        while (stackPanel.size() > 0) {
+            if (headPanel() == j) {
+                this.setContentPane(headPanel());
+                headPanel().requestFocus();
+                this.pack();
+                return;
+            } else {
+                stackPanel.pop();
+            }
         }
-        this.setContentPane(stackPanel.peek());
-        this.pack();
+
+        IGLog.error("MainFrame::returnToPanel(Jpanel) -> panel not found...");
     }
 
     /**
@@ -124,14 +129,21 @@ public class MainFrame extends JFrame {
      * @param i the number of panel that we want to pop
      */
     public void returnToPanel(int i){
-        this.setVisible(false);
         while(i != 0){
             stackPanel.pop();
             i--;
         }
         this.setContentPane(stackPanel.peek());
         this.pack();
-        this.setVisible(true);
+    }
+
+    public void backToFirstPanel() {
+        while (stackPanel.size() != 1) {
+            stackPanel.pop();
+        }
+
+        this.setContentPane(headPanel());
+        this.pack();
     }
 
     public static void main(String[] args) {
