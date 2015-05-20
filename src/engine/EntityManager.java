@@ -5,9 +5,12 @@ import engine.nutritionists.AbstractNutritionist;
 import engine.weapons.Weapon;
 import graphics.Circle;
 import helpers.ExtMath;
+import log.IGLog;
 
+import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.*;
+import java.util.List;
 
 
 /**
@@ -23,6 +26,8 @@ public class EntityManager {
 
     private LinkedList<Entity> others;
     private Map<Entity, EntityView> othersView;
+
+    private Dimension boardDimension;
 
     /**
      *  Create an empty manager.
@@ -87,6 +92,41 @@ public class EntityManager {
                 checkCrossCollision(others, e1, position);
     }
 
+    public boolean outOfBound(Circle circle) {
+        if (getBoardDimension() == null) {
+            IGLog.error("No dimension found for the board.");
+            return false;
+        }
+
+        double x = circle.getCenterX();
+        double y = circle.getCenterY();
+
+        double boardWidth  = getBoardDimension().getWidth();
+        double boardHeight = getBoardDimension().getHeight();
+
+        double radius = circle.getRadius();
+
+        /*
+        IGLog.write("==== OUT OF BOUND ===");
+        IGLog.write("x : " + x + "; y : " + y + ";wd : " + boardWidth + "hg : " + boardHeight);
+        IGLog.write("radius : " + radius);
+        IGLog.write("x - radius : " + (Math.ceil(x - radius)));
+        IGLog.write("x + radius : " + (Math.floor(x + radius)));
+        IGLog.write("y - radius : " + (Math.ceil(y - radius)));
+        IGLog.write("y + radius : " + (Math.floor(y + radius)));
+        IGLog.write("=====================");
+        */
+
+        return  (Math.ceil(x - radius)  < 0) ||
+                (Math.floor(x + radius) > boardWidth)  ||
+                (Math.ceil(y - radius)  < 0) ||
+                (Math.floor(y + radius) > boardHeight);
+    }
+
+    public boolean outOfBound(Entity e) {
+        return outOfBound(e.getBoundsCircle());
+    }
+
     public void setRandomPosition(Entity e, int minHeight, int maxHeight,
                                   int minWidth, int maxWidth) {
 
@@ -98,7 +138,7 @@ public class EntityManager {
 
             Circle circle = new Circle(p.getX(), p.getY(), e.getSize().getWidth() / 2);
 
-            if (!hasCrossCollision(e, circle)) {
+            if (!hasCrossCollision(e, circle) && !outOfBound(circle)) {
                 e.setPoint(p);
                 return;
             }
@@ -320,5 +360,13 @@ public class EntityManager {
 
     public Glutton getGlutton() {
         return player;
+    }
+
+    public Dimension getBoardDimension() {
+        return boardDimension;
+    }
+
+    public void setBoardDimension(Dimension boardDimension) {
+        this.boardDimension = boardDimension;
     }
 }

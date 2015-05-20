@@ -45,9 +45,12 @@ public class BoardController extends Thread implements MouseListener, KeyListene
 
     public BoardController(Board board, BoardView view) {
         this.board = board;
+
         this.boardView = view;
         boardView.addKeyListener(this);
         board.addObserver(boardView);
+        getBoard().getLevel().getEntityManager().setBoardDimension(boardView.getSize());
+
         gameState = true;
 
         gameSound = new MSound("ingame", "music/ingame00.wav");
@@ -165,7 +168,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
     }
 
     private void randomNutritionistsPop() {
-        if (nextRandomNutritionists.hasPassed()) {
+        if (nextRandomNutritionists.hasPassed() && false) {
             IGLog.write("BoardController::run -> Next Random Nutritionists Pop has to be done.");
 
             EntityManager manager = getBoard().getLevel().getEntityManager();
