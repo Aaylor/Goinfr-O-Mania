@@ -66,6 +66,15 @@ public class MainMenuButton extends JButton {
 
     public void reinit() {
         setIcon(imgOnSleep);
+        setBackground(null);
+        setFocusPainted(false);
+        setBorderPainted(false);
+        setOpaque(false);
+        setContentAreaFilled(false);
+        if(fontSleep != null)
+            setFont(fontSleep);
+        setIconTextGap(sleepGap);
+        setForeground(fontColorSleep);
     }
 
     private final class RolloverMainButtonListener extends MouseAdapter {
@@ -93,16 +102,7 @@ public class MainMenuButton extends JButton {
 
         @Override
         public void mouseExited(MouseEvent event){
-            mb.setIcon(imgOnSleep);
-            mb.setBackground(null);
-            mb.setFocusPainted(false);
-            mb.setBorderPainted(false);
-            mb.setOpaque(false);
-            mb.setContentAreaFilled(false);
-            if(mb.fontSleep != null)
-                mb.setFont(mb.fontSleep);
-            mb.setIconTextGap(mb.sleepGap);
-            mb.setForeground(fontColorSleep);
+            mb.reinit();
         }
 
         @Override
