@@ -107,11 +107,9 @@ public class BoardView extends JPanel implements Observer {
             drawEntity(graphics2D, manager.getGluttonView());
 
         /* Draw nutritionists */
-        Collection<EntityView> ns = manager.getNutritionistsView();
-        synchronized (ns) {
+
             for (EntityView e : manager.getNutritionistsView())
                 drawEntity(graphics2D, e);
-        }
 
         /* Draw other entities */
         for (EntityView e : manager.getOthersView())

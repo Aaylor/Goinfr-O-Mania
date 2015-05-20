@@ -168,7 +168,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
     }
 
     private void randomNutritionistsPop() {
-        if (nextRandomNutritionists.hasPassed() && false) {
+        if (nextRandomNutritionists.hasPassed()) {
             IGLog.write("BoardController::run -> Next Random Nutritionists Pop has to be done.");
 
             EntityManager manager = getBoard().getLevel().getEntityManager();
@@ -185,7 +185,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
                     EntityAssociation.getEntityView(who)
             );
 
-            nextRandomNutritionists = new PopTimer(5);
+            nextRandomNutritionists = new PopTimer(1);
         }
     }
 
