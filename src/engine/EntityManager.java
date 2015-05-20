@@ -14,8 +14,8 @@ import java.util.*;
  */
 public class EntityManager {
 
-    private final Glutton player;
-    private final EntityView gluttonView;
+    private Glutton player;
+    private EntityView gluttonView;
 
     private LinkedList<AbstractNutritionist> nutritionists;
     private Map<AbstractNutritionist, EntityView> nutritionistsView;
@@ -26,12 +26,7 @@ public class EntityManager {
     /**
      *  Create an empty manager.
      */
-    public EntityManager(Glutton player, EntityView view){
-        this.player = player;
-        this.gluttonView = view;
-        view.setEntity(player);
-        player.setManager(this);
-
+    public EntityManager(){
         nutritionists = new LinkedList<>();
         others = new LinkedList<>();
 
@@ -72,6 +67,9 @@ public class EntityManager {
             return false;
 
         for (Entity e2 : entities) {
+            if (e2 == null)
+                continue;
+
             if (e1 != e2 && !e2.isCrossable() && collision(position, e2))
                 return true;
         }
@@ -85,6 +83,42 @@ public class EntityManager {
         return checkCrossCollision(lp, e1, position) ||
                 checkCrossCollision(nutritionists, e1, position) ||
                 checkCrossCollision(others, e1, position);
+    }
+
+    public void setRandomPosition(Entity e, int minHeight, int maxHeight,
+                                  int minWidth, int maxWidth) {
+
+        while (true) {
+            Point2D p = new Point2D.Double(
+                    ExtMath.getRandomBewteen(minWidth, maxWidth),
+                    ExtMath.getRandomBewteen(minHeight, maxHeight)
+            );
+
+            Circle circle = new Circle(p.getX(), p.getY(), e.getSize().getWidth() / 2);
+
+            if (!hasCrossCollision(e, circle)) {
+                e.setPoint(p);
+                return;
+            }
+
+        }
+    }
+
+    public void addAtRandomPosition(Entity entity, EntityView view,
+                                    int minHeight, int maxHeight,
+                                    int minWidth, int maxWidth) {
+        setRandomPosition(entity, minHeight, maxHeight, minWidth, maxWidth);
+
+        view.setEntity(entity);
+
+        if (entity instanceof Glutton) {
+            changeGlutton((Glutton)entity, view);
+        } else if (entity instanceof AbstractNutritionist) {
+            addNutritionist((AbstractNutritionist) entity, view);
+        } else {
+            addOther(entity, view);
+        }
+
     }
 
 
@@ -183,6 +217,13 @@ public class EntityManager {
         }
 
         return false;
+    }
+
+    private void changeGlutton(Glutton glutton,  EntityView view) {
+        player = glutton;
+        player.setManager(this);
+        gluttonView = view;
+        gluttonView.setEntity(glutton);
     }
 
     /**
