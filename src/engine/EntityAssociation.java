@@ -13,6 +13,7 @@ public final class EntityAssociation {
     public final static String DEFAULT_GLUTTON       = "default_glutton";
 
     /* Nutritionists */
+    public final static RandomCreation randomNutritionist = new RandomCreation();
     public final static String DEFAULT_CAKECHASER    = "default_cakechaser";
     public final static String DEFAULT_GLUTTONCHASER = "default_gluttonchaser";
 
@@ -66,17 +67,21 @@ public final class EntityAssociation {
         register(DEFAULT_GLUTTON, glutton, gluttonView);
 
 
+
+        /* NUTRITIONIST */
         /* CakeChaser */
         CakeChaserNutritionist cakeChaser = new CakeChaserNutritionist(null, new Dimension(30, 30), 2f, 0f, 3);
         EntityView cakeChaserView = new EntityView(new Skin(30, 30));
         register(DEFAULT_CAKECHASER, cakeChaser, cakeChaserView);
-
 
         /* GluttonChaser */
         GluttonChaserNutritionist gluttonChaser =
                 new GluttonChaserNutritionist(null, new Dimension(30, 30), 2f, 0f, 6);
         EntityView gluttonChaserView = new EntityView(new Skin(30, 30));
         register(DEFAULT_GLUTTONCHASER, gluttonChaser, gluttonChaserView);
+
+        randomNutritionist.add(DEFAULT_CAKECHASER, 20);
+        randomNutritionist.add(DEFAULT_GLUTTONCHASER, 60);
 
 
         /* DefaultCake */

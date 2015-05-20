@@ -138,7 +138,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
 
         /* Initialize timer. */
         nextRandomPop = new PopTimer(10);
-        nextRandomNutritionists = new PopTimer(20);
+        nextRandomNutritionists = new PopTimer(5);
     }
 
     private void randomPop() {
@@ -159,15 +159,19 @@ public class BoardController extends Thread implements MouseListener, KeyListene
 
             EntityManager manager = getBoard().getLevel().getEntityManager();
 
-            Entity e = EntityAssociation.getEntity("default_cakechaser");
+            String who = EntityAssociation.randomNutritionist.getRandomlyName();
+            Entity e   = EntityAssociation.getEntity(who);
             manager.setRandomPosition(e, 0, boardView.getHeight(), 0, boardView.getWidth());
+
+            /* FIXME */
+            e.setWeapon(Weapon.make("punch"));
 
             board.getLevel().getEntityManager().addNutritionist(
                     (AbstractNutritionist)e,
-                    EntityAssociation.getEntityView("default_cakechaser")
+                    EntityAssociation.getEntityView(who)
             );
 
-            nextRandomNutritionists = new PopTimer(20);
+            nextRandomNutritionists = new PopTimer(5);
         }
     }
 
