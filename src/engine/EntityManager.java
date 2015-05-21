@@ -3,6 +3,8 @@ package engine;
 import engine.cake.AbstractCake;
 import engine.nutritionists.AbstractNutritionist;
 import engine.weapons.Weapon;
+import graphics.Board;
+import graphics.BoardController;
 import graphics.Circle;
 import helpers.ExtMath;
 import log.IGLog;
@@ -21,6 +23,7 @@ public class EntityManager {
 
     private Glutton player;
     private EntityView gluttonView;
+    private Level level;
 
     private LinkedList<AbstractNutritionist> nutritionists;
     private Map<AbstractNutritionist, EntityView> nutritionistsView;
@@ -33,12 +36,14 @@ public class EntityManager {
     /**
      *  Create an empty manager.
      */
-    public EntityManager(){
+    public EntityManager(Level level){
         nutritionists = new LinkedList<>();
         others = new LinkedList<>();
 
         nutritionistsView = new ConcurrentHashMap<>();
         othersView = new ConcurrentHashMap<>();
+
+        this.level = level;
     }
 
     private void nutritionistsMove() {

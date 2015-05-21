@@ -11,10 +11,10 @@ public class Level {
     private EntityManager em;
     private SoundManager sm;
 
-    public Level(Score actualScore, Goal goal, EntityManager em, SoundManager sm) {
+    public Level(Score actualScore, Goal goal, SoundManager sm) {
         this.actualScore = actualScore;
         this.goal = goal;
-        this.em = em;
+        this.em = new EntityManager(this);
         this.sm = sm;
     }
 
