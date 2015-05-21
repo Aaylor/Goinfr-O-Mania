@@ -68,7 +68,7 @@ public final class EntityAssociation {
         /* TODO */
 
         /* Default Glutton */
-        Glutton glutton = new Glutton(null, new Dimension(30, 30), 3f, 0f, 10);
+        Glutton glutton = new Glutton(null, new Dimension(30, 30), 3f, 0f, 6);
         EntityView gluttonView = new EntityView(new Skin(30, 30));
         register(DEFAULT_GLUTTON, glutton, gluttonView);
 
