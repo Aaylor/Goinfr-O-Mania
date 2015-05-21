@@ -18,6 +18,8 @@ public class BoardView extends JPanel implements Observer {
 
     private static final int UI_HEIGHT = 50;
 
+    private ImageIcon gameUi;
+
     private Board board;
 
     private boolean paused;
@@ -34,6 +36,8 @@ public class BoardView extends JPanel implements Observer {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        gameUi = new ImageIcon("pictures/gameui.png");
 
         setDoubleBuffered(true);
     }
@@ -59,12 +63,14 @@ public class BoardView extends JPanel implements Observer {
     private void drawUI(Graphics2D g2d) {
         EntityManager em = board.getLevel().getEntityManager();
 
-        g2d.setBackground(new Color(0, 0, 0));
-        g2d.drawRect(0, getHeight() - UI_HEIGHT, getWidth(), getHeight());
+        /*g2d.setBackground(new Color(0, 0, 0));
+        g2d.drawRect(0, getHeight() - UI_HEIGHT, getWidth(), getHeight());*/
+        g2d.drawImage(gameUi.getImage(), 0, getHeight() - UI_HEIGHT, getWidth(), UI_HEIGHT, null);
 
         if (em.getGlutton() != null)
             g2d.drawString(em.getGlutton().getLife() + "/" + em.getGlutton().getMaxLife(),
                     10, getHeight() - 15);
+
     }
 
     private void drawEntity(Graphics2D g2d, EntityView ev) {
