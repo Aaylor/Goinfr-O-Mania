@@ -39,8 +39,6 @@ public class BoardController extends Thread implements MouseListener, KeyListene
 
     private MSound gameSound;
 
-    private Chrono chrono;
-
     private PopTimer nextRandomPop;
     private PopTimer nextRandomNutritionists;
 
@@ -53,8 +51,6 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         boardView.addKeyListener(this);
         board.addObserver(boardView);
         getBoard().getLevel().getEntityManager().setBoardDimension(boardView.getSize());
-
-        chrono = new Chrono();
 
         gameState = true;
 
@@ -77,7 +73,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         IGLog.info("BoardController, gamed paused.");
         boardView.setPaused(true);
         gameSound.stop();
-        chrono.pause();
+        getBoard().getChrono().pause();
         nextRandomPop.pauseTimer();
         nextRandomNutritionists.pauseTimer();
         board.notification();
@@ -88,7 +84,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         IGLog.info("BoardController, game resumed.");
         boardView.setPaused(false);
         gameSound.play();
-        chrono.resume();
+        getBoard().getChrono().resume();
         nextRandomPop.resumeTimer();
         nextRandomNutritionists.resumeTimer();
         gameState = true;
@@ -210,7 +206,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         /* Game initialization */
         initialization(manager);
 
-        chrono.start();
+        getBoard().getChrono().start();
 
         while (true) {
             waitForResume();
@@ -308,6 +304,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
             new PauseController(boardView, this, getBoard().getPlayer());
         } else if (code == kc.getQuit()) {
             /* TODO: Maybe ask to save ?? */
+            getBoard().getChrono().stop();
             System.exit(0);
         } else {
             synchronized (pressedKeys) {
