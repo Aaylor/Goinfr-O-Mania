@@ -23,4 +23,9 @@ public abstract class AbstractCake extends Entity implements Soundable, Valuable
         this.sound = sound;
     }
 
+    @Override
+    public void playSound() {
+        if (sound != null)
+            sound.play();
+    }
 }
