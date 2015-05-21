@@ -19,11 +19,8 @@ public class BoardView extends JPanel implements Observer {
     private static final int UI_HEIGHT = 50;
 
     private ImageIcon gameUi;
-
     private Board board;
-
     private boolean paused;
-
     private Font font;
 
     public BoardView(Board board) {
@@ -37,7 +34,8 @@ public class BoardView extends JPanel implements Observer {
             e.printStackTrace();
         }
 
-        gameUi = new ImageIcon("pictures/gameui.png");
+        //gameUi = new ImageIcon("pictures/gameui.png");
+        gameUi = new ImageIcon("pictures/frise00.png");
 
         setDoubleBuffered(true);
     }
@@ -48,6 +46,10 @@ public class BoardView extends JPanel implements Observer {
 
     public void setPaused(boolean paused) {
         this.paused = paused;
+    }
+
+    private int getRealHeight() {
+        return getHeight() - UI_HEIGHT;
     }
 
     @Override
@@ -63,11 +65,47 @@ public class BoardView extends JPanel implements Observer {
     private void drawUI(Graphics2D g2d) {
         EntityManager em = board.getLevel().getEntityManager();
 
-        g2d.drawImage(gameUi.getImage(), 0, getHeight() - UI_HEIGHT, getWidth(), UI_HEIGHT, null);
+        Color initialColor = g2d.getColor();
 
-        if (em.getGlutton() != null)
+        /* Rectangle */
+        g2d.setColor(Color.BLACK);
+        g2d.fillRect(0, getRealHeight(), getWidth(), UI_HEIGHT);
+
+        /* Frise */
+        double change = 10.;
+        double alpha  = change / gameUi.getIconHeight();
+        int widthp = (int) (gameUi.getIconWidth() * alpha);
+        int start  = 0;
+        do {
+            g2d.drawImage(
+                    gameUi.getImage(),
+                    start, getRealHeight(),
+                    widthp, (int) change,
+                    null
+            );
+
+            start += widthp;
+        } while(start <= getWidth());
+
+        /* Glutton informations */
+        /* FIXME : real ui for those informations. */
+        if (em.getGlutton() != null) {
+            g2d.setColor(Color.white);
+
+            // life
             g2d.drawString(em.getGlutton().getLife() + "/" + em.getGlutton().getMaxLife(),
                     10, getHeight() - 15);
+
+            // score
+            /* Fixme : use bundle here. */
+            g2d.drawString(
+                    "Score : " + board.getLevel().getScore(), 100, getHeight() - 15);
+
+            g2d.drawString(
+                    "Chrono : " + board.getChrono().toString(), 400, getHeight() - 15);
+        }
+
+        g2d.setColor(initialColor);
 
     }
 
