@@ -36,7 +36,7 @@ public class BoardView extends JPanel implements Observer {
             e.printStackTrace();
         }
 
-        gameUi = resizeInitialImage("picutres/frise00.png");
+        gameUi = resizeInitialImage("pictures/frise00.png");
         setDoubleBuffered(true);
     }
 
@@ -124,10 +124,15 @@ public class BoardView extends JPanel implements Observer {
             // score
             /* Fixme : use bundle here. */
             g2d.drawString(
-                    "Score : " + board.getLevel().getScore(), 100, getHeight() - 15);
+                    "Score : " + board.getLevel().getScore(), 200, getHeight() - 15);
 
+            // weapon
             g2d.drawString(
-                    "Chrono : " + board.getChrono().toString(), 400, getHeight() - 15);
+                    "Weapon : Fistiropoing", 400, getHeight() - 15); /* TODO */
+
+            // chrono
+            g2d.drawString(
+                    "Chrono : " + board.getChrono().toString(), 600, getHeight() - 15);
         }
 
         g2d.setColor(initialColor);
