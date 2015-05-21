@@ -81,13 +81,9 @@ public class MainMenuController implements ActionListener {
         mainMusic.stop();
         parent.setPreferredSize(parent.getSize());
 
-        EntityManager manager = new EntityManager();
-
-
         Level level = new Level(
                 new Score(),
                 new Goal(),
-                manager,
                 new SoundManager()
         );
 

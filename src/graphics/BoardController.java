@@ -30,15 +30,10 @@ public class BoardController extends Thread implements MouseListener, KeyListene
      * The game board that must be controlled
      */
     private Board board;
-
     private BoardView boardView;
-
     private boolean gameState;
-
     private final Set<Integer> pressedKeys;
-
     private MSound gameSound;
-
     private PopTimer nextRandomPop;
     private PopTimer nextRandomNutritionists;
 
