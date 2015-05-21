@@ -11,7 +11,6 @@ import java.awt.geom.Point2D;
 public class LifeTrap extends AbstractTrap {
 
     private int damage;
-    private boolean hasScored = false;
 
     public LifeTrap(MSound sound, int damage) {
         super(sound);
@@ -36,24 +35,16 @@ public class LifeTrap extends AbstractTrap {
     }
 
     @Override
-    public void effect(Entity e) {
-        if (e instanceof Attackable && getCooldown().isReady()) {
-            playSound();
-            getCooldown().start();
-            hasScored = false;
-
+    void applyEffect(Entity e) {
+        if (e instanceof Attackable) {
             IGLog.write("Trap::effect -> effect on " + e);
-                    ((Attackable) e).takeDamage(damage);
+            ((Attackable) e).takeDamage(damage);
         }
     }
 
     @Override
-    public int scoreValue() {
-        if (!hasScored) {
-            hasScored = true;
-            return -5;
-        }
-
-        return 0;
+    int getScoreValue() {
+        return -5;
     }
+
 }

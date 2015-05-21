@@ -5,6 +5,7 @@ import engine.cake.LifeCake;
 import engine.nutritionists.CakeChaserNutritionist;
 import engine.nutritionists.GluttonChaserNutritionist;
 import engine.traps.LifeTrap;
+import engine.traps.SlowTrap;
 import sound.MSound;
 
 import java.awt.*;
@@ -32,6 +33,7 @@ public final class EntityAssociation {
     public final static RandomCreation randomTraps = new RandomCreation();
     public final static String LIFETRAP    = "lifetrap";
     public final static String BIGLIFETRAP = "biglifetrap";
+    public final static String SLOWTRAP    = "slowtrap";
 
     private static Map<String, Entity> entityMap   = new HashMap<>();
     private static Map<String, EntityView> viewMap = new HashMap<>();
@@ -133,8 +135,13 @@ public final class EntityAssociation {
         EntityView bigLifeTrapView = new EntityView(new Skin(40, 40));
         register(BIGLIFETRAP, bigLifeTrap, bigLifeTrapView);
 
+        SlowTrap slowTrap = new SlowTrap(null, new Dimension(7, 7), true, null, 2000);
+        EntityView slowTrapView = new EntityView(new Skin(7, 7));
+        register(SLOWTRAP, slowTrap, slowTrapView);
+
         randomTraps.add(LIFETRAP, 30);
         randomTraps.add(BIGLIFETRAP, 15);
+        randomTraps.add(SLOWTRAP, 90);
 
     }
 
