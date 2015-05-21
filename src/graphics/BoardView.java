@@ -9,6 +9,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -16,9 +17,10 @@ import java.util.List;
 
 public class BoardView extends JPanel implements Observer {
 
-    private static final int UI_HEIGHT = 50;
+    private static final int    UI_HEIGHT    = 50;
+    private static final double FRISE_HEIGHT = 10;
 
-    private ImageIcon gameUi;
+    private Image gameUi;
     private Board board;
     private boolean paused;
     private Font font;
@@ -34,9 +36,7 @@ public class BoardView extends JPanel implements Observer {
             e.printStackTrace();
         }
 
-        //gameUi = new ImageIcon("pictures/gameui.png");
-        gameUi = new ImageIcon("pictures/frise00.png");
-
+        gameUi = resizeInitialImage("picutres/frise00.png");
         setDoubleBuffered(true);
     }
 
@@ -46,6 +46,35 @@ public class BoardView extends JPanel implements Observer {
 
     public void setPaused(boolean paused) {
         this.paused = paused;
+    }
+
+    private Image resizeInitialImage(String path) {
+        ImageIcon gameUi = new ImageIcon(path);
+        double alpha  = FRISE_HEIGHT / gameUi.getIconHeight();
+        int widthp = (int) (gameUi.getIconWidth() * alpha);
+
+        BufferedImage image =
+                new BufferedImage(widthp, (int)FRISE_HEIGHT,
+                        BufferedImage.TYPE_INT_ARGB);
+
+        Graphics2D g = image.createGraphics();
+        g.setComposite(AlphaComposite.Src);
+
+        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g.setRenderingHint(RenderingHints.KEY_RENDERING,
+                RenderingHints.VALUE_RENDER_QUALITY);
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+
+        g.drawImage(
+                gameUi.getImage(),
+                0, 0,
+                widthp, (int) FRISE_HEIGHT,
+                null
+        );
+
+        return image;
     }
 
     private int getRealHeight() {
@@ -72,19 +101,15 @@ public class BoardView extends JPanel implements Observer {
         g2d.fillRect(0, getRealHeight(), getWidth(), UI_HEIGHT);
 
         /* Frise */
-        double change = 10.;
-        double alpha  = change / gameUi.getIconHeight();
-        int widthp = (int) (gameUi.getIconWidth() * alpha);
         int start  = 0;
         do {
             g2d.drawImage(
-                    gameUi.getImage(),
+                    gameUi,
                     start, getRealHeight(),
-                    widthp, (int) change,
+                    gameUi.getWidth(null), gameUi.getHeight(null),
                     null
             );
-
-            start += widthp;
+            start += gameUi.getWidth(null);
         } while(start <= getWidth());
 
         /* Glutton informations */
