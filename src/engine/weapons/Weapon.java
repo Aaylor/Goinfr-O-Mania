@@ -177,7 +177,7 @@ public class Weapon {
         return maxDamage;
     }
 
-    public void attack(Entity entity) {
+    public boolean attack(Entity entity) {
         playNextSound();
         launchCooldown();
 
@@ -189,8 +189,10 @@ public class Weapon {
                     random.nextInt(
                             (getMaxDamage() - getMinDamage()) + 1
                     ) + getMinDamage();
-            a.takeDamage(damage);
+            return a.takeDamage(damage);
         }
+
+        return false;
     }
 
 

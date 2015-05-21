@@ -56,9 +56,10 @@ public class Glutton extends AbstractMovableEntity implements Attackable {
     }
 
     @Override
-    public void takeDamage(int damage) {
+    public boolean takeDamage(int damage) {
         setLife(getLife() - damage);
 
         IGLog.info(this + " a pris " + damage + " dommages. " + getLife() + " pv restants.");
+        return getLife() <= 0;
     }
 }

@@ -231,7 +231,19 @@ public class EntityManager {
                     (llimit > hlimit && (nextAngle >= llimit || nextAngle <= hlimit))) &&
                     attackRange.intersects(attackedEntity.getBoundsCircle())) {
                     System.out.println("L'entité (" + attackedEntity + ") a été touché.");
-                    w.attack(attackedEntity);
+
+                    if (w.attack(attackedEntity)) { /* the attacked entity is dead */
+                        if (attackedEntity instanceof AbstractNutritionist) {
+                            removeNutritionist((AbstractNutritionist) attackedEntity);
+                        } else if (! (attackedEntity instanceof Glutton)) {
+                            removeOther(attackedEntity);
+                        }
+
+                        if (e instanceof  Glutton && attackedEntity instanceof Valuable) {
+                            level.getScore().add(((Valuable) attackedEntity).scoreValue());
+                        }
+                    }
+
                 }
 
             }
