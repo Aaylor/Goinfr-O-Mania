@@ -26,6 +26,11 @@ public class BoardView extends JPanel implements Observer {
     private String timeLabel;
 
     private Image gameUI;
+    private Image barUI;
+
+    private Image emptyHeart;
+    private Image filledHeart;
+
     private Font  fontUI;
     private Board board;
     private boolean paused;
@@ -42,7 +47,8 @@ public class BoardView extends JPanel implements Observer {
             e.printStackTrace();
         }
 
-        gameUI = resizeInitialImage("pictures/frise00.png");
+        gameUI = resizeInitialImage("pictures/frise00.png", FRISE_HEIGHT, true);
+        barUI  = resizeInitialImage("pictures/frise01.png", 6, false);
 
         try {
             File file = new File("fonts/Viking_n.ttf");
@@ -51,6 +57,9 @@ public class BoardView extends JPanel implements Observer {
         } catch (Exception e) {
             fontUI = null;
         }
+
+        emptyHeart  = new ImageIcon("pictures/heart00.png").getImage();
+        filledHeart = new ImageIcon("pictures/heart01.png").getImage();
 
         ResourceBundle bundle = MainFrame.getCurrentInstance().getBundle();
         lifeLabel   = bundle.getString("lifeUI");
@@ -69,13 +78,25 @@ public class BoardView extends JPanel implements Observer {
         this.paused = paused;
     }
 
-    private Image resizeInitialImage(String path) {
-        ImageIcon gameUi = new ImageIcon(path);
-        double alpha  = FRISE_HEIGHT / gameUi.getIconHeight();
-        int widthp = (int) (gameUi.getIconWidth() * alpha);
+    private Image resizeInitialImage(String path, double newValue, boolean what) {
+        ImageIcon icon = new ImageIcon(path);
+
+        double alpha;
+        int nWidth;
+        int nHeight;
+
+        if (what) {
+            alpha   = newValue / icon.getIconHeight();
+            nWidth  = (int) (icon.getIconWidth() * alpha);
+            nHeight = (int) newValue;
+        } else {
+            alpha   = newValue / icon.getIconWidth();
+            nWidth  = (int) newValue;
+            nHeight = (int) (icon.getIconHeight() * alpha);
+        }
 
         BufferedImage image =
-                new BufferedImage(widthp, (int)FRISE_HEIGHT,
+                new BufferedImage(nWidth, nHeight,
                         BufferedImage.TYPE_INT_ARGB);
 
         Graphics2D g = image.createGraphics();
@@ -89,10 +110,8 @@ public class BoardView extends JPanel implements Observer {
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
         g.drawImage(
-                gameUi.getImage(),
-                0, 0,
-                widthp, (int) FRISE_HEIGHT,
-                null
+                icon.getImage(),
+                0, 0, nWidth, nHeight, null
         );
 
         return image;
@@ -133,6 +152,16 @@ public class BoardView extends JPanel implements Observer {
             start += gameUI.getWidth(null);
         } while(start <= getWidth());
 
+        /* Bar */
+        int distance  = getWidth() / 4;
+        int xPosition = distance;
+        while (xPosition < getWidth()) {
+            g2d.drawImage(barUI, xPosition, (int)(getRealHeight() + FRISE_HEIGHT),
+                    barUI.getWidth(null), barUI.getHeight(null), null);
+            xPosition += distance;
+        }
+
+
         /* Glutton informations */
         /* FIXME : real ui for those informations. */
         if (em.getGlutton() != null) {
@@ -144,25 +173,39 @@ public class BoardView extends JPanel implements Observer {
 
             g2d.setColor(Color.white);
 
+            FontMetrics fm = g2d.getFontMetrics(fontUI);
+
+            int current_distance = 0;
+
+            int labelPosition =
+                    getRealHeight() + ((int)FRISE_HEIGHT) +
+                    ((getHeight() - getRealHeight() + ((int)FRISE_HEIGHT)) / 2) -
+                            (fm.getHeight() / 2);
+
             // life
-            g2d.drawString(em.getGlutton().getLife() + "/" + em.getGlutton().getMaxLife(),
-                    10, getHeight() - 15);
+            g2d.drawString(lifeLabel, current_distance + 5, labelPosition);
+            current_distance += distance + barUI.getWidth(null);
 
             // score
-            /* Fixme : use bundle here. */
+            g2d.drawString(scoreLabel, current_distance + 5, labelPosition);
             g2d.drawString(
-                    String.format("%s : %05d", scoreLabel,
-                            board.getLevel().getScore().getValue()),
-                    200, getHeight() - 15);
+                    String.format("%05d", board.getLevel().getScore().getValue()),
+                    current_distance + fm.stringWidth(scoreLabel) + 50, labelPosition
+            );
+            current_distance += distance + barUI.getWidth(null);
 
             // weapon
+            g2d.drawString(weaponLabel, current_distance + 5, labelPosition);
             g2d.drawString(
-                    weaponLabel + " : Fistiropoing", 400, getHeight() - 15); /* TODO */
+                    "*TODO*",
+                    current_distance + fm.stringWidth(weaponLabel) + 50, labelPosition
+            );
+            current_distance += distance + barUI.getWidth(null);
 
             // chrono
-            g2d.drawString(
-                    timeLabel + " : " + board.getChrono().toString(),
-                    600, getHeight() - 15);
+            g2d.drawString(timeLabel, current_distance + 5, labelPosition);
+            g2d.drawString(board.getChrono().toString(),
+                    current_distance + fm.stringWidth(timeLabel) + 50, labelPosition);
 
             g2d.setFont(initialFont);
         }
