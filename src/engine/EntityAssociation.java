@@ -4,9 +4,11 @@ import engine.cake.AbstractCake;
 import engine.cake.LifeCake;
 import engine.nutritionists.CakeChaserNutritionist;
 import engine.nutritionists.GluttonChaserNutritionist;
+import engine.traps.LifeTrap;
 import sound.MSound;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +27,11 @@ public final class EntityAssociation {
     public final static String DEFAULT_LIFECAKE      = "default_lifecake";
     public final static String SUPERLIFECAKE         = "superlifecake";
     public final static String HYPERLIFECAKE         = "hyperlifecake";
+
+    /* Traps */
+    public final static RandomCreation randomTraps = new RandomCreation();
+    public final static String LIFETRAP    = "lifetrap";
+    public final static String BIGLIFETRAP = "biglifetrap";
 
     private static Map<String, Entity> entityMap   = new HashMap<>();
     private static Map<String, EntityView> viewMap = new HashMap<>();
@@ -76,13 +83,13 @@ public final class EntityAssociation {
 
         /* NUTRITIONIST */
         /* CakeChaser */
-        CakeChaserNutritionist cakeChaser = new CakeChaserNutritionist(null, new Dimension(30, 30), 2f, 0f, 3);
+        CakeChaserNutritionist cakeChaser = new CakeChaserNutritionist(null, new Dimension(30, 30), 2f, 0f, 2);
         EntityView cakeChaserView = new EntityView(new Skin(30, 30));
         register(DEFAULT_CAKECHASER, cakeChaser, cakeChaserView);
 
         /* GluttonChaser */
         GluttonChaserNutritionist gluttonChaser =
-                new GluttonChaserNutritionist(null, new Dimension(30, 30), 2f, 0f, 6);
+                new GluttonChaserNutritionist(null, new Dimension(30, 30), 2f, 0f, 3);
         EntityView gluttonChaserView = new EntityView(new Skin(30, 30));
         register(DEFAULT_GLUTTONCHASER, gluttonChaser, gluttonChaserView);
 
@@ -112,6 +119,22 @@ public final class EntityAssociation {
         randomCakes.add(DEFAULT_LIFECAKE, 50);
         randomCakes.add(SUPERLIFECAKE, 30);
         randomCakes.add(HYPERLIFECAKE, 5);
+
+
+        /* TRAPS */
+        /* Life trap */
+        LifeTrap lifeTrap = new LifeTrap(null, new Dimension(23, 23), true,
+                null, 1000, 1);
+        EntityView lifeTrapView = new EntityView(new Skin(23, 23));
+        register(LIFETRAP, lifeTrap, lifeTrapView);
+
+        LifeTrap bigLifeTrap = new LifeTrap(null, new Dimension(40, 40), true,
+                null, 1000, 2);
+        EntityView bigLifeTrapView = new EntityView(new Skin(40, 40));
+        register(BIGLIFETRAP, bigLifeTrap, bigLifeTrapView);
+
+        randomTraps.add(LIFETRAP, 30);
+        randomTraps.add(BIGLIFETRAP, 15);
 
     }
 
