@@ -1,5 +1,6 @@
 package engine.weapons;
 
+import engine.Cooldown;
 import engine.Entity;
 import log.IGLog;
 import sound.MSound;
@@ -28,8 +29,11 @@ public class Weapon {
 
     private int maxDamage;
 
+    private Cooldown cooldown;
+    /*
     private long cooldown;
     private boolean cooldownReady;
+    */
 
     private Weapon(String name, int type, List<MSound> sounds, double range,
                   int minDamage, int maxDamage, long cooldown) {
@@ -41,21 +45,23 @@ public class Weapon {
         this.range = range;
         this.minDamage = minDamage;
         this.maxDamage = maxDamage;
-        this.cooldown = cooldown;
-        cooldownReady = true;
+        this.cooldown = new Cooldown(cooldown);
+        /*this.cooldown = cooldown;
+        cooldownReady = true;*/
     }
 
     private Weapon(Weapon weapon) {
-        name = weapon.name;
-        owner = null;
-        type = weapon.type;
-        sounds = new LinkedList<>(weapon.sounds);
+        name      = weapon.name;
+        owner     = null;
+        type      = weapon.type;
+        sounds    = new LinkedList<>(weapon.sounds);
         soundsCpt = 0;
-        range = weapon.range;
+        range     = weapon.range;
         minDamage = weapon.minDamage;
         maxDamage = weapon.maxDamage;
-        cooldown = weapon.cooldown;
-        cooldownReady = true;
+        cooldown  = new Cooldown(weapon.cooldown.getTime());
+        /*cooldown = weapon.cooldown;
+        cooldownReady = true;*/
     }
 
     public static void register(String name, int type, Map<String, String> sounds, double range,
@@ -122,30 +128,9 @@ public class Weapon {
             sounds.get(soundsCpt).play();
     }
 
-    private void launchCooldown() {
-        if (cooldownReady) {
-            new Thread() {
-                @Override
-                public void run() {
-                    cooldownReady = false;
-                    Date wanted = new Date(new Date().getTime() + cooldown);
-                    do {
-                        try {
-                            Thread.sleep(cooldown);
-                            break;
-                        } catch (InterruptedException e) {
-                            if (new Date().after(wanted))
-                                break;
-                        }
-                    } while (true);
-                    cooldownReady = true;
-                }
-            }.start();
-        }
-    }
 
     public boolean ready() {
-        return cooldownReady;
+        return cooldown.isReady();
     }
 
 
@@ -179,7 +164,7 @@ public class Weapon {
 
     public boolean attack(Entity entity) {
         playNextSound();
-        launchCooldown();
+        cooldown.start();
 
         if (entity instanceof Attackable) {
             Random random = new Random();
