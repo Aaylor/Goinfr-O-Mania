@@ -177,35 +177,35 @@ public class BoardView extends JPanel implements Observer {
 
             int current_distance = 0;
 
-            int labelPosition =
+            int middle =
                     getRealHeight() + ((int)FRISE_HEIGHT) +
                     ((getHeight() - getRealHeight() + ((int)FRISE_HEIGHT)) / 2) -
                             (fm.getHeight() / 2);
 
             // life
-            g2d.drawString(lifeLabel, current_distance + 5, labelPosition);
+            g2d.drawString(lifeLabel, current_distance + 5, middle);
             current_distance += distance + barUI.getWidth(null);
 
             // score
-            g2d.drawString(scoreLabel, current_distance + 5, labelPosition);
+            g2d.drawString(scoreLabel, current_distance + 5, middle);
             g2d.drawString(
                     String.format("%05d", board.getLevel().getScore().getValue()),
-                    current_distance + fm.stringWidth(scoreLabel) + 50, labelPosition
+                    current_distance + fm.stringWidth(scoreLabel) + 50, middle
             );
             current_distance += distance + barUI.getWidth(null);
 
             // weapon
-            g2d.drawString(weaponLabel, current_distance + 5, labelPosition);
+            g2d.drawString(weaponLabel, current_distance + 5, middle);
             g2d.drawString(
                     "*TODO*",
-                    current_distance + fm.stringWidth(weaponLabel) + 50, labelPosition
+                    current_distance + fm.stringWidth(weaponLabel) + 50, middle
             );
             current_distance += distance + barUI.getWidth(null);
 
             // chrono
-            g2d.drawString(timeLabel, current_distance + 5, labelPosition);
+            g2d.drawString(timeLabel, current_distance + 5, middle);
             g2d.drawString(board.getChrono().toString(),
-                    current_distance + fm.stringWidth(timeLabel) + 50, labelPosition);
+                    current_distance + fm.stringWidth(timeLabel) + 50, middle);
 
             g2d.setFont(initialFont);
         }
