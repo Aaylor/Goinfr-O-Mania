@@ -3,6 +3,7 @@ package engine.nutritionists;
 import engine.AbstractMovableEntity;
 import engine.Entity;
 import engine.Movable;
+import engine.Valuable;
 import engine.weapons.Attackable;
 import engine.weapons.Weapon;
 import graphics.Circle;
@@ -18,7 +19,7 @@ import java.util.List;
  *  The nutritionist entity.
  */
 public abstract class AbstractNutritionist extends AbstractMovableEntity
-        implements Attackable, ArtificialIntelligence {
+        implements Attackable, ArtificialIntelligence, Valuable {
 
     public AbstractNutritionist(int nbLifes) {
         super();
@@ -39,14 +40,12 @@ public abstract class AbstractNutritionist extends AbstractMovableEntity
     }
 
     @Override
-    public void takeDamage(int damage) {
+    public boolean takeDamage(int damage) {
         setLife(getLife() - damage);
 
         IGLog.info(this + " a pris " + damage + " dommages. " + getLife() + " pv restants.");
 
-        if (getLife() <= 0) {
-            getManager().removeNutritionist(this);
-        }
+        return getLife() <= 0;
     }
 
 

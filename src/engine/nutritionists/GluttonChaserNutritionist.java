@@ -29,4 +29,9 @@ public class GluttonChaserNutritionist extends AbstractNutritionist {
     public void effect(Entity e) {
 
     }
+
+    @Override
+    public int scoreValue() {
+        return 15;
+    }
 }

@@ -39,4 +39,9 @@ public class CakeChaserNutritionist extends AbstractNutritionist {
             getManager().removeEntity(e);
         }
     }
+
+    @Override
+    public int scoreValue() {
+        return 5;
+    }
 }
