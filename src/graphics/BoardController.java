@@ -213,7 +213,6 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         chrono.start();
 
         while (true) {
-            System.out.println("chrono : " + chrono.toString());
             waitForResume();
             if (board.getLevel().getEntityManager().getGlutton().getLife() <= 0) {
                 IGLog.info("Glutton is dead.");

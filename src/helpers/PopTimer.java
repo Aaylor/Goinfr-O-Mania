@@ -22,12 +22,10 @@ public class PopTimer {
 
         /* add the waiting time to the due time. */
         dueTime += (System.currentTimeMillis() - pauseTime);
-        System.out.println("ResumeTimer -> " + dueTime);
         pauseTime = 0;
     }
 
     public boolean hasPassed() {
-        System.out.println("HasPassed -> " + dueTime);
         return System.currentTimeMillis() >= dueTime;
     }
 
