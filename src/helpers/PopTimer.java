@@ -1,35 +1,34 @@
 package helpers;
 
-import java.util.Date;
-
 public class PopTimer {
 
-    private Date startTime;
-    private Date dueTime;
-    private Date pauseTime;
+    private long startTime;
+    private long dueTime;
+    private long pauseTime;
 
     public PopTimer(long second) {
-        startTime = new Date();
-        dueTime   = new Date(startTime.getTime() + (second * 1000));
-        pauseTime = null;
+        startTime = System.currentTimeMillis();
+        dueTime   = startTime + (second * 1000);
+        pauseTime = 0;
     }
 
     public void pauseTimer() {
-        pauseTime = new Date();
+        pauseTime = System.currentTimeMillis();
     }
 
     public void resumeTimer() {
-        if (hasPassed()) return;
+        if (pauseTime == 0)
+            return;
 
-        if (pauseTime != null) {
-            long rest = dueTime.getTime() - pauseTime.getTime();
-            dueTime = new Date(new Date().getTime() + rest);
-            pauseTime = null;
-        }
+        /* add the waiting time to the due time. */
+        dueTime += (System.currentTimeMillis() - pauseTime);
+        System.out.println("ResumeTimer -> " + dueTime);
+        pauseTime = 0;
     }
 
     public boolean hasPassed() {
-        return ExtDate.hasPassed(dueTime);
+        System.out.println("HasPassed -> " + dueTime);
+        return System.currentTimeMillis() >= dueTime;
     }
 
 }
