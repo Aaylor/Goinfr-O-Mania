@@ -63,6 +63,12 @@ public class EntityManager {
             if (collision(player, entity)) {
                 player.effect(entity);
                 entity.effect(player);
+
+                /* if could add a score, then do it. */
+                if (entity instanceof Valuable) {
+                    level.getScore().add(((Valuable)entity).scoreValue());
+                }
+
             } else {
                 for (AbstractNutritionist nutritionist : nutritionists) {
                     if (collision(nutritionist, entity)) {
@@ -111,17 +117,6 @@ public class EntityManager {
         double boardHeight = getBoardDimension().getHeight();
 
         double radius = circle.getRadius();
-
-        /*
-        IGLog.write("==== OUT OF BOUND ===");
-        IGLog.write("x : " + x + "; y : " + y + ";wd : " + boardWidth + "hg : " + boardHeight);
-        IGLog.write("radius : " + radius);
-        IGLog.write("x - radius : " + (Math.ceil(x - radius)));
-        IGLog.write("x + radius : " + (Math.floor(x + radius)));
-        IGLog.write("y - radius : " + (Math.ceil(y - radius)));
-        IGLog.write("y + radius : " + (Math.floor(y + radius)));
-        IGLog.write("=====================");
-        */
 
         return  (Math.ceil(x - radius)  < 0) ||
                 (Math.floor(x + radius) > boardWidth)  ||
