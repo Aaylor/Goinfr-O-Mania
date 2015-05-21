@@ -53,9 +53,9 @@ public class Chrono {
 
         int minutes      = (int) ((realTime / 1000) / 60);
         int seconds      = (int) ((realTime / 1000) % 60);
-        int milliseconds = (int) ((realTime / 100)  % 10);
+        int milliseconds = (int) (realTime % 1000);
 
-        return String.format("%02d:%02d:%d", minutes, seconds, milliseconds);
+        return String.format("%02d:%02d:%03d", minutes, seconds, milliseconds);
     }
 
 }
