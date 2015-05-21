@@ -25,7 +25,8 @@ public class BoardView extends JPanel implements Observer {
     private String weaponLabel;
     private String timeLabel;
 
-    private Image gameUi;
+    private Image gameUI;
+    private Font  fontUI;
     private Board board;
     private boolean paused;
     private Font font;
@@ -41,7 +42,15 @@ public class BoardView extends JPanel implements Observer {
             e.printStackTrace();
         }
 
-        gameUi = resizeInitialImage("pictures/frise00.png");
+        gameUI = resizeInitialImage("pictures/frise00.png");
+
+        try {
+            File file = new File("fonts/Viking_n.ttf");
+            fontUI = Font.createFont(Font.TRUETYPE_FONT, file)
+                    .deriveFont(Font.PLAIN, 12);
+        } catch (Exception e) {
+            fontUI = null;
+        }
 
         ResourceBundle bundle = MainFrame.getCurrentInstance().getBundle();
         lifeLabel   = bundle.getString("lifeUI");
@@ -116,17 +125,23 @@ public class BoardView extends JPanel implements Observer {
         int start  = 0;
         do {
             g2d.drawImage(
-                    gameUi,
+                    gameUI,
                     start, getRealHeight(),
-                    gameUi.getWidth(null), gameUi.getHeight(null),
+                    gameUI.getWidth(null), gameUI.getHeight(null),
                     null
             );
-            start += gameUi.getWidth(null);
+            start += gameUI.getWidth(null);
         } while(start <= getWidth());
 
         /* Glutton informations */
         /* FIXME : real ui for those informations. */
         if (em.getGlutton() != null) {
+            Font initialFont = g2d.getFont();
+
+            if (fontUI != null) {
+                g2d.setFont(fontUI);
+            }
+
             g2d.setColor(Color.white);
 
             // life
@@ -148,6 +163,8 @@ public class BoardView extends JPanel implements Observer {
             g2d.drawString(
                     timeLabel + " : " + board.getChrono().toString(),
                     600, getHeight() - 15);
+
+            g2d.setFont(initialFont);
         }
 
         g2d.setColor(initialColor);
