@@ -3,6 +3,7 @@ package graphics;
 import engine.*;
 import engine.nutritionists.AbstractNutritionist;
 import engine.weapons.Weapon;
+import helpers.Chrono;
 import helpers.ExtDate;
 import helpers.ExtMath;
 import helpers.PopTimer;
@@ -38,6 +39,8 @@ public class BoardController extends Thread implements MouseListener, KeyListene
 
     private MSound gameSound;
 
+    private Chrono chrono;
+
     private PopTimer nextRandomPop;
     private PopTimer nextRandomNutritionists;
 
@@ -50,6 +53,8 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         boardView.addKeyListener(this);
         board.addObserver(boardView);
         getBoard().getLevel().getEntityManager().setBoardDimension(boardView.getSize());
+
+        chrono = new Chrono();
 
         gameState = true;
 
@@ -72,6 +77,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         IGLog.info("BoardController, gamed paused.");
         boardView.setPaused(true);
         gameSound.stop();
+        chrono.pause();
         nextRandomPop.pauseTimer();
         nextRandomNutritionists.pauseTimer();
         board.notification();
@@ -82,6 +88,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         IGLog.info("BoardController, game resumed.");
         boardView.setPaused(false);
         gameSound.play();
+        chrono.resume();
         nextRandomPop.resumeTimer();
         nextRandomNutritionists.resumeTimer();
         gameState = true;
@@ -203,7 +210,10 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         /* Game initialization */
         initialization(manager);
 
+        chrono.start();
+
         while (true) {
+            System.out.println("chrono : " + chrono.toString());
             waitForResume();
             if (board.getLevel().getEntityManager().getGlutton().getLife() <= 0) {
                 IGLog.info("Glutton is dead.");

@@ -63,8 +63,6 @@ public class BoardView extends JPanel implements Observer {
     private void drawUI(Graphics2D g2d) {
         EntityManager em = board.getLevel().getEntityManager();
 
-        /*g2d.setBackground(new Color(0, 0, 0));
-        g2d.drawRect(0, getHeight() - UI_HEIGHT, getWidth(), getHeight());*/
         g2d.drawImage(gameUi.getImage(), 0, getHeight() - UI_HEIGHT, getWidth(), UI_HEIGHT, null);
 
         if (em.getGlutton() != null)
