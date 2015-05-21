@@ -34,7 +34,9 @@ public class BoardController extends Thread implements MouseListener, KeyListene
     private boolean gameState;
     private final Set<Integer> pressedKeys;
     private MSound gameSound;
+
     private PopTimer nextRandomPop;
+    private PopTimer nextRandomTrap;
     private PopTimer nextRandomNutritionists;
 
     /* Constructors */
@@ -68,9 +70,13 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         IGLog.info("BoardController, gamed paused.");
         boardView.setPaused(true);
         gameSound.stop();
+
+        // Pause chrono and timer.
         getBoard().getChrono().pause();
         nextRandomPop.pauseTimer();
+        nextRandomTrap.pauseTimer();
         nextRandomNutritionists.pauseTimer();
+
         board.notification();
         gameState = false;
     }
@@ -79,9 +85,12 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         IGLog.info("BoardController, game resumed.");
         boardView.setPaused(false);
         gameSound.play();
+
+        // Resume chrono and timer.
         getBoard().getChrono().resume();
         nextRandomPop.resumeTimer();
         nextRandomNutritionists.resumeTimer();
+
         gameState = true;
         notify();
     }
@@ -150,6 +159,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
 
         /* Initialize timer. */
         nextRandomPop = new PopTimer(10);
+        nextRandomTrap = new PopTimer(2);
         nextRandomNutritionists = new PopTimer(5);
     }
 
@@ -168,8 +178,17 @@ public class BoardController extends Thread implements MouseListener, KeyListene
     }
 
     private void randomTrapPop() {
+        if (nextRandomTrap.hasPassed()) {
+            IGLog.write("BoardController::run -> Next Random Trap has to be done.");
 
+            String trapName = EntityAssociation.randomTraps.getRandomlyName();
+            getBoard().getLevel().getEntityManager().addAtRandomPosition(
+                    EntityAssociation.getEntity(trapName),
+                    EntityAssociation.getEntityView(trapName)
+            );
 
+            nextRandomTrap = new PopTimer(2);
+        }
     }
 
     private void randomNutritionistsPop() {
@@ -236,13 +255,9 @@ public class BoardController extends Thread implements MouseListener, KeyListene
                 );
             }
 
-            waitForResume();
             randomPop();
-
-            waitForResume();
             randomNutritionistsPop();
-
-
+            randomTrapPop();
 
             board.notification();
             sleepFor(15);

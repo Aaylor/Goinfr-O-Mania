@@ -20,6 +20,8 @@ public class BoardView extends JPanel implements Observer {
     private static final int    UI_HEIGHT    = 50;
     private static final double FRISE_HEIGHT = 10;
 
+    private final int HEART_PADDING = 5;
+
     private String lifeLabel;
     private String scoreLabel;
     private String weaponLabel;
@@ -59,9 +61,7 @@ public class BoardView extends JPanel implements Observer {
         }
 
         emptyHeart  = resizeInitialImage("pictures/heart00.png", 20, true);
-                //new ImageIcon("pictures/heart00.png").getImage();
         filledHeart = resizeInitialImage("pictures/heart01.png", 20, true);
-                //new ImageIcon("pictures/heart01.png").getImage();
 
         ResourceBundle bundle = MainFrame.getCurrentInstance().getBundle();
         lifeLabel   = bundle.getString("lifeUI");
@@ -165,7 +165,6 @@ public class BoardView extends JPanel implements Observer {
 
 
         /* Glutton informations */
-        /* FIXME : real ui for those informations. */
         if (em.getGlutton() != null) {
             Font initialFont = g2d.getFont();
 
@@ -186,17 +185,13 @@ public class BoardView extends JPanel implements Observer {
 
             // life
             g2d.drawString(lifeLabel, current_distance + 5, middle);
-
-
-            final int padding = 5;
             int curX = current_distance + fm.stringWidth(lifeLabel) + 30;
-
             for (int i = 0; i < 6; i++) {
                 if (i < board.getLevel().getEntityManager().getGlutton().getLife())
                     g2d.drawImage(filledHeart, curX, (middle - (emptyHeart.getHeight(null) / 2) - 5), null);
                 else
                     g2d.drawImage(emptyHeart, curX, (middle - (emptyHeart.getHeight(null) / 2) - 5), null);
-                curX += emptyHeart.getWidth(null) + padding;
+                curX += emptyHeart.getWidth(null) + HEART_PADDING;
             }
             current_distance += distance + barUI.getWidth(null);
 
