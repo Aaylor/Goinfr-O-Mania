@@ -213,7 +213,7 @@ public class BoardView extends JPanel implements Observer {
 
             // chrono
             g2d.drawString(timeLabel, current_distance + 5, middle);
-            g2d.drawString(board.getChrono().toString(),
+            g2d.drawString(board.getLevel().getChrono().toString(),
                     current_distance + fm.stringWidth(timeLabel) + 50, middle);
 
             g2d.setFont(initialFont);

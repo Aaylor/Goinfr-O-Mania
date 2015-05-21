@@ -1,6 +1,7 @@
 package graphics;
 
 import engine.*;
+import engine.effects.SlowSpeedBuff;
 import helpers.Chrono;
 import sound.MSound;
 
@@ -13,7 +14,6 @@ public class Board extends Observable {
     private Player currentPlayer;
     private Level currentLevel;
 
-    private Chrono chrono;
 
     public Board(Background background) {
         this.background = background;
@@ -23,7 +23,6 @@ public class Board extends Observable {
         this.background    = null;
         this.currentPlayer = player;
         this.currentLevel  = level;
-        chrono = new Chrono();
     }
 
     public Player getPlayer() {
@@ -34,9 +33,6 @@ public class Board extends Observable {
         return currentLevel;
     }
 
-    public Chrono getChrono() {
-        return chrono;
-    }
 
     public void sendGluttonMovement(Movable.Direction d) {
         Glutton glutton = currentLevel.getEntityManager().getGlutton();

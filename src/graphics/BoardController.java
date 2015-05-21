@@ -72,7 +72,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         gameSound.stop();
 
         // Pause chrono and timer.
-        getBoard().getChrono().pause();
+        getBoard().getLevel().getChrono().pause();
         nextRandomPop.pauseTimer();
         nextRandomTrap.pauseTimer();
         nextRandomNutritionists.pauseTimer();
@@ -87,7 +87,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         gameSound.play();
 
         // Resume chrono and timer.
-        getBoard().getChrono().resume();
+        getBoard().getLevel().getChrono().resume();
         nextRandomPop.resumeTimer();
         nextRandomNutritionists.resumeTimer();
 
@@ -220,7 +220,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         /* Game initialization */
         initialization(manager);
 
-        getBoard().getChrono().start();
+        getBoard().getLevel().getChrono().start();
 
         while (true) {
             waitForResume();
@@ -314,7 +314,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
             new PauseController(boardView, this, getBoard().getPlayer());
         } else if (code == kc.getQuit()) {
             /* TODO: Maybe ask to save ?? */
-            getBoard().getChrono().stop();
+            getBoard().getLevel().getChrono().stop();
             System.exit(0);
         } else {
             synchronized (pressedKeys) {
