@@ -20,6 +20,11 @@ public class BoardView extends JPanel implements Observer {
     private static final int    UI_HEIGHT    = 50;
     private static final double FRISE_HEIGHT = 10;
 
+    private String lifeLabel;
+    private String scoreLabel;
+    private String weaponLabel;
+    private String timeLabel;
+
     private Image gameUi;
     private Board board;
     private boolean paused;
@@ -37,6 +42,13 @@ public class BoardView extends JPanel implements Observer {
         }
 
         gameUi = resizeInitialImage("pictures/frise00.png");
+
+        ResourceBundle bundle = MainFrame.getCurrentInstance().getBundle();
+        lifeLabel   = bundle.getString("lifeUI");
+        scoreLabel  = bundle.getString("scoreUI");
+        weaponLabel = bundle.getString("weaponUI");
+        timeLabel   = bundle.getString("chronoUI");
+
         setDoubleBuffered(true);
     }
 
@@ -124,15 +136,18 @@ public class BoardView extends JPanel implements Observer {
             // score
             /* Fixme : use bundle here. */
             g2d.drawString(
-                    "Score : " + board.getLevel().getScore(), 200, getHeight() - 15);
+                    String.format("%s : %05d", scoreLabel,
+                            board.getLevel().getScore().getValue()),
+                    200, getHeight() - 15);
 
             // weapon
             g2d.drawString(
-                    "Weapon : Fistiropoing", 400, getHeight() - 15); /* TODO */
+                    weaponLabel + " : Fistiropoing", 400, getHeight() - 15); /* TODO */
 
             // chrono
             g2d.drawString(
-                    "Chrono : " + board.getChrono().toString(), 600, getHeight() - 15);
+                    timeLabel + " : " + board.getChrono().toString(),
+                    600, getHeight() - 15);
         }
 
         g2d.setColor(initialColor);
