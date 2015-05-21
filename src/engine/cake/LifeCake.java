@@ -43,4 +43,9 @@ public class LifeCake extends AbstractCake {
         if (sound != null)
             sound.play();
     }
+
+    @Override
+    public int scoreValue() {
+        return 10;
+    }
 }
