@@ -49,11 +49,11 @@ public class Score implements Comparable<Score>, Comparator<Score> {
 
     @Override
     public int compareTo(Score o) {
-        if (value - o.value == 0) {
-            return who.compareTo(o.who);
+        if (o.value - value == 0) {
+            return o.who.compareTo(who);
         }
 
-        return value - o.value;
+        return o.value - value;
     }
 
     @Override

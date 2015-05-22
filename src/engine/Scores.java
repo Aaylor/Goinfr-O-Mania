@@ -14,6 +14,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Scores {
@@ -38,7 +39,7 @@ public class Scores {
 
     private void load() {
 
-        File fXmlFile = new File("scores.xml");
+        File fXmlFile = new File(path);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder;
         Document document;
@@ -85,11 +86,17 @@ public class Scores {
     public void save() {
         int cpt;
 
+        /*
         if (!changed)
             return;
+        */
+
+        for (Score score : scores) {
+            System.out.println(score.getWho() + " -- " + score.getValue());
+        }
 
         IGLog.write("Scores::save -> exit detected + changes");
-        scores.sort(new Score());
+        Collections.sort(scores, new Score());
 
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = null;
@@ -121,7 +128,7 @@ public class Scores {
 
             score.appendChild(player);
             score.appendChild(value);
-
+            System.out.println("{ " + s.getWho() + " ; " + s.getValue() + " }");
             rootElement.appendChild(score);
             ++cpt;
         }
@@ -138,7 +145,7 @@ public class Scores {
 
         DOMSource source = new DOMSource(doc);
 
-        StreamResult r = new StreamResult(new File("scores.xml"));
+        StreamResult r = new StreamResult(new File(path));
 
         try {
             transformer.transform(source, r);
