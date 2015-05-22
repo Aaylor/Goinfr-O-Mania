@@ -8,6 +8,7 @@ import graphics.BoardController;
 import graphics.Circle;
 import helpers.ExtMath;
 import log.IGLog;
+import sun.awt.image.ImageWatched;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -25,11 +26,12 @@ public class EntityManager {
     private EntityView gluttonView;
     private Level level;
 
-    private LinkedList<AbstractNutritionist> nutritionists;
+    private List<AbstractNutritionist> nutritionists;
     private Map<AbstractNutritionist, EntityView> nutritionistsView;
 
-    private LinkedList<Entity> others;
+    private List<Entity> others;
     private Map<Entity, EntityView> othersView;
+    private Map<Entity, Long> othersLifeTime;
 
     private Dimension boardDimension;
 
@@ -37,11 +39,12 @@ public class EntityManager {
      *  Create an empty manager.
      */
     public EntityManager(Level level){
-        nutritionists = new LinkedList<>();
-        others = new LinkedList<>();
+        nutritionists = Collections.synchronizedList(new LinkedList<>());
+        others = Collections.synchronizedList(new LinkedList<>());
 
         nutritionistsView = new ConcurrentHashMap<>();
         othersView = new ConcurrentHashMap<>();
+        othersLifeTime = new ConcurrentHashMap<>();
 
         this.level = level;
     }
@@ -59,10 +62,26 @@ public class EntityManager {
     public void entityLoop() {
         nutritionistsMove();
 
+        List<AbstractNutritionist> nToDestroy = new LinkedList<>();
+        List<Entity> othersToDestroy = new LinkedList<>();
+
         for (Entity entity : others) {
+            if (othersLifeTime.containsKey(entity)) {
+                long end = othersLifeTime.get(entity);
+
+                if (end < level.getChrono().timeEllapsed()) {
+                    IGLog.write("EntityManager::entityLoop() -> time to destroy " + entity);
+                    othersToDestroy.add(entity);
+                    continue;
+                }
+            }
+
             if (collision(player, entity)) {
                 player.effect(entity);
-                entity.effect(player);
+
+                if (entity.effect(player)) {
+                    othersToDestroy.add(entity);
+                }
 
                 /* if could add a score, then do it. */
                 if (entity instanceof Valuable) {
@@ -72,12 +91,23 @@ public class EntityManager {
             } else {
                 for (AbstractNutritionist nutritionist : nutritionists) {
                     if (collision(nutritionist, entity)) {
-                        nutritionist.effect(entity);
+
+                        if (nutritionist.effect(entity)) {
+                            nToDestroy.add(nutritionist);
+                        }
+
+                        if (entity.effect(nutritionist)) {
+                            othersToDestroy.add(entity);
+                        }
+
                         break;
                     }
                 }
             }
         }
+
+        removeNutritionist(nToDestroy);
+        removeOther(othersToDestroy);
     }
 
     private boolean checkCrossCollision(List<? extends Entity> entities, Entity e1,
@@ -262,7 +292,7 @@ public class EntityManager {
      *  @param e The entity to add.
      */
     public void addEntity(Entity e, EntityView view){
-        others.addFirst(e);
+        others.add(e);
         e.setManager(this);
         othersView.put(e, view);
         view.setEntity(e);
@@ -296,15 +326,9 @@ public class EntityManager {
      *  @param n The new nutritionist.
      */
     public void addNutritionist(AbstractNutritionist n, EntityView view) {
-        synchronized (nutritionists) {
-            nutritionists.addFirst(n);
-        }
+        nutritionists.add(n);
         n.setManager(this);
-
-        synchronized (nutritionistsView) {
-            nutritionistsView.put(n, view);
-        }
-
+        nutritionistsView.put(n, view);
         view.setEntity(n);
     }
 
@@ -315,18 +339,23 @@ public class EntityManager {
      *  @return True if nutritionist has been remove correctly.
      */
     public boolean removeNutritionist(AbstractNutritionist n) {
-
-        synchronized (nutritionists) {
-            if (nutritionists.remove(n)) {
-                n.setManager(null);
-                synchronized (nutritionistsView) {
-                    nutritionistsView.remove(n);
-                }
-                return true;
-            }
+        if (nutritionists.remove(n)) {
+            n.setManager(null);
+            nutritionistsView.remove(n);
+            return true;
         }
 
         return false;
+    }
+    
+    public boolean removeNutritionist(List<AbstractNutritionist> es) {
+        nutritionists.removeAll(es);
+
+        for (Entity e : es) {
+            nutritionistsView.remove(e);
+        }
+
+        return true;
     }
 
     /**
@@ -334,10 +363,19 @@ public class EntityManager {
      *  @param n The new other.
      */
     public void addOther(Entity n, EntityView view) {
-        others.addFirst(n);
+        others.add(n);
         n.setManager(this);
         othersView.put(n, view);
         view.setEntity(n);
+    }
+
+    public void addOther(Entity e, EntityView view, long lifetime) {
+        addOther(e, view);
+        putLifeTime(e, lifetime);
+    }
+
+    public void putLifeTime(Entity e, long lifetime) {
+        othersLifeTime.put(e, level.getChrono().timeEllapsed() + lifetime);
     }
 
     /**
@@ -350,10 +388,22 @@ public class EntityManager {
         if (others.remove(n)) {
             n.setManager(null);
             othersView.remove(n);
+            othersLifeTime.remove(n);
             return true;
         }
 
         return false;
+    }
+
+    public boolean removeOther(List<Entity> es) {
+        others.removeAll(es);
+
+        for (Entity e : es) {
+            othersView.remove(e);
+            othersLifeTime.remove(e);
+        }
+
+        return true;
     }
 
     public List<Entity> getCakes() {

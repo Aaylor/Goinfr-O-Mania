@@ -48,11 +48,13 @@ public class Glutton extends AbstractMovableEntity implements Attackable {
     }
 
     @Override
-    public void effect(Entity e) {
+    public boolean effect(Entity e) {
         if (e instanceof AbstractCake) {
             IGLog.info("Glutton, effect: cake.");
-            getManager().removeEntity(e);
+            return false;
         }
+
+        return false;
     }
 
     @Override

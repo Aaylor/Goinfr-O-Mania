@@ -126,16 +126,16 @@ public final class EntityAssociation {
         /* TRAPS */
         /* Life trap */
         LifeTrap lifeTrap = new LifeTrap(null, new Dimension(23, 23), true,
-                null, 1000, 1);
+                null, 1000, 5000, 1);
         EntityView lifeTrapView = new EntityView(new Skin(23, 23));
         register(LIFETRAP, lifeTrap, lifeTrapView);
 
         LifeTrap bigLifeTrap = new LifeTrap(null, new Dimension(40, 40), true,
-                null, 1000, 2);
+                null, 1000, 4000, 2);
         EntityView bigLifeTrapView = new EntityView(new Skin(40, 40));
         register(BIGLIFETRAP, bigLifeTrap, bigLifeTrapView);
 
-        SlowTrap slowTrap = new SlowTrap(null, new Dimension(7, 7), true, null, 2000);
+        SlowTrap slowTrap = new SlowTrap(null, new Dimension(7, 7), true, null, 2000, 7000);
         EntityView slowTrapView = new EntityView(new Skin(7, 7));
         register(SLOWTRAP, slowTrap, slowTrapView);
 

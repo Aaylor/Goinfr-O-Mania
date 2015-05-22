@@ -177,6 +177,6 @@ public abstract class Entity extends Observable implements Cloneable {
     /**
      * Apply the effect of the Entity.
      */
-    public abstract void effect(Entity e);
+    public abstract boolean effect(Entity e);
 
 }

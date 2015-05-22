@@ -21,14 +21,16 @@ public class SlowTrap extends AbstractTrap {
         super(position, size, crossable, sound);
     }
 
-    public SlowTrap(Point2D position, Dimension size, boolean crossable, MSound sound, long cooldown) {
-        super(position, size, crossable, sound, cooldown);
+    public SlowTrap(Point2D position, Dimension size, boolean crossable, MSound sound, long cooldown, long lifetime) {
+        super(position, size, crossable, sound, cooldown, lifetime);
     }
 
     @Override
-    void applyEffect(Entity e) {
+    boolean applyEffect(Entity e) {
         if (e instanceof AbstractMovableEntity)
             new SlowSpeedBuff((AbstractMovableEntity) e, 3).startBuff();
+
+        return false;
     }
 
     @Override

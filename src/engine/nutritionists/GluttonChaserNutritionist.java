@@ -26,8 +26,8 @@ public class GluttonChaserNutritionist extends AbstractNutritionist {
     }
 
     @Override
-    public void effect(Entity e) {
-
+    public boolean effect(Entity e) {
+        return false;
     }
 
     @Override

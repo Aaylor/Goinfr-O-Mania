@@ -22,24 +22,24 @@ public class LifeTrap extends AbstractTrap {
         this.damage = damage;
     }
 
-    public LifeTrap(Point2D position, Dimension size, boolean crossable,
-                    MSound sound, int damage) {
+    public LifeTrap(Point2D position, Dimension size, boolean crossable, MSound sound, int damage) {
         super(position, size, crossable, sound);
         this.damage = damage;
     }
 
-    public LifeTrap(Point2D position, Dimension size, boolean crossable,
-                    MSound sound, long cooldown, int damage) {
-        super(position, size, crossable, sound, cooldown);
+    public LifeTrap(Point2D position, Dimension size, boolean crossable, MSound sound, long cooldown, long lifetime, int damage) {
+        super(position, size, crossable, sound, cooldown, lifetime);
         this.damage = damage;
     }
 
     @Override
-    void applyEffect(Entity e) {
+    boolean applyEffect(Entity e) {
         if (e instanceof Attackable) {
             IGLog.write("Trap::effect -> effect on " + e);
             ((Attackable) e).takeDamage(damage);
         }
+
+        return false;
     }
 
     @Override

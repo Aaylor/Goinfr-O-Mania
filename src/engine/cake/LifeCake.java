@@ -1,6 +1,8 @@
 package engine.cake;
 
 import engine.Entity;
+import engine.Glutton;
+import engine.nutritionists.CakeChaserNutritionist;
 import sound.MSound;
 
 import java.awt.*;
@@ -26,16 +28,20 @@ public class LifeCake extends AbstractCake {
     }
 
     @Override
-    public void effect(Entity e) {
-        int life = e.getLife();
+    public boolean effect(Entity e) {
+        if (e instanceof Glutton || e instanceof CakeChaserNutritionist) {
+            int life = e.getLife();
+            if (life + lifeGiven > e.getMaxLife()) {
+                e.setLife(e.getMaxLife());
+            } else {
+                e.setLife(life + lifeGiven);
+            }
 
-        if (life + lifeGiven > e.getMaxLife()) {
-            e.setLife(e.getMaxLife());
-        } else {
-            e.setLife(life + lifeGiven);
+            playSound();
+            return true;
         }
 
-        playSound();
+        return false;
     }
 
     @Override

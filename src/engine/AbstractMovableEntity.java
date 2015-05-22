@@ -187,7 +187,4 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
         setPoint(new Point2D.Double(x, y));
     }
 
-    @Override
-    public abstract void effect(Entity e);
-
 }

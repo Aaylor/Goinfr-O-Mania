@@ -15,6 +15,7 @@ public abstract class AbstractTrap extends Entity implements Soundable, Valuable
 
     private MSound sound;
     private Cooldown damageCooldown;
+    private long lifetime;
 
     private boolean hasScored = false;
 
@@ -40,17 +41,22 @@ public abstract class AbstractTrap extends Entity implements Soundable, Valuable
     }
 
     public AbstractTrap(Point2D position, Dimension size, boolean crossable,
-                        MSound sound, long cooldown) {
+                        MSound sound, long cooldown, long lifetime) {
         super(position, size, crossable);
         this.sound = sound;
         this.damageCooldown = new Cooldown(cooldown);
+        this.lifetime = lifetime;
     }
 
-    abstract void applyEffect(Entity e);
+    abstract boolean applyEffect(Entity e);
     abstract int getScoreValue();
 
     public Cooldown getCooldown() {
         return damageCooldown;
+    }
+
+    public long getLifetime() {
+        return lifetime;
     }
 
     @Override
@@ -60,14 +66,16 @@ public abstract class AbstractTrap extends Entity implements Soundable, Valuable
     }
 
     @Override
-    public final void effect(Entity e) {
+    public final boolean effect(Entity e) {
         if (getCooldown().isReady()) {
             playSound();
             getCooldown().start();
             hasScored = false;
 
-            applyEffect(e);
+            return applyEffect(e);
         }
+
+        return false;
     }
 
     @Override

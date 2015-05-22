@@ -33,11 +33,13 @@ public class CakeChaserNutritionist extends AbstractNutritionist {
     }
 
     @Override
-    public void effect(Entity e) {
+    public boolean effect(Entity e) {
         if (e instanceof AbstractCake) {
             IGLog.info("CakeChaser, effect: cake.");
-            getManager().removeEntity(e);
+            return false;
         }
+
+        return false;
     }
 
     @Override

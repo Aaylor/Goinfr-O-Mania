@@ -22,7 +22,7 @@ public class Projectile extends AbstractMovableEntity implements Cloneable {
     }
 
     @Override
-    public void effect(Entity e) {
-
+    public boolean effect(Entity e) {
+        return false;
     }
 }

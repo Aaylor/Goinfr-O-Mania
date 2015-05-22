@@ -2,6 +2,7 @@ package graphics;
 
 import engine.*;
 import engine.nutritionists.AbstractNutritionist;
+import engine.traps.AbstractTrap;
 import engine.weapons.Weapon;
 import helpers.Chrono;
 import helpers.ExtDate;
@@ -182,10 +183,12 @@ public class BoardController extends Thread implements MouseListener, KeyListene
             IGLog.write("BoardController::run -> Next Random Trap has to be done.");
 
             String trapName = EntityAssociation.randomTraps.getRandomlyName();
+            AbstractTrap a = (AbstractTrap) EntityAssociation.getEntity(trapName);
             getBoard().getLevel().getEntityManager().addAtRandomPosition(
-                    EntityAssociation.getEntity(trapName),
+                    a,
                     EntityAssociation.getEntityView(trapName)
             );
+            getBoard().getLevel().getEntityManager().putLifeTime(a, a.getLifetime());
 
             nextRandomTrap = new PopTimer(2);
         }
