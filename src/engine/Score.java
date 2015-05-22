@@ -1,14 +1,18 @@
 package engine;
 
+import java.util.Comparator;
 import java.util.Observable;
 
-public class Score {
+public class Score implements Comparable<Score>, Comparator<Score> {
+
+    private String who;
     private int value;
 
 
     //CONSTRUCTORS
 
     public Score(String name, int value) {
+        this.who = name;
         this.value = value;
     }
 
@@ -28,6 +32,11 @@ public class Score {
 
     //GETTERS
 
+
+    public String getWho() {
+        return who;
+    }
+
     public int getValue() {
         return value;
     }
@@ -36,5 +45,19 @@ public class Score {
     @Override
     public String toString() {
         return String.valueOf(value);
+    }
+
+    @Override
+    public int compareTo(Score o) {
+        if (value - o.value == 0) {
+            return who.compareTo(o.who);
+        }
+
+        return value - o.value;
+    }
+
+    @Override
+    public int compare(Score o1, Score o2) {
+        return o1.compareTo(o2);
     }
 }
