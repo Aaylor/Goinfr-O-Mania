@@ -220,14 +220,11 @@ public class BoardController extends Thread implements MouseListener, KeyListene
     @Override
     public void run() {
         EntityManager manager = board.getLevel().getEntityManager();
-        System.out.println("run");
+
         /* Game initialization */
         initialization(manager);
 
-        System.out.println("fufu");
         getBoard().getLevel().getChrono().start();
-        System.out.println("bisbis");
-
 
         while (true) {
             waitForResume();
@@ -238,7 +235,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
                         board.getPlayer().getName(),
                         board.getLevel().getScore()
                 );
-                MainFrame.getCurrentInstance().popPanel();
+                MainFrame.getCurrentInstance().popPanel(false);
                 new EndGameController(getBoard());
                 return;
             }
