@@ -20,12 +20,26 @@ public class MainFrame extends JFrame {
     private Stack<JPanel> stackPanel;
     private ResourceBundle bundle;
 
+    private Scores scores;
+
     public MainFrame(ResourceBundle bundle) throws HeadlessException {
         super(bundle.getString("title"));
         this.bundle = bundle;
         IGLog.write("Main frame creation.");
         stackPanel = new Stack<>();
         defaultFrameConfiguration(bundle);
+
+        /* Scores setting */
+        scores = new Scores("scores.xml");
+        Runtime.getRuntime().addShutdownHook(
+                new Thread() {
+                    @Override
+                    public void run() {
+                        scores.save();
+                    }
+                }
+        );
+
         instance = this;
     }
 
@@ -35,6 +49,10 @@ public class MainFrame extends JFrame {
 
     public ResourceBundle getBundle() {
         return bundle;
+    }
+
+    public Scores getScores() {
+        return scores;
     }
 
     private void defaultFrameConfiguration(ResourceBundle bundle) {
