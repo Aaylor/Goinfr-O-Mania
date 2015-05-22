@@ -233,56 +233,49 @@ public class EntityManager {
         all.addAll(nutritionists);
         all.addAll(others);
 
-        if (w.isMelee()) {
-            /* Now check if there is anyone on the range. */
-            Point2D center = e.getCenter();
 
-            double weaponRadius = w.getRange() + e.getBoundsCircle().getRadius();
-            Circle attackRange = new Circle(
-                    e.getCenterX() - weaponRadius,
-                    e.getCenterY() - weaponRadius,
-                    weaponRadius
-            );
+        /* Now check if there is anyone on the range. */
+        Point2D center = e.getCenter();
 
-            for (Entity attackedEntity : all) {
+        double weaponRadius = w.getRange() + e.getBoundsCircle().getRadius();
+        Circle attackRange = new Circle(
+                e.getCenterX() - weaponRadius,
+                e.getCenterY() - weaponRadius,
+                weaponRadius
+        );
 
-                if (attackedEntity == e)
-                    continue;
+        for (Entity attackedEntity : all) {
 
-                double llimit = ExtMath.addToAngle(e.getDirection(), -90);
-                double hlimit = ExtMath.addToAngle(e.getDirection(), 90);
+            if (attackedEntity == e)
+                continue;
 
-                /* Fourth step : calculate the new needed angle to face the player. */
-                double dx = attackedEntity.getCenterX() - center.getX();
-                double dy = attackedEntity.getCenterY() - center.getY();
-                double nextAngle = ExtMath.addToAngle(Math.toDegrees(Math.atan2(dy, dx)), 360);
+            double llimit = ExtMath.addToAngle(e.getDirection(), -90);
+            double hlimit = ExtMath.addToAngle(e.getDirection(), 90);
 
-                if (((llimit < hlimit && nextAngle >= llimit && nextAngle <= hlimit) ||
-                    (llimit > hlimit && (nextAngle >= llimit || nextAngle <= hlimit))) &&
-                    attackRange.intersects(attackedEntity.getBoundsCircle())) {
-                    System.out.println("L'entité (" + attackedEntity + ") a été touché.");
+            /* Fourth step : calculate the new needed angle to face the player. */
+            double dx = attackedEntity.getCenterX() - center.getX();
+            double dy = attackedEntity.getCenterY() - center.getY();
+            double nextAngle = ExtMath.addToAngle(Math.toDegrees(Math.atan2(dy, dx)), 360);
 
-                    if (w.attack(attackedEntity)) { /* the attacked entity is dead */
-                        if (attackedEntity instanceof AbstractNutritionist) {
-                            removeNutritionist((AbstractNutritionist) attackedEntity);
-                        } else if (! (attackedEntity instanceof Glutton)) {
-                            removeOther(attackedEntity);
-                        }
+            if (((llimit < hlimit && nextAngle >= llimit && nextAngle <= hlimit) ||
+                (llimit > hlimit && (nextAngle >= llimit || nextAngle <= hlimit))) &&
+                attackRange.intersects(attackedEntity.getBoundsCircle())) {
+                System.out.println("L'entité (" + attackedEntity + ") a été touché.");
 
-                        if (e instanceof  Glutton && attackedEntity instanceof Valuable) {
-                            level.getScore().add(((Valuable) attackedEntity).scoreValue());
-                        }
+                if (w.attack(attackedEntity)) { /* the attacked entity is dead */
+                    if (attackedEntity instanceof AbstractNutritionist) {
+                        removeNutritionist((AbstractNutritionist) attackedEntity);
+                    } else if (! (attackedEntity instanceof Glutton)) {
+                        removeOther(attackedEntity);
                     }
 
+                    if (e instanceof  Glutton && attackedEntity instanceof Valuable) {
+                        level.getScore().add(((Valuable) attackedEntity).scoreValue());
+                    }
                 }
 
             }
 
-        } else if (w.isRanged()) {
-
-
-        } else {
-            /* Do nothing here */
         }
 
     }

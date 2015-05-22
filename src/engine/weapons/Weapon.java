@@ -11,14 +11,9 @@ public class Weapon {
 
     private static final Map<String, Weapon> map = new HashMap<>();
 
-    public static final int RANGED = 0;
-    public static final int MELEE  = 1;
-
     private String name;
 
     private Entity owner;
-
-    private int type;
 
     private List<MSound> sounds;
     private int soundsCpt;
@@ -30,51 +25,36 @@ public class Weapon {
     private int maxDamage;
 
     private Cooldown cooldown;
-    /*
-    private long cooldown;
-    private boolean cooldownReady;
-    */
 
-    private Weapon(String name, int type, List<MSound> sounds, double range,
+
+    private Weapon(String name, List<MSound> sounds, double range,
                   int minDamage, int maxDamage, long cooldown) {
         this.name = name;
         owner = null;
-        this.type = type;
         this.sounds = sounds;
         soundsCpt = 0;
         this.range = range;
         this.minDamage = minDamage;
         this.maxDamage = maxDamage;
         this.cooldown = new Cooldown(cooldown);
-        /*this.cooldown = cooldown;
-        cooldownReady = true;*/
     }
 
     private Weapon(Weapon weapon) {
         name      = weapon.name;
         owner     = null;
-        type      = weapon.type;
         sounds    = new LinkedList<>(weapon.sounds);
         soundsCpt = 0;
         range     = weapon.range;
         minDamage = weapon.minDamage;
         maxDamage = weapon.maxDamage;
         cooldown  = new Cooldown(weapon.cooldown.getTime());
-        /*cooldown = weapon.cooldown;
-        cooldownReady = true;*/
     }
 
-    public static void register(String name, int type, Map<String, String> sounds, double range,
+    public static void register(String name, Map<String, String> sounds, double range,
                                 int minDamage, int maxDamage, long cooldown) {
         if (map.containsKey(name)) {
             throw new IllegalArgumentException("Weapon::register -> " +
                     name + " already registered.");
-        }
-
-        if (type != RANGED && type != MELEE) {
-            throw new IllegalArgumentException("Weapon::register -> " +
-                    name + ", illegal type argument."
-            );
         }
 
         if (minDamage > maxDamage) {
@@ -95,7 +75,7 @@ public class Weapon {
             }
         }
 
-        map.put(name, new Weapon(name, type, createdSounds, range, minDamage,
+        map.put(name, new Weapon(name, createdSounds, range, minDamage,
                 maxDamage, cooldown));
     }
 
@@ -115,7 +95,7 @@ public class Weapon {
         HashMap<String, String> punchSounds = new HashMap<>();
         punchSounds.put("left-punch", "sounds/left-punch.mp3");
         punchSounds.put("right-punch", "sounds/right-punch.mp3");
-        Weapon.register("punch", Weapon.MELEE, punchSounds, 10, 1, 2, 1000);
+        Weapon.register("punch", punchSounds, 10, 1, 2, 1000);
 
     }
 
@@ -133,14 +113,6 @@ public class Weapon {
         return cooldown.isReady();
     }
 
-
-    public boolean isRanged() {
-        return type == RANGED;
-    }
-
-    public boolean isMelee() {
-        return type == MELEE;
-    }
 
     public Entity getOwner() {
         return owner;
