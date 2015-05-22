@@ -110,8 +110,12 @@ public class MainFrame extends JFrame {
      * Pop the first panel of the stack and show the precedent.
      */
     public void popPanel(){
+        popPanel(true);
+    }
+
+    public void popPanel(boolean resume) {
         stackPanel.pop();
-        changePanel(headPanel(), true);
+        changePanel(headPanel(), resume);
     }
 
     public JPanel headPanel() {

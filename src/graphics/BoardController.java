@@ -158,6 +158,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         );
         manager.getGlutton().setWeapon(Weapon.make("punch"));
 
+
         /* Initialize timer. */
         nextRandomPop = new PopTimer(10);
         nextRandomTrap = new PopTimer(2);
@@ -219,11 +220,14 @@ public class BoardController extends Thread implements MouseListener, KeyListene
     @Override
     public void run() {
         EntityManager manager = board.getLevel().getEntityManager();
-
+        System.out.println("run");
         /* Game initialization */
         initialization(manager);
 
+        System.out.println("fufu");
         getBoard().getLevel().getChrono().start();
+        System.out.println("bisbis");
+
 
         while (true) {
             waitForResume();
