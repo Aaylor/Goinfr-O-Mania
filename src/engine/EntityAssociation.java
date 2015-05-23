@@ -110,7 +110,7 @@ public final class EntityAssociation {
         Skin skin = new Skin(30, 30);
         Glutton glutton = new Glutton(null, new Dimension(30, 30), 3f, 0f, 6);
         try {
-            BufferedImage[] p = createCharacterFromFile("pictures/Characters/goinfre", 12, ".png");
+            BufferedImage[] p = createCharacterFromFile("pictures/Characters2/goinfre", 12, ".png");
             skin = new Skin(p, p[0].getWidth(), p[0].getHeight());
             glutton = new Glutton(null, new Dimension(p[0].getWidth(), p[0].getHeight()), 3f, 0f, 6);
         }
@@ -126,7 +126,7 @@ public final class EntityAssociation {
         Skin skin2 = new Skin(30, 30);
         CakeChaserNutritionist cakeChaser = new CakeChaserNutritionist(null, new Dimension(30, 30), 2f, 0f, 2);
         try {
-            BufferedImage[] p2 = createCharacterFromFile("pictures/Characters/Nutritioniste1", 12, ".png");
+            BufferedImage[] p2 = createCharacterFromFile("pictures/Characters2/Nutritioniste1", 12, ".png");
             skin2 = new Skin(p2, p2[0].getWidth(), p2[0].getHeight());
             cakeChaser = new CakeChaserNutritionist(null, new Dimension(p2[0].getWidth(), p2[0].getHeight()), 2f, 0f, 2);
         }
@@ -139,7 +139,7 @@ public final class EntityAssociation {
         GluttonChaserNutritionist gluttonChaser =
                 new GluttonChaserNutritionist(null, new Dimension(30, 30), 2f, 0f, 3);
         try {
-            BufferedImage[] p3 = createCharacterFromFile("pictures/Characters/Nutritioniste2", 12, ".png");
+            BufferedImage[] p3 = createCharacterFromFile("pictures/Characters2/Nutritioniste2", 12, ".png");
             skin3 = new Skin(p3, p3[0].getWidth(), p3[0].getHeight());
             gluttonChaser =
                     new GluttonChaserNutritionist(null, new Dimension(p3[0].getWidth(), p3[0].getHeight()), 2f, 0f, 3);
