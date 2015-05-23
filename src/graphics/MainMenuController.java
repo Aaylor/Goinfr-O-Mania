@@ -138,6 +138,7 @@ public class MainMenuController implements ActionListener {
         mainMenuView.getPlay().addActionListener(this);
         mainMenuView.getLoad().addActionListener(this);
         mainMenuView.getOptions().addActionListener(this);
+        mainMenuView.getScores().addActionListener(this);
     }
 
     @Override
@@ -150,6 +151,8 @@ public class MainMenuController implements ActionListener {
         }
         else if(e.getSource()==mainMenuView.getOptions()){
             System.out.println("options");
+        } else if(e.getSource()==mainMenuView.getScores()){
+            showScores();
         }
         else{
             System.out.println("Erreur !!");

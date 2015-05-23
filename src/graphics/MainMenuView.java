@@ -18,6 +18,7 @@ public class MainMenuView extends Background implements Observer, Resumable {
     private MainMenuButton play;
     private MainMenuButton load;
     private MainMenuButton options;
+    private MainMenuButton scores;
     private GridBagConstraints gbc;
     private Font font;
 
@@ -92,16 +93,23 @@ public class MainMenuView extends Background implements Observer, Resumable {
                 "pictures/GameMenuFocusButton.png",
                 bundle.getString("gameMenuOptionsButton"),
                 font);
+        scores = new MainMenuButton(
+                "pictures/GameMenuSleepButton.png",
+                "pictures/GameMenuPressedButton.png",
+                "pictures/GameMenuFocusButton.png",
+                bundle.getString("gameMenuScoresButton"),
+                font);
         this.add(play, gbc);
         this.add(load, gbc);
         this.add(options, gbc);
-        //play.setVisible(true);
+        this.add(scores, gbc);
     }
 
     public void reinitializeButton() {
         play.reinit();
         load.reinit();
         options.reinit();
+        scores.reinit();
     }
 
     //GETTER
@@ -116,6 +124,10 @@ public class MainMenuView extends Background implements Observer, Resumable {
 
     public MainMenuButton getOptions() {
         return options;
+    }
+
+    public MainMenuButton getScores() {
+        return  scores;
     }
 
     //UPDATE
