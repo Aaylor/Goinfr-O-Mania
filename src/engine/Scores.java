@@ -30,6 +30,10 @@ public class Scores {
         load();
     }
 
+    public List<Score> getScores() {
+        return scores;
+    }
+
     public void addScore(String name, Score s) {
         changed = true;
         Score score = new Score(name, s.getValue());

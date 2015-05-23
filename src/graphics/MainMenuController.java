@@ -1,16 +1,10 @@
 package graphics;
 
 import engine.*;
-import engine.nutritionists.AbstractNutritionist;
-import engine.nutritionists.CakeChaserNutritionist;
-import engine.nutritionists.GluttonChaserNutritionist;
-import engine.weapons.Weapon;
 import log.IGLog;
 import sound.MSound;
 import sound.SoundManager;
 
-import java.applet.AudioClip;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -137,7 +131,7 @@ public class MainMenuController implements ActionListener {
      * Shows the scores of the several games.
      */
     public void showScores(){
-        /* TODO : showScores () */
+        new ScoresController(this.mainMenuView);
     }
 
     private void addControllers(){
