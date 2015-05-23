@@ -121,10 +121,10 @@ public class MainMenuController implements ActionListener {
     }
 
     /**
-     * TODO : options() documentation
+     * Launche the option menu
      */
     public void options(){
-        /* TODO : options() */
+        new OptionsController(this.mainMenuView);
     }
 
     /**
@@ -150,7 +150,7 @@ public class MainMenuController implements ActionListener {
             System.out.println("load !");
         }
         else if(e.getSource()==mainMenuView.getOptions()){
-            System.out.println("options");
+            options();
         } else if(e.getSource()==mainMenuView.getScores()){
             showScores();
         }
