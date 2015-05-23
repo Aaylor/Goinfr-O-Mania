@@ -1,18 +1,26 @@
 package graphics;
 
+import sound.MSound;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.plaf.TabbedPaneUI;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
+import java.util.ResourceBundle;
 
 /**
  * Created by PixelMan on 23/05/15.
  */
-public class OptionsTabs extends JTabbedPane {
+public class OptionsTabs extends JTabbedPane{
 
-    public class OptionTabsUI extends BasicTabbedPaneUI {
+    /**
+     * The UI decoration of the option basicTabbedPane
+     */
+    private class OptionTabsUI extends BasicTabbedPaneUI {
 
         JPanel parent;
 
@@ -20,10 +28,13 @@ public class OptionsTabs extends JTabbedPane {
         Image[] unselected;
         Image[] tabBorder;
 
+
+
         public OptionTabsUI(JPanel parent){
             super();
             try {
                 this.parent = parent;
+
 
                 this.selected = ImageIO.read(new File("pictures/OptionsMenuSelected.png"));
 
@@ -121,10 +132,26 @@ public class OptionsTabs extends JTabbedPane {
     public OptionsTabs(JPanel parent, JPanel general, JPanel commands) {
         super();
 
+        ResourceBundle bundle = MainFrame.getCurrentInstance().getBundle();
+
+        Font font;
+
+        try {
+            File file = new File("fonts/newyorkescape.ttf");
+            font = Font.createFont(Font.TRUETYPE_FONT, file)
+                    .deriveFont(Font.ITALIC, 15);
+        } catch (Exception e) {
+            font = null;
+        }
+
+        if(font != null){
+            this.setFont(font);
+        }
+
         this.setUI(new OptionTabsUI(parent));
 
-        this.addTab("General", general);
-        this.addTab("Commands", commands);
+        this.addTab(bundle.getString("optionsTabsGeneral"), general);
+        this.addTab(bundle.getString("optionsTabsControls"), commands);
 
     }
 }

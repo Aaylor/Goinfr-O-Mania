@@ -23,7 +23,7 @@ public class OptionsView extends Background {
     private Font font;
 
     public OptionsView(JPanel previousView){
-        super("pictures/cake.jpg");
+        super("pictures/simpleBackground.png");
 
         this.setLayout(new BorderLayout());
 
@@ -44,6 +44,10 @@ public class OptionsView extends Background {
         initGeneralPanel();
         initTabs();
 
+    }
+
+    public JTabbedPane getTabs() {
+        return tabs;
     }
 
     private void instantiateTitle(){
@@ -71,7 +75,6 @@ public class OptionsView extends Background {
     }
 
     public void initTabs(){
-
         UIManager.put("TabbedPane.contentOpaque", false);
         tabs = new OptionsTabs(this, generalPanel, commandsPanel);
         this.add(tabs, BorderLayout.CENTER);
