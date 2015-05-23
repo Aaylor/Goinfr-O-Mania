@@ -230,10 +230,7 @@ public class BoardView extends JPanel implements Observer {
         t.translate(entity.getX(), entity.getY());
         t.scale(1, 1);
 
-        g2d.drawImage(ev.getCurrentDrawing(), t, null);
-
         if (entity instanceof AbstractMovableEntity) {
-
             AbstractMovableEntity ame = (AbstractMovableEntity) entity;
             Circle c = ame.getBoundsCircle();
 
@@ -242,8 +239,18 @@ public class BoardView extends JPanel implements Observer {
             double dy = entity.getCenterY() +
                     (c.getRadius() * Math.sin(ame.getDirectionRadian()));
 
+            double angle = ame.getDirectionRadian();
+
+            g2d.rotate(angle, entity.getCenterX(), entity.getCenterY());
+            g2d.drawImage(ev.getCurrentDrawing(), t, null);
+            g2d.rotate(-angle, entity.getCenterX(), entity.getCenterY());
+
+
             g2d.draw(new Line2D.Double(entity.getCenter(), new Point2D.Double(dx, dy)));
 
+        }
+        else {
+            g2d.drawImage(ev.getCurrentDrawing(), t, null);
         }
 
         Toolkit.getDefaultToolkit().sync();

@@ -24,6 +24,12 @@ public class Skin implements Cloneable {
     private BufferedImage[] down;
     private int downCpt;
 
+    private BufferedImage[] perso;
+    private int width;
+    private int height;
+    private int animation;
+
+
     private BufferedImage[] onDestruct;
     private int onDestructCpt;
 
@@ -51,6 +57,27 @@ public class Skin implements Cloneable {
         this.onDestruct = onDestruct;
         this.onAppears = onAppears;
         reinit();
+    }
+
+    public Skin (BufferedImage[] perso, int width, int height){
+        this.perso = perso;
+        this.width = width;
+        this.height = height;
+        this.animation = 0;
+    }
+
+    /**
+     * Move an image to show the next animation
+     */
+    public BufferedImage move(){
+        animation++;
+        if (animation == perso.length)
+            animation=0;
+        return this.perso[animation];
+    }
+
+    public BufferedImage test2(){
+        return perso[animation];
     }
 
     /**
@@ -93,13 +120,14 @@ public class Skin implements Cloneable {
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = image.createGraphics();
 
-
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         g2d.setColor(new Color(r, g, b));
         g2d.fill(new Circle(0, 0, width / 2).getShape());
+        this.width = width;
+        this.height = height;
 
-        right = top = down = onDestruct = onAppears = left =
+        right = top = down = onDestruct = onAppears = left = perso =
                 new BufferedImage[] { image };
     }
 
@@ -107,15 +135,18 @@ public class Skin implements Cloneable {
     protected Object clone() throws CloneNotSupportedException {
         Skin s = (Skin) super.clone();
 
-        s.left  = left.clone();
+        /*s.left  = left.clone();
         s.right = right.clone();
         s.top   = top.clone();
-        s.down  = down.clone();
+        s.down  = down.clone();*/
+        s.perso = perso.clone();
+        s.width = width;
+        s.animation = animation;
 
-        s.onDestruct = onDestruct.clone();
+        /*s.onDestruct = onDestruct.clone();
         s.onAppears  = onAppears.clone();
-
-        s.reinit();
+*/
+        //s.reinit();
 
         return s;
     }

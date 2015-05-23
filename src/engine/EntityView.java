@@ -44,7 +44,7 @@ public class EntityView implements Cloneable, Observer {
     }
 
     public BufferedImage getCurrentDrawing() {
-        return skin.test();
+        return skin.move();
     }
 
     @Override

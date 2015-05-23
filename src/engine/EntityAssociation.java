@@ -8,8 +8,11 @@ import engine.traps.LifeTrap;
 import engine.traps.SlowTrap;
 import sound.MSound;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,26 +76,76 @@ public final class EntityAssociation {
         }
     }
 
+    /**
+     * Create a character animation from file but, the name of the files must be "an" follow by the number,
+     * of the animation. The first image is "an1". Image must be on the same size for a same animation.
+     * @param folder the folder in which we can find the images
+     * @param numberimg The number of image in folder
+     * @param extension the type of extension
+     * @return the tab of buffered image creates
+     */
+    public static BufferedImage[] createCharacterFromFile(String folder, int numberimg, String extension) throws java.io.IOException{
+        String imgname = folder+"/an";
+        String tmp = "";
+        BufferedImage[] tab = new BufferedImage[numberimg];
+        for(int i = 0; i < numberimg; i++){
+            tmp = imgname+(i+1)+extension;
+            File img = new File(tmp);
+            try {
+                BufferedImage in = ImageIO.read(img);
+                tab[i] = in;
+            } catch (java.io.IOException e) {
+                System.err.println("Error with image :" + tmp);
+                throw new java.io.IOException();
+            }
+        }
+        return tab;
+    }
+
     public final static void defaults() {
         /* TODO */
 
         /* Default Glutton */
+
+        Skin skin = new Skin(30, 30);
         Glutton glutton = new Glutton(null, new Dimension(30, 30), 3f, 0f, 6);
-        EntityView gluttonView = new EntityView(new Skin(30, 30));
+        try {
+            BufferedImage[] p = createCharacterFromFile("pictures/Characters/goinfre", 12, ".png");
+            skin = new Skin(p, p[0].getWidth(), p[0].getHeight());
+            glutton = new Glutton(null, new Dimension(p[0].getWidth(), p[0].getHeight()), 3f, 0f, 6);
+        }
+        catch (Exception e){}
+
+        EntityView gluttonView = new EntityView(skin);
         register(DEFAULT_GLUTTON, glutton, gluttonView);
 
 
 
         /* NUTRITIONIST */
         /* CakeChaser */
+        Skin skin2 = new Skin(30, 30);
         CakeChaserNutritionist cakeChaser = new CakeChaserNutritionist(null, new Dimension(30, 30), 2f, 0f, 2);
-        EntityView cakeChaserView = new EntityView(new Skin(30, 30));
+        try {
+            BufferedImage[] p2 = createCharacterFromFile("pictures/Characters/Nutritioniste1", 12, ".png");
+            skin2 = new Skin(p2, p2[0].getWidth(), p2[0].getHeight());
+            cakeChaser = new CakeChaserNutritionist(null, new Dimension(p2[0].getWidth(), p2[0].getHeight()), 2f, 0f, 2);
+        }
+        catch (Exception e){}
+        EntityView cakeChaserView = new EntityView(skin2);
         register(DEFAULT_CAKECHASER, cakeChaser, cakeChaserView);
 
         /* GluttonChaser */
+        Skin skin3 = new Skin(30, 30);
         GluttonChaserNutritionist gluttonChaser =
                 new GluttonChaserNutritionist(null, new Dimension(30, 30), 2f, 0f, 3);
-        EntityView gluttonChaserView = new EntityView(new Skin(30, 30));
+        try {
+            BufferedImage[] p3 = createCharacterFromFile("pictures/Characters/Nutritioniste2", 12, ".png");
+            skin3 = new Skin(p3, p3[0].getWidth(), p3[0].getHeight());
+            gluttonChaser =
+                    new GluttonChaserNutritionist(null, new Dimension(p3[0].getWidth(), p3[0].getHeight()), 2f, 0f, 3);
+        }
+        catch (Exception e){}
+        EntityView gluttonChaserView = new EntityView(skin3);
         register(DEFAULT_GLUTTONCHASER, gluttonChaser, gluttonChaserView);
 
         randomNutritionist.add(DEFAULT_CAKECHASER, 20);
