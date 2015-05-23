@@ -17,6 +17,7 @@ public class ScoresView extends Background {
     private MainMenuButton back;
     private JPanel scoreTable;
     private JLabel[][] scoreLabels;
+    private ResourceBundle bundle;
 
     private Font font;
 
@@ -35,6 +36,9 @@ public class ScoresView extends Background {
 
         this.setPreferredSize(previousView.getSize());
 
+        this.bundle = MainFrame.getCurrentInstance().getBundle();
+
+        instantiateTitle();
         initScoreLabels();
         initScoreTable();
         initButton();
@@ -57,14 +61,25 @@ public class ScoresView extends Background {
 
             scoreLabels[i][0] = new JLabel(player);
             scoreLabels[i][0].setHorizontalAlignment(SwingConstants.RIGHT);
-            scoreLabels[i][0].setFont(font);
             scoreLabels[i][0].setForeground(Color.WHITE);
 
             scoreLabels[i][1] = new JLabel(score);
             scoreLabels[i][1].setHorizontalAlignment(SwingConstants.LEFT);
-            scoreLabels[i][1].setFont(font);
             scoreLabels[i][1].setForeground(Color.WHITE);
+
+            if(font != null){
+                scoreLabels[i][0].setFont(font);
+                scoreLabels[i][1].setFont(font);
+            }
         }
+    }
+
+    private void instantiateTitle(){
+        JLabel title = new JLabel(bundle.getString("scoresTitle"), SwingConstants.CENTER);
+        if(this.font != null)
+            title.setFont(font.deriveFont(Font.PLAIN, 60));
+        title.setForeground(new Color(0x3B3B3B));
+        this.add(title, BorderLayout.NORTH);
     }
 
     public void initScoreTable(){
@@ -83,7 +98,6 @@ public class ScoresView extends Background {
     }
 
     private void initButton() {
-        ResourceBundle bundle = MainFrame.getCurrentInstance().getBundle();
         this.back = new MainMenuButton(
                 "pictures/GameMenuSleepButton.png",
                 "pictures/GameMenuPressedButton.png",
