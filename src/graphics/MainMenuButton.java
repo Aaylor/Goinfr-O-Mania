@@ -106,6 +106,9 @@ public class MainMenuButton extends JButton {
         }
 
         @Override
+        public void mouseReleased(MouseEvent event) { mb.reinit();}
+
+        @Override
         public void mousePressed(MouseEvent event){
             mb.setIcon(imgOnClick);
             selection.play();
