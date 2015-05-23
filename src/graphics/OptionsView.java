@@ -15,7 +15,20 @@ import java.util.ResourceBundle;
 public class OptionsView extends Background {
 
     private JTabbedPane tabs;
+
     private JPanel generalPanel;
+
+    private JPanel volumePanel;
+    private JLabel volumeLabel;
+    private JButton muteButton;
+    private JSlider volumeSlider;
+
+    private JLabel difficultyLabel;
+    private JComboBox<Integer> difficultyComboBox;
+
+    private JLabel languageLabel;
+    private JComboBox<Integer> languageComboBox;
+
     private JPanel commandsPanel;
 
     private JPanel buttonPanel;
@@ -78,10 +91,41 @@ public class OptionsView extends Background {
     }
 
     public void initGeneralPanel(){
-        generalPanel = new JPanel();
-        JLabel label = new JLabel("General Panel");
-        label.setForeground(Color.white);
-        generalPanel.add(label);
+        GridLayout generalLayout = new GridLayout(3, 2);
+        generalLayout.setHgap(40);
+        generalLayout.setVgap(10);
+        generalPanel = new JPanel(generalLayout);
+
+        volumeLabel = new JLabel(bundle.getString("optionsVolumeLabel"), SwingConstants.CENTER);
+        volumeLabel.setForeground(Color.WHITE);
+        volumeLabel.setFont(font);
+
+        volumePanel = new JPanel(new BorderLayout());
+        volumePanel.setOpaque(false);
+        muteButton = new JButton("Mute");
+        volumeSlider = new JSlider(JSlider.HORIZONTAL);
+        volumePanel.add(muteButton, BorderLayout.WEST);
+        volumePanel.add(volumeSlider, BorderLayout.CENTER);
+
+        difficultyLabel = new JLabel(bundle.getString("optionsDifficultyLabel"), SwingConstants.CENTER);
+        difficultyLabel.setForeground(Color.WHITE);
+        difficultyLabel.setFont(font);
+
+        difficultyComboBox = new JComboBox<>();
+
+        languageLabel = new JLabel(bundle.getString("optionsLanguageLabel"), SwingConstants.CENTER);
+        languageLabel.setForeground(Color.WHITE);
+        languageLabel.setFont(font);
+
+        languageComboBox = new JComboBox<>();
+
+        generalPanel.add(volumeLabel);
+        generalPanel.add(volumePanel);
+        generalPanel.add(difficultyLabel);
+        generalPanel.add(difficultyComboBox);
+        generalPanel.add(languageLabel);
+        generalPanel.add(languageComboBox);
+
         generalPanel.setOpaque(false);
     }
 
