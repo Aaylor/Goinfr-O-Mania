@@ -244,10 +244,6 @@ public class BoardView extends JPanel implements Observer {
             g2d.rotate(angle, entity.getCenterX(), entity.getCenterY());
             g2d.drawImage(ev.getCurrentDrawing(), t, null);
             g2d.rotate(-angle, entity.getCenterX(), entity.getCenterY());
-
-
-            g2d.draw(new Line2D.Double(entity.getCenter(), new Point2D.Double(dx, dy)));
-
         }
         else {
             g2d.drawImage(ev.getCurrentDrawing(), t, null);
