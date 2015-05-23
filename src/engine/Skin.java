@@ -12,104 +12,33 @@ import java.util.Random;
  */
 public class Skin implements Cloneable {
 
-    private BufferedImage[] left;
-    private int leftCpt;
-
-    private BufferedImage[] right;
-    private int rightCpt;
-
-    private BufferedImage[] top;
-    private int topCpt;
-
-    private BufferedImage[] down;
-    private int downCpt;
-
     private BufferedImage[] perso;
-    private int width;
-    private int height;
     private int animation;
+    private int movement;
+    private int movementmax;
 
-
-    private BufferedImage[] onDestruct;
-    private int onDestructCpt;
-
-    private BufferedImage[] onAppears;
-    private int onAppearsCpt;
-
-    private boolean fix = false;
-
-    /**
-     *  Create a skin with given buffered images arrays.
-     *  @param left handling the left position
-     *  @param right handling the right position
-     *  @param top handling the top position
-     *  @param down handling the down position
-     *  @param onDestruct skin on destruction
-     *  @param onAppears skin on appearance
-     */
-    public Skin(BufferedImage[] left, BufferedImage[] right, BufferedImage[] top,
-                BufferedImage[] down, BufferedImage[] onDestruct,
-                BufferedImage[] onAppears) {
-        this.left = left;
-        this.right = right;
-        this.top = top;
-        this.down = down;
-        this.onDestruct = onDestruct;
-        this.onAppears = onAppears;
-        reinit();
-    }
-
-    public Skin (BufferedImage[] perso, int width, int height){
+    public Skin (BufferedImage[] perso, int movementmax){
         this.perso = perso;
-        this.width = width;
-        this.height = height;
         this.animation = 0;
+        this.movement = -1;
+        if(movementmax > 0)
+            this.movementmax = movementmax;
+        else
+            this.movementmax = 0;
     }
 
     /**
      * Move an image to show the next animation
      */
     public BufferedImage move(){
-        animation++;
+        movement++;
+        if (movement == movementmax) {
+            animation++;
+            movement = 0;
+        }
         if (animation == perso.length)
             animation=0;
         return this.perso[animation];
-    }
-
-    public BufferedImage test2(){
-        return perso[animation];
-    }
-
-    /**
-     *  Create a skin with given buffered images arrays.
-     *  The skin is considered as fixed (ie. even if it moves, it doesn't
-     *  have differences on the current skin).
-     *  @param fixed fixed skin
-     *  @param onDestruct skin on destruction
-     *  @param onAppears skin on appearance
-     */
-    public Skin(BufferedImage[] fixed, BufferedImage[] onDestruct,
-                BufferedImage[] onAppears) {
-        this.left = this.right = this.top = this.down = fixed;
-        this.onDestruct = onDestruct;
-        this.onAppears = onAppears;
-        fix = true;
-        reinit();
-    }
-
-    public Skin(String folder) {
-        /* TODO: handle skin folder *
-           It should be like:
-            left00.jpg
-            left01.jpg
-            ...
-            right00.jpg
-            ...
-            ...
-
-            Every others files will be ignored (will be printing on the log).
-            If fix.jpg is found, the Skin is considered as fixed.
-         */
     }
 
     public Skin(int width, int height) {
@@ -124,10 +53,8 @@ public class Skin implements Cloneable {
 
         g2d.setColor(new Color(r, g, b));
         g2d.fill(new Circle(0, 0, width / 2).getShape());
-        this.width = width;
-        this.height = height;
 
-        right = top = down = onDestruct = onAppears = left = perso =
+        perso =
                 new BufferedImage[] { image };
     }
 
@@ -140,7 +67,6 @@ public class Skin implements Cloneable {
         s.top   = top.clone();
         s.down  = down.clone();*/
         s.perso = perso.clone();
-        s.width = width;
         s.animation = animation;
 
         /*s.onDestruct = onDestruct.clone();
@@ -149,14 +75,5 @@ public class Skin implements Cloneable {
         //s.reinit();
 
         return s;
-    }
-
-    /* TODO : add function to get the correct buffered image of a skin */
-    public void reinit() {
-        leftCpt = rightCpt = topCpt = downCpt = onDestructCpt = onAppearsCpt = 0;
-    }
-
-    public BufferedImage test() {
-        return left[0];
     }
 }

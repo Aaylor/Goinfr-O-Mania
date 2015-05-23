@@ -38,13 +38,17 @@ public final class EntityAssociation {
     public final static String BIGLIFETRAP = "biglifetrap";
     public final static String SLOWTRAP    = "slowtrap";
 
-    private final static String FOLDER_GLUTTON = "pictures/Characters3/goinfre";
-    private final static String FOLDER_CAKE_CHASER = "pictures/Characters3/Nutritioniste1";
-    private final static String FOLDER_GLUTTON_CHASER = "pictures/Characters3/Nutritioniste2";
+    private final static String FOLDER_GLUTTON = "pictures/Characters/goinfre";
+    private final static String FOLDER_CAKE_CHASER = "pictures/Characters/Nutritioniste1";
+    private final static String FOLDER_GLUTTON_CHASER = "pictures/Characters/Nutritioniste2";
 
     private final static String FILE_CAKE = "pictures/cake/cake_cream.png";
     private final static String FILE_SUPER_CAKE = "pictures/cake/cake_citron.png";
     private final static String FILE__HYPER_CAKE = "pictures/cake/cake_choco.png";
+
+    private final static String FOLDER_LIFE_TRAP = "pictures/trap/mw2";
+    private final static String FOLDER_BIG_LIFE_TRAP = "pictures/trap/katon";
+    private final static String FOLDER_SLOW_TRAP = "pictures/trap/mw1";
 
     private static Map<String, Entity> entityMap   = new HashMap<>();
     private static Map<String, EntityView> viewMap = new HashMap<>();
@@ -119,7 +123,7 @@ public final class EntityAssociation {
         Glutton glutton = new Glutton(null, new Dimension(30, 30), 3f, 0f, 6);
         try {
             BufferedImage[] p = createCharacterFromFile(FOLDER_GLUTTON, 12, ".png");
-            skin = new Skin(p, p[0].getWidth(), p[0].getHeight());
+            skin = new Skin(p, 3);
             glutton = new Glutton(null, new Dimension(p[0].getWidth(), p[0].getHeight()), 3f, 0f, 6);
         }
         catch (Exception e){}
@@ -135,7 +139,7 @@ public final class EntityAssociation {
         CakeChaserNutritionist cakeChaser = new CakeChaserNutritionist(null, new Dimension(30, 30), 2f, 0f, 2);
         try {
             BufferedImage[] p2 = createCharacterFromFile(FOLDER_CAKE_CHASER, 12, ".png");
-            skin2 = new Skin(p2, p2[0].getWidth(), p2[0].getHeight());
+            skin2 = new Skin(p2, 3);
             cakeChaser = new CakeChaserNutritionist(null, new Dimension(p2[0].getWidth(), p2[0].getHeight()), 2f, 0f, 2);
         }
         catch (Exception e){}
@@ -148,7 +152,7 @@ public final class EntityAssociation {
                 new GluttonChaserNutritionist(null, new Dimension(30, 30), 2f, 0f, 3);
         try {
             BufferedImage[] p3 = createCharacterFromFile(FOLDER_GLUTTON_CHASER, 12, ".png");
-            skin3 = new Skin(p3, p3[0].getWidth(), p3[0].getHeight());
+            skin3 = new Skin(p3, 3);
             gluttonChaser =
                     new GluttonChaserNutritionist(null, new Dimension(p3[0].getWidth(), p3[0].getHeight()), 2f, 0f, 3);
         }
@@ -169,7 +173,7 @@ public final class EntityAssociation {
             File img = new File(FILE_CAKE);
             BufferedImage in = ImageIO.read(img);
             BufferedImage[] p4 = { in };
-            skin4 = new Skin(p4, p4[0].getWidth(), p4[0].getHeight());
+            skin4 = new Skin(p4, 0);
             cake =  new LifeCake(null, new Dimension(p4[0].getWidth(), p4[0].getHeight()),
                     new MSound(DEFAULT_LIFECAKE, "music/pickupitem00.wav"), 1);
 
@@ -189,7 +193,7 @@ public final class EntityAssociation {
             File img = new File(FILE_SUPER_CAKE);
             BufferedImage in = ImageIO.read(img);
             BufferedImage[] p5 = { in };
-            skin5 = new Skin(p5, p5[0].getWidth(), p5[0].getHeight());
+            skin5 = new Skin(p5, 0);
             superLifeCake = new LifeCake(null, new Dimension(p5[0].getWidth(), p5[0].getHeight()),
                     new MSound(SUPERLIFECAKE, "music/pickupitem00.wav"), 2);
         }
@@ -207,7 +211,7 @@ public final class EntityAssociation {
             File img = new File(FILE_SUPER_CAKE);
             BufferedImage in = ImageIO.read(img);
             BufferedImage[] p6 = { in };
-            skin6 = new Skin(p6, p6[0].getWidth(), p6[0].getHeight());
+            skin6 = new Skin(p6, 0);
             hyperLifeCake = new LifeCake(null, new Dimension(p6[0].getWidth(), p6[0].getHeight()),
                     new MSound(HYPERLIFECAKE, "music/pickupitem00.wav"), 1);
         }
@@ -224,18 +228,43 @@ public final class EntityAssociation {
 
         /* TRAPS */
         /* Life trap */
+        Skin skin7 = new Skin(23, 23);
         LifeTrap lifeTrap = new LifeTrap(null, new Dimension(23, 23), true,
                 null, 1000, 5000, 1);
-        EntityView lifeTrapView = new EntityView(new Skin(23, 23));
+        try {
+            BufferedImage[] p7 = createCharacterFromFile(FOLDER_LIFE_TRAP, 4, ".png");
+            skin7 = new Skin(p7, 6);
+            lifeTrap = new LifeTrap(null, new Dimension(p7[0].getWidth(), p7[0].getHeight()), true,
+                    null, 1000, 5000, 1);
+        }
+        catch (Exception e){}
+        EntityView lifeTrapView = new EntityView(skin7);
         register(LIFETRAP, lifeTrap, lifeTrapView);
 
+        /* Big Life trap */
+        Skin skin8 = new Skin(40, 40);
         LifeTrap bigLifeTrap = new LifeTrap(null, new Dimension(40, 40), true,
                 null, 1000, 4000, 2);
-        EntityView bigLifeTrapView = new EntityView(new Skin(40, 40));
+        try {
+            BufferedImage[] p8 = createCharacterFromFile(FOLDER_BIG_LIFE_TRAP, 3, ".png");
+            skin8 = new Skin(p8, 6);
+            bigLifeTrap = new LifeTrap(null, new Dimension(p8[0].getWidth(), p8[0].getHeight()), true,
+                    null, 1000, 4000, 2);
+        }
+        catch (Exception e){}
+        EntityView bigLifeTrapView = new EntityView(skin8);
         register(BIGLIFETRAP, bigLifeTrap, bigLifeTrapView);
 
+        /*Slow Trap */
+        Skin skin9 = new Skin(7, 7);
         SlowTrap slowTrap = new SlowTrap(null, new Dimension(7, 7), true, null, 2000, 7000);
-        EntityView slowTrapView = new EntityView(new Skin(7, 7));
+        try {
+            BufferedImage[] p9 = createCharacterFromFile(FOLDER_SLOW_TRAP, 4, ".png");
+            skin9 = new Skin(p9, 6);
+            slowTrap = new SlowTrap(null, new Dimension(7, 7), true, null, 2000, 7000);
+        }
+        catch (Exception e){}
+        EntityView slowTrapView = new EntityView(skin9);
         register(SLOWTRAP, slowTrap, slowTrapView);
 
         randomTraps.add(LIFETRAP, 30);
