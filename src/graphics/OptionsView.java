@@ -14,6 +14,11 @@ import java.util.ResourceBundle;
  */
 public class OptionsView extends Background {
 
+    private JTabbedPane tabs;
+
+    private JPanel generalPanel;
+    private JPanel commandsPanel;
+
     private ResourceBundle bundle;
     private Font font;
 
@@ -35,6 +40,9 @@ public class OptionsView extends Background {
         this.bundle = MainFrame.getCurrentInstance().getBundle();
 
         instantiateTitle();
+        initCommandPanel();
+        initGeneralPanel();
+        initTabs();
 
     }
 
@@ -44,6 +52,29 @@ public class OptionsView extends Background {
             title.setFont(font.deriveFont(Font.PLAIN, 60));
         title.setForeground(new Color(0x3B3B3B));
         this.add(title, BorderLayout.NORTH);
+    }
+
+    public void initGeneralPanel(){
+        generalPanel = new JPanel();
+        JLabel label = new JLabel("General Panel");
+        label.setForeground(Color.white);
+        generalPanel.add(label);
+        generalPanel.setOpaque(false);
+    }
+
+    public void initCommandPanel(){
+        commandsPanel = new JPanel();
+        JLabel label = new JLabel("Command Panel");
+        label.setForeground(Color.white);
+        commandsPanel.add(label);
+        commandsPanel.setOpaque(false);
+    }
+
+    public void initTabs(){
+
+        UIManager.put("TabbedPane.contentOpaque", false);
+        tabs = new OptionsTabs(this, generalPanel, commandsPanel);
+        this.add(tabs, BorderLayout.CENTER);
     }
 
 }
