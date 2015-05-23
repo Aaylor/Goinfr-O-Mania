@@ -24,16 +24,23 @@ public class OptionsController implements ActionListener{
     }
 
     private void registerListening(){
+        view.getBack().addActionListener(this);
+        view.getOk().addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        /*if (e.getSource() == view.getBack()) {
+        if (e.getSource() == view.getBack()) {
             IGLog.write("ScoreController::actionPerformed -> getBack()");
             parent.popPanel();
-        } else {
+        }
+        else if (e.getSource() == view.getOk()){
+            IGLog.write("ScoreController::actionPerformed -> getOk()");
+            /* TODO */
+        }
+        else {
             IGLog.error("ScoreController::actionPerformed -> "
                     + "unknown action (" + e + ").");
-        }*/
+        }
     }
 }

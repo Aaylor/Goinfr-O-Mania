@@ -15,12 +15,18 @@ import java.util.ResourceBundle;
 public class OptionsView extends Background {
 
     private JTabbedPane tabs;
-
     private JPanel generalPanel;
     private JPanel commandsPanel;
 
+    private JPanel buttonPanel;
+    private MainMenuButton back;
+    private MainMenuButton ok;
+
     private ResourceBundle bundle;
     private Font font;
+
+
+    /* Constructors */
 
     public OptionsView(JPanel previousView){
         super("pictures/simpleBackground.png");
@@ -43,12 +49,25 @@ public class OptionsView extends Background {
         initCommandPanel();
         initGeneralPanel();
         initTabs();
+        initButtonPanel();
 
     }
+
+    /* Accessors */
 
     public JTabbedPane getTabs() {
         return tabs;
     }
+
+    public MainMenuButton getOk() {
+        return ok;
+    }
+
+    public MainMenuButton getBack() {
+        return back;
+    }
+
+    /* Initialisation functionalities */
 
     private void instantiateTitle(){
         JLabel title = new JLabel(bundle.getString("optionsTitle"), SwingConstants.CENTER);
@@ -78,6 +97,30 @@ public class OptionsView extends Background {
         UIManager.put("TabbedPane.contentOpaque", false);
         tabs = new OptionsTabs(this, generalPanel, commandsPanel);
         this.add(tabs, BorderLayout.CENTER);
+    }
+
+    public void initButtonPanel(){
+        this.buttonPanel = new JPanel(new BorderLayout());
+        buttonPanel.setOpaque(false);
+
+        back = new MainMenuButton(
+                "pictures/GameMenuSleepButton.png",
+                "pictures/GameMenuPressedButton.png",
+                "pictures/GameMenuFocusButton.png",
+                bundle.getString("optionsBackButton"),
+                font);
+
+        ok = new MainMenuButton(
+                "pictures/GameMenuSleepButton.png",
+                "pictures/GameMenuPressedButton.png",
+                "pictures/GameMenuFocusButton.png",
+                bundle.getString("optionsOkButton"),
+                font);
+
+        buttonPanel.add(back, BorderLayout.WEST);
+        buttonPanel.add(ok, BorderLayout.EAST);
+
+        this.add(buttonPanel, BorderLayout.SOUTH);
     }
 
 }
