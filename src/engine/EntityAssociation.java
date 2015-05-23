@@ -38,6 +38,14 @@ public final class EntityAssociation {
     public final static String BIGLIFETRAP = "biglifetrap";
     public final static String SLOWTRAP    = "slowtrap";
 
+    private final static String FOLDER_GLUTTON = "pictures/Characters3/goinfre";
+    private final static String FOLDER_CAKE_CHASER = "pictures/Characters3/Nutritioniste1";
+    private final static String FOLDER_GLUTTON_CHASER = "pictures/Characters3/Nutritioniste2";
+
+    private final static String FILE_CAKE = "pictures/cake/cake_cream.png";
+    private final static String FILE_SUPER_CAKE = "pictures/cake/cake_citron.png";
+    private final static String FILE__HYPER_CAKE = "pictures/cake/cake_choco.png";
+
     private static Map<String, Entity> entityMap   = new HashMap<>();
     private static Map<String, EntityView> viewMap = new HashMap<>();
 
@@ -110,7 +118,7 @@ public final class EntityAssociation {
         Skin skin = new Skin(30, 30);
         Glutton glutton = new Glutton(null, new Dimension(30, 30), 3f, 0f, 6);
         try {
-            BufferedImage[] p = createCharacterFromFile("pictures/Characters2/goinfre", 12, ".png");
+            BufferedImage[] p = createCharacterFromFile(FOLDER_GLUTTON, 12, ".png");
             skin = new Skin(p, p[0].getWidth(), p[0].getHeight());
             glutton = new Glutton(null, new Dimension(p[0].getWidth(), p[0].getHeight()), 3f, 0f, 6);
         }
@@ -126,7 +134,7 @@ public final class EntityAssociation {
         Skin skin2 = new Skin(30, 30);
         CakeChaserNutritionist cakeChaser = new CakeChaserNutritionist(null, new Dimension(30, 30), 2f, 0f, 2);
         try {
-            BufferedImage[] p2 = createCharacterFromFile("pictures/Characters2/Nutritioniste1", 12, ".png");
+            BufferedImage[] p2 = createCharacterFromFile(FOLDER_CAKE_CHASER, 12, ".png");
             skin2 = new Skin(p2, p2[0].getWidth(), p2[0].getHeight());
             cakeChaser = new CakeChaserNutritionist(null, new Dimension(p2[0].getWidth(), p2[0].getHeight()), 2f, 0f, 2);
         }
@@ -139,7 +147,7 @@ public final class EntityAssociation {
         GluttonChaserNutritionist gluttonChaser =
                 new GluttonChaserNutritionist(null, new Dimension(30, 30), 2f, 0f, 3);
         try {
-            BufferedImage[] p3 = createCharacterFromFile("pictures/Characters2/Nutritioniste2", 12, ".png");
+            BufferedImage[] p3 = createCharacterFromFile(FOLDER_GLUTTON_CHASER, 12, ".png");
             skin3 = new Skin(p3, p3[0].getWidth(), p3[0].getHeight());
             gluttonChaser =
                     new GluttonChaserNutritionist(null, new Dimension(p3[0].getWidth(), p3[0].getHeight()), 2f, 0f, 3);
@@ -154,21 +162,59 @@ public final class EntityAssociation {
 
         /* CAKES */
         /* DefaultCake */
+        Skin skin4 = new Skin(20, 20);
         LifeCake cake = new LifeCake(null, new Dimension(15, 15),
                 new MSound(DEFAULT_LIFECAKE, "music/pickupitem00.wav"), 1);
-        EntityView cakeView = new EntityView(new Skin(15, 15));
+        try {
+            File img = new File(FILE_CAKE);
+            BufferedImage in = ImageIO.read(img);
+            BufferedImage[] p4 = { in };
+            skin4 = new Skin(p4, p4[0].getWidth(), p4[0].getHeight());
+            cake =  new LifeCake(null, new Dimension(p4[0].getWidth(), p4[0].getHeight()),
+                    new MSound(DEFAULT_LIFECAKE, "music/pickupitem00.wav"), 1);
+
+        }
+        catch (Exception e){
+            System.err.println("Error with image :" + FILE_CAKE);
+        }
+
+        EntityView cakeView = new EntityView(skin4);
         register(DEFAULT_LIFECAKE, cake, cakeView);
 
         /* Super life cake */
+        Skin skin5 = new Skin(20, 20);
         LifeCake superLifeCake = new LifeCake(null, new Dimension(15, 15),
                 new MSound(SUPERLIFECAKE, "music/pickupitem00.wav"), 2);
-        EntityView superLifeCakeView = new EntityView(new Skin(15, 15));
+        try {
+            File img = new File(FILE_SUPER_CAKE);
+            BufferedImage in = ImageIO.read(img);
+            BufferedImage[] p5 = { in };
+            skin5 = new Skin(p5, p5[0].getWidth(), p5[0].getHeight());
+            superLifeCake = new LifeCake(null, new Dimension(p5[0].getWidth(), p5[0].getHeight()),
+                    new MSound(SUPERLIFECAKE, "music/pickupitem00.wav"), 2);
+        }
+        catch (Exception e){
+            System.err.println("Error with image :" + FILE_SUPER_CAKE);
+        }
+        EntityView superLifeCakeView = new EntityView(skin5);
         register(SUPERLIFECAKE, superLifeCake, superLifeCakeView);
 
         /* Hyper life cake */
+        Skin skin6 = new Skin(20, 20);
         LifeCake hyperLifeCake = new LifeCake(null, new Dimension(15, 15),
                 new MSound(HYPERLIFECAKE, "music/pickupitem00.wav"), 1);
-        EntityView hyperLifeCakeView = new EntityView(new Skin(15, 15));
+        try {
+            File img = new File(FILE_SUPER_CAKE);
+            BufferedImage in = ImageIO.read(img);
+            BufferedImage[] p6 = { in };
+            skin6 = new Skin(p6, p6[0].getWidth(), p6[0].getHeight());
+            hyperLifeCake = new LifeCake(null, new Dimension(p6[0].getWidth(), p6[0].getHeight()),
+                    new MSound(HYPERLIFECAKE, "music/pickupitem00.wav"), 1);
+        }
+        catch (Exception e){
+            System.err.println("Error with image :" + FILE__HYPER_CAKE);
+        }
+        EntityView hyperLifeCakeView = new EntityView(skin6);
         register(HYPERLIFECAKE, hyperLifeCake, hyperLifeCakeView);
 
         randomCakes.add(DEFAULT_LIFECAKE, 50);
