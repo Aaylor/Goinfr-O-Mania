@@ -28,6 +28,7 @@ public class PauseController implements ActionListener {
     private void registerListening() {
         view.getContinue().addActionListener(this);
         view.getMenu().addActionListener(this);
+        view.getOptions().addActionListener(this);
         view.getQuit().addActionListener(this);
     }
 
@@ -41,6 +42,9 @@ public class PauseController implements ActionListener {
             IGLog.write("PauseController::actionPerformed -> getMenu()");
             parentController.interrupt();
             MainFrame.getCurrentInstance().backToFirstPanel();
+        } else if (e.getSource() == view.getOptions()) {
+            IGLog.write("PauseController::actionPerformed -> getOptions()");
+            new OptionsController(this.view);
         } else if (e.getSource() == view.getQuit()) {
             IGLog.write("PauseController::actionPerformed -> getQuit()");
             System.exit(0);

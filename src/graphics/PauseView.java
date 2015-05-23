@@ -12,6 +12,7 @@ public class PauseView extends Background {
 
     private MainMenuButton continue_;
     private MainMenuButton menu;
+    private MainMenuButton options;
     private MainMenuButton quit;
 
 
@@ -57,6 +58,12 @@ public class PauseView extends Background {
                 "pictures/GameMenuFocusButton.png",
                 bundle.getString("pauseMenuMenu"),
                 font);
+        options = new MainMenuButton(
+                "pictures/GameMenuSleepButton.png",
+                "pictures/GameMenuPressedButton.png",
+                "pictures/GameMenuFocusButton.png",
+                bundle.getString("pauseMenuOptions"),
+                font);
         quit = new MainMenuButton(
                 "pictures/GameMenuSleepButton.png",
                 "pictures/GameMenuPressedButton.png",
@@ -66,10 +73,11 @@ public class PauseView extends Background {
 
 
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(3, 1));
+        buttonPanel.setLayout(new GridLayout(4, 1));
         buttonPanel.setOpaque(false);
         buttonPanel.add(continue_);
         buttonPanel.add(menu);
+        buttonPanel.add(options);
         buttonPanel.add(quit);
 
         this.add(buttonPanel, BorderLayout.SOUTH);
@@ -79,9 +87,12 @@ public class PauseView extends Background {
         return continue_;
     }
 
-
     public MainMenuButton getMenu() {
         return menu;
+    }
+
+    public MainMenuButton getOptions() {
+        return options;
     }
 
     public MainMenuButton getQuit() {
