@@ -47,6 +47,7 @@ public class EndGameController implements ActionListener {
             bc.start();
         } else if (e.getSource() == endGameView.getScore()) {
             IGLog.write("EndGameController::actionPerformed -> getScore()");
+            new ScoresController(this.endGameView);
         } else if (e.getSource() == endGameView.getMenu()) {
             IGLog.write("EndGameController::actionPerformed -> getMenu()");
             MainFrame.getCurrentInstance().popPanel();
