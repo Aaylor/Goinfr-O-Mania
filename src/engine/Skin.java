@@ -17,6 +17,9 @@ public class Skin implements Cloneable {
     private int movement;
     private int movementmax;
 
+    private boolean oneTime;
+    private boolean started;
+
     public Skin (BufferedImage[] perso, int movementmax){
         this.perso = perso;
         this.animation = 0;
@@ -25,20 +28,8 @@ public class Skin implements Cloneable {
             this.movementmax = movementmax;
         else
             this.movementmax = 0;
-    }
-
-    /**
-     * Move an image to show the next animation
-     */
-    public BufferedImage move(){
-        movement++;
-        if (movement == movementmax) {
-            animation++;
-            movement = 0;
-        }
-        if (animation == perso.length)
-            animation=0;
-        return this.perso[animation];
+        started = false;
+        oneTime = false;
     }
 
     public Skin(int width, int height) {
@@ -58,21 +49,52 @@ public class Skin implements Cloneable {
                 new BufferedImage[] { image };
     }
 
+    /**
+     * Move an image to show the next animation
+     */
+    public BufferedImage move(){
+        if (started) {
+            movement++;
+            if (movement == movementmax) {
+                animation++;
+                movement = 0;
+            }
+            if (animation == perso.length) {
+                animation = 0;
+                if (oneTime) {
+                    started = false;
+                    return null;
+                }
+            }
+            return this.perso[animation];
+        }
+
+        return null;
+    }
+
+
+
+    public boolean isStarted() {
+        return started;
+    }
+
+    public void start() {
+        started = true;
+    }
+
+    public void start(boolean oneTime) {
+        this.oneTime = oneTime;
+        start();
+    }
+
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         Skin s = (Skin) super.clone();
 
-        /*s.left  = left.clone();
-        s.right = right.clone();
-        s.top   = top.clone();
-        s.down  = down.clone();*/
-        s.perso = perso.clone();
-        s.animation = animation;
-
-        /*s.onDestruct = onDestruct.clone();
-        s.onAppears  = onAppears.clone();
-*/
-        //s.reinit();
+        s.perso         = perso.clone();
+        s.animation     = 0;
+        s.movement      = -1;
+        s.movementmax   = movementmax;
 
         return s;
     }
