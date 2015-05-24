@@ -2,8 +2,6 @@ package graphics;
 
 import helpers.ExtMath;
 
-import java.util.HashMap;
-
 public class BoardViewGenerator {
 
     private String BACKGROUND_PATH = "pictures/background/";
@@ -21,7 +19,6 @@ public class BoardViewGenerator {
 
 
     private Board board;
-    private String[] back_tab;
 
     public BoardViewGenerator(Board board){
         this.board = board;
@@ -38,10 +35,9 @@ public class BoardViewGenerator {
                 return new BoardView(board, MAP);
             case ID_STP:
                 return new BoardView(board, STP);
-            case ID_WOOD:
+            default:
                 return new BoardView(board, WOOD);
         }
-        return new BoardView(board, "");
     }
 
 }
