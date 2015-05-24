@@ -3,6 +3,7 @@ package graphics;
 import engine.*;
 import engine.weapons.Weapon;
 import log.IGLog;
+import sound.MSound;
 import sound.SoundManager;
 
 import javax.swing.*;
@@ -20,11 +21,16 @@ public class MainFrame extends JFrame {
     private Stack<JPanel> stackPanel;
     private ResourceBundle bundle;
 
+    private MSound mainMusic;
+
+    private Options options;
     private Scores scores;
 
     public MainFrame(ResourceBundle bundle) throws HeadlessException {
         super(bundle.getString("title"));
         this.bundle = bundle;
+        this.mainMusic = null;
+        this.options = new Options(100);
         IGLog.write("Main frame creation.");
         stackPanel = new Stack<>();
         defaultFrameConfiguration(bundle);
@@ -43,6 +49,10 @@ public class MainFrame extends JFrame {
         instance = this;
     }
 
+
+
+    /* Getters */
+
     public static MainFrame getCurrentInstance() {
         return instance;
     }
@@ -54,6 +64,27 @@ public class MainFrame extends JFrame {
     public Scores getScores() {
         return scores;
     }
+
+    public Options getOptions() {
+        return options;
+    }
+
+    public MSound getMainMusic() {
+        return mainMusic;
+    }
+
+    public void setMainMusic(MSound mainMusic) {
+        if(this.mainMusic!=null && this.mainMusic.isPlaying())
+            this.mainMusic.stop();
+        this.mainMusic = mainMusic;
+        this.mainMusic.play(options.getVolume());
+    }
+
+    public void setOptions(Options options) {
+        this.options = options;
+    }
+
+    /* Frame Configuration */
 
     private void defaultFrameConfiguration(ResourceBundle bundle) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -96,6 +127,9 @@ public class MainFrame extends JFrame {
     private static void loadExternalResources() {
 
     }
+
+
+    /* Panels Management */
 
     /**
      * Add the panel j to the stack in this frame and set him as the actual panel to show.
@@ -169,6 +203,10 @@ public class MainFrame extends JFrame {
         }
         pack();
     }
+
+
+
+    /* Main */
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {

@@ -1,6 +1,9 @@
 package graphics;
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
+import engine.Options;
 import log.IGLog;
+import sound.MSound;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -16,15 +19,40 @@ public class OptionsController implements ActionListener, ChangeListener{
     MainFrame parent;
     OptionsView view;
 
+    Options currentSettings;
+
     boolean muting;
 
     public OptionsController(JPanel previousView) {
         parent = MainFrame.getCurrentInstance();
 
+        this.currentSettings = new Options(MainFrame.getCurrentInstance().getOptions());
+
         view = new OptionsView(previousView);
         parent.addPanel(view);
 
         registerListening();
+    }
+
+
+    /**
+     * update the mainFrame options and operate the immediate effects
+     * of the settings modifications.
+     */
+    public void updateOptions(){
+        MainFrame.getCurrentInstance().setOptions(currentSettings);
+        MainFrame.getCurrentInstance().getMainMusic().setVolume(currentSettings.getVolume());
+    }
+
+    public void updateSonorVolume(int volume){
+        try {
+            double optionVolume = new Integer(volume).doubleValue() / 100;
+            IGLog.info("Options updates <volume> : " + optionVolume);
+            currentSettings.setVolume(optionVolume);
+        }
+        catch (InvalidArgumentException e){
+            IGLog.error("Invalide Sonor Volume");
+        }
     }
 
     private void registerListening(){
@@ -42,7 +70,7 @@ public class OptionsController implements ActionListener, ChangeListener{
         }
         else if (e.getSource() == view.getOk()){
             IGLog.write("ScoreController::actionPerformed -> getOk()");
-            /* TODO */
+            updateOptions();
         }
         else if (e.getSource() == view.getMuteButton()){
             IGLog.write("ScoreController::actionPerformed -> getMuteButton()");
@@ -52,9 +80,12 @@ public class OptionsController implements ActionListener, ChangeListener{
                 muting = true;
                 view.getVolumeSlider().setValue(0);
                 muting = false;
+                updateSonorVolume(0);
             }
             else{
-                view.getVolumeSlider().setValue(view.getVolumeSlider().getVolume());
+                int volumeUpdate = view.getVolumeSlider().getVolume();
+                view.getVolumeSlider().setValue(volumeUpdate);
+                updateSonorVolume(volumeUpdate);
             }
         }
         else {
@@ -77,6 +108,7 @@ public class OptionsController implements ActionListener, ChangeListener{
                 if(!muting)
                     vSlider.setVolume(vSlider.getValue());
             }
+            updateSonorVolume(vSlider.getValue());
         }
     }
 }
