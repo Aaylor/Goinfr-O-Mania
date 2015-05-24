@@ -20,7 +20,7 @@ public class MMusic {
      */
     private static String prefix = "file://";
 
-    private static double volumeGlobal;
+    private static double volumeGlobal=1;
 
 
     static {

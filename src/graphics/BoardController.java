@@ -9,6 +9,7 @@ import helpers.ExtDate;
 import helpers.ExtMath;
 import helpers.PopTimer;
 import log.IGLog;
+import sound.MMusic;
 import sound.MSound;
 
 import java.awt.*;
@@ -34,7 +35,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
     private BoardView boardView;
     private boolean gameState;
     private final Set<Integer> pressedKeys;
-    private MSound gameSound;
+    private MMusic gameSound;
 
     private PopTimer nextRandomPop;
     private PopTimer nextRandomTrap;
@@ -52,7 +53,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
 
         gameState = true;
 
-        gameSound = new MSound("ingame", "music/ingame00.wav");
+        gameSound = new MMusic("ingame", "music/ingame00.wav");
 
         pressedKeys = new HashSet<>();
     }
