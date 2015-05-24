@@ -4,6 +4,7 @@ import engine.Score;
 import engine.Scores;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.io.File;
 import java.util.Collections;
@@ -20,7 +21,7 @@ public class OptionsView extends Background {
 
     private JPanel volumePanel;
     private JLabel volumeLabel;
-    private JButton muteButton;
+    private VolumeButton muteButton;
     private JSlider volumeSlider;
 
     private JLabel difficultyLabel;
@@ -94,7 +95,22 @@ public class OptionsView extends Background {
         GridLayout generalLayout = new GridLayout(3, 2);
         generalLayout.setHgap(40);
         generalLayout.setVgap(10);
+
         generalPanel = new JPanel(generalLayout);
+        generalPanel.setBorder(new Border() {
+            @Override
+            public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {}
+
+            @Override
+            public Insets getBorderInsets(Component c) {
+                return new Insets(0, 60, 0, 60);
+            }
+
+            @Override
+            public boolean isBorderOpaque() {
+                return false;
+            }
+        });
 
         volumeLabel = new JLabel(bundle.getString("optionsVolumeLabel"), SwingConstants.CENTER);
         volumeLabel.setForeground(Color.WHITE);
@@ -102,7 +118,7 @@ public class OptionsView extends Background {
 
         volumePanel = new JPanel(new BorderLayout());
         volumePanel.setOpaque(false);
-        muteButton = new JButton("Mute");
+        muteButton = new VolumeButton();
         volumeSlider = new JSlider(JSlider.HORIZONTAL);
         volumePanel.add(muteButton, BorderLayout.WEST);
         volumePanel.add(volumeSlider, BorderLayout.CENTER);
