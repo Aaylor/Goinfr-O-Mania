@@ -83,8 +83,7 @@ public class MainMenuController implements ActionListener {
 
 
         Board board = new Board(new Player("Test"), level);
-
-        BoardView view = new BoardView(board);
+        BoardView view = new BoardViewGenerator(board).viewGeneration();
         view.setSize(parent.getSize());
         parent.addPanel(view);
         BoardController controller = new BoardController(board, view);

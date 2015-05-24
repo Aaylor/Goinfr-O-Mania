@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
-public class BoardView extends JPanel implements Observer {
+public class BoardView extends Background implements Observer {
 
     private static final int    UI_HEIGHT    = 50;
     private static final double FRISE_HEIGHT = 10;
@@ -38,8 +38,8 @@ public class BoardView extends JPanel implements Observer {
     private boolean paused;
     private Font font;
 
-    public BoardView(Board board) {
-        super();
+    public BoardView(Board board, String background) {
+        super(background);
         this.board = board;
 
         try {

@@ -40,7 +40,7 @@ public class EndGameController implements ActionListener {
             IGLog.write("EndGameController::actionPerformed -> getReplay()");
             MainFrame.getCurrentInstance().popPanel(false);
             Board b = new Board(currentState.getPlayer(), new Level(new Score(), new Goal(), null));
-            BoardView boardView = new BoardView(b);
+            BoardView boardView = new BoardViewGenerator(b).viewGeneration();
             boardView.setSize(MainFrame.getCurrentInstance().getSize());
             BoardController bc = new BoardController(b, boardView);
             MainFrame.getCurrentInstance().addPanel(boardView);
