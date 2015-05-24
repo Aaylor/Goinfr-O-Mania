@@ -20,6 +20,8 @@ public class MMusic {
      */
     private static String prefix = "file://";
 
+    private double volumeGlobal;
+
 
     static {
         memory = new Hashtable<>();
@@ -97,6 +99,7 @@ public class MMusic {
      *  Play the sound.
      */
     public void play() {
+        mp.setVolume(volumeGlobal);
         mp.play();
     }
 
@@ -105,6 +108,7 @@ public class MMusic {
      *  @param volume The sound volume.
      */
     public void play(double volume) {
+        volumeGlobal = volume;
         mp.setVolume(volume);
         mp.play();
     }
@@ -128,6 +132,7 @@ public class MMusic {
     }
 
     public void setVolume(double volume) {
+        volumeGlobal = volume;
         mp.setVolume(volume);
     }
 

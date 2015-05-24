@@ -22,6 +22,8 @@ public class MSound {
      */
     private static String prefix = "file://";
 
+    private double volumeGlobal;
+
 
     static {
         memory = new Hashtable<>();
@@ -96,6 +98,7 @@ public class MSound {
      *  Play the sound.
      */
     public void play() {
+        clip.setVolume(volumeGlobal);
         clip.play();
     }
 
@@ -104,6 +107,7 @@ public class MSound {
      *  @param volume The sound volume.
      */
     public void play(double volume) {
+        volumeGlobal = volume;
         clip.play(volume);
     }
 
@@ -126,6 +130,7 @@ public class MSound {
     }
 
     public void setVolume(double volume){
+        volumeGlobal = volume;
         clip.setVolume(volume);
     }
 
