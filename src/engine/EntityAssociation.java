@@ -47,6 +47,7 @@ public final class EntityAssociation {
     private final static String FILE_CAKE = "pictures/cake/cake_cream.png";
     private final static String FILE_SUPER_CAKE = "pictures/cake/cake_citron.png";
     private final static String FILE__HYPER_CAKE = "pictures/cake/cake_choco.png";
+    private final static String FILE_SPEED_CAKE ="pictures/cake/cake_fraise.png";
 
     private final static String FOLDER_LIFE_TRAP = "pictures/trap/mw2";
     private final static String FOLDER_BIG_LIFE_TRAP = "pictures/trap/katon";
@@ -124,7 +125,7 @@ public final class EntityAssociation {
         Skin skin = new Skin(30, 30);
         Glutton glutton = new Glutton(null, new Dimension(30, 30), 3f, 0f, 6);
         try {
-            BufferedImage[] p = createCharacterFromFile(FOLDER_GLUTTON, 12, ".png");
+            BufferedImage[] p = createCharacterFromFile(FOLDER_GLUTTON, 16, ".png");
             skin = new Skin(p, 3);
             glutton = new Glutton(null, new Dimension(p[0].getWidth(), p[0].getHeight()), 3f, 0f, 6);
         }
@@ -140,7 +141,7 @@ public final class EntityAssociation {
         Skin skin2 = new Skin(30, 30);
         CakeChaserNutritionist cakeChaser = new CakeChaserNutritionist(null, new Dimension(30, 30), 2f, 0f, 2);
         try {
-            BufferedImage[] p2 = createCharacterFromFile(FOLDER_CAKE_CHASER, 12, ".png");
+            BufferedImage[] p2 = createCharacterFromFile(FOLDER_CAKE_CHASER, 16, ".png");
             skin2 = new Skin(p2, 3);
             cakeChaser = new CakeChaserNutritionist(null, new Dimension(p2[0].getWidth(), p2[0].getHeight()), 2f, 0f, 2);
         }
@@ -153,7 +154,7 @@ public final class EntityAssociation {
         GluttonChaserNutritionist gluttonChaser =
                 new GluttonChaserNutritionist(null, new Dimension(30, 30), 2f, 0f, 3);
         try {
-            BufferedImage[] p3 = createCharacterFromFile(FOLDER_GLUTTON_CHASER, 12, ".png");
+            BufferedImage[] p3 = createCharacterFromFile(FOLDER_GLUTTON_CHASER, 16, ".png");
             skin3 = new Skin(p3, 3);
             gluttonChaser =
                     new GluttonChaserNutritionist(null, new Dimension(p3[0].getWidth(), p3[0].getHeight()), 2f, 0f, 3);
@@ -227,6 +228,17 @@ public final class EntityAssociation {
         Skin skinSC = new Skin(20, 20);
         SpeedCake speedCake = new SpeedCake(null, new Dimension(15, 15),
                 new MSound(SPEEDCAKE, "music/pickspeeditem00.wav"));
+        try {
+            File img = new File(FILE_SPEED_CAKE);
+            BufferedImage in = ImageIO.read(img);
+            BufferedImage[] pSC = { in };
+            skinSC = new Skin(pSC, 0);
+            speedCake = new SpeedCake(null, new Dimension(pSC[0].getWidth(), pSC[0].getHeight()),
+                    new MSound(SPEEDCAKE, "music/pickspeeditem00.wav"));
+        }
+        catch (Exception e){
+            System.err.println("Error with image :" + FILE_SPEED_CAKE);
+        }
         EntityView speedCakeView = new EntityView(skinSC);
         register(SPEEDCAKE, speedCake, speedCakeView);
 
