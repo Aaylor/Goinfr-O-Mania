@@ -22,7 +22,7 @@ public class OptionsView extends Background {
     private JPanel volumePanel;
     private JLabel volumeLabel;
     private VolumeButton muteButton;
-    private JSlider volumeSlider;
+    private VolumeSlider volumeSlider;
 
     private JLabel difficultyLabel;
     private JComboBox<Integer> difficultyComboBox;
@@ -69,16 +69,20 @@ public class OptionsView extends Background {
 
     /* Accessors */
 
-    public JTabbedPane getTabs() {
-        return tabs;
-    }
-
     public MainMenuButton getOk() {
         return ok;
     }
 
     public MainMenuButton getBack() {
         return back;
+    }
+
+    public VolumeButton getMuteButton() {
+        return muteButton;
+    }
+
+    public VolumeSlider getVolumeSlider() {
+        return volumeSlider;
     }
 
     /* Initialisation functionalities */
@@ -119,7 +123,7 @@ public class OptionsView extends Background {
         volumePanel = new JPanel(new BorderLayout());
         volumePanel.setOpaque(false);
         muteButton = new VolumeButton();
-        volumeSlider = new JSlider(JSlider.HORIZONTAL);
+        volumeSlider = new VolumeSlider();
         volumePanel.add(muteButton, BorderLayout.WEST);
         volumePanel.add(volumeSlider, BorderLayout.CENTER);
 

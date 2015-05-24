@@ -9,12 +9,12 @@ import java.awt.event.MouseListener;
 /**
  * Created by PixelMan on 24/05/15.
  */
-public class VolumeButton extends JButton implements MouseListener {
+public class VolumeButton extends JButton{
 
-    Icon mute;
-    Icon soundy;
+    private Icon mute;
+    private Icon soundy;
 
-    boolean muted;
+    private boolean muted;
 
     /**
      * Creates a button with no set text or icon.
@@ -34,38 +34,18 @@ public class VolumeButton extends JButton implements MouseListener {
         this.setBorderPainted(false);
         this.setOpaque(false);
         this.setContentAreaFilled(false);
-        this.addMouseListener(this);
     }
 
     public boolean isMuted() {
         return muted;
     }
 
-    /**
-     * Invoked when the mouse button has been clicked (pressed
-     * and released) on a component.
-     *
-     * @param e
-     */
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        muted = !muted;
+    public void setMuted(boolean muted) {
+        this.muted = muted;
         if(muted)
             this.setIcon(mute);
         else
             this.setIcon(soundy);
     }
 
-
-    @Override
-    public void mousePressed(MouseEvent e) {}
-
-    @Override
-    public void mouseReleased(MouseEvent e) {}
-
-    @Override
-    public void mouseEntered(MouseEvent e) {}
-
-    @Override
-    public void mouseExited(MouseEvent e) {}
 }
