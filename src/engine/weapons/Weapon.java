@@ -2,9 +2,12 @@ package engine.weapons;
 
 import engine.Cooldown;
 import engine.Entity;
+import engine.EntityAssociation;
+import engine.Skin;
 import log.IGLog;
 import sound.MSound;
 
+import java.awt.image.BufferedImage;
 import java.util.*;
 
 public class Weapon {
@@ -26,9 +29,11 @@ public class Weapon {
 
     private Cooldown cooldown;
 
+    private Skin weaponSkin;
+
 
     private Weapon(String name, List<MSound> sounds, double range,
-                  int minDamage, int maxDamage, long cooldown) {
+                  int minDamage, int maxDamage, long cooldown, Skin weaponSkin) {
         this.name = name;
         owner = null;
         this.sounds = sounds;
@@ -37,21 +42,27 @@ public class Weapon {
         this.minDamage = minDamage;
         this.maxDamage = maxDamage;
         this.cooldown = new Cooldown(cooldown);
+        this.weaponSkin = weaponSkin;
     }
 
     private Weapon(Weapon weapon) {
-        name      = weapon.name;
-        owner     = null;
-        sounds    = new LinkedList<>(weapon.sounds);
-        soundsCpt = 0;
-        range     = weapon.range;
-        minDamage = weapon.minDamage;
-        maxDamage = weapon.maxDamage;
-        cooldown  = new Cooldown(weapon.cooldown.getTime());
+        name       = weapon.name;
+        owner      = null;
+        sounds     = new LinkedList<>(weapon.sounds);
+        soundsCpt  = 0;
+        range      = weapon.range;
+        minDamage  = weapon.minDamage;
+        maxDamage  = weapon.maxDamage;
+        cooldown   = new Cooldown(weapon.cooldown.getTime());
+        try {
+            weaponSkin = (Skin)weapon.weaponSkin.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void register(String name, Map<String, String> sounds, double range,
-                                int minDamage, int maxDamage, long cooldown) {
+                                int minDamage, int maxDamage, long cooldown, Skin s) {
         if (map.containsKey(name)) {
             throw new IllegalArgumentException("Weapon::register -> " +
                     name + " already registered.");
@@ -76,7 +87,7 @@ public class Weapon {
         }
 
         map.put(name, new Weapon(name, createdSounds, range, minDamage,
-                maxDamage, cooldown));
+                maxDamage, cooldown, s));
     }
 
     public static Weapon make(String name) {
@@ -95,7 +106,12 @@ public class Weapon {
         HashMap<String, String> punchSounds = new HashMap<>();
         punchSounds.put("left-punch", "sounds/left-punch.mp3");
         punchSounds.put("right-punch", "sounds/right-punch.mp3");
-        Weapon.register("punch", punchSounds, 10, 1, 2, 1000);
+        Skin skinPunch = new Skin(20,20);
+        try {
+            BufferedImage[] c = EntityAssociation.createCharacterFromFile("pictures/animation/", 7, ".png");
+            skinPunch = new Skin(c, 4);
+        } catch (Exception e){}
+        Weapon.register("punch", punchSounds, 10, 1, 2, 1000, skinPunch);
 
     }
 
@@ -134,9 +150,14 @@ public class Weapon {
         return maxDamage;
     }
 
+    public BufferedImage getNextAnimation() {
+        return weaponSkin.move();
+    }
+
     public boolean attack(Entity entity) {
         playNextSound();
         cooldown.start();
+        weaponSkin.start(true);
 
         if (entity instanceof Attackable) {
             Random random = new Random();
