@@ -226,7 +226,7 @@ public final class EntityAssociation {
         /* speed cake */
         Skin skinSC = new Skin(20, 20);
         SpeedCake speedCake = new SpeedCake(null, new Dimension(15, 15),
-                new MSound(SPEEDCAKE, "music/pickupitem00.wav"));
+                new MSound(SPEEDCAKE, "music/pickspeeditem00.wav"));
         EntityView speedCakeView = new EntityView(skinSC);
         register(SPEEDCAKE, speedCake, speedCakeView);
 

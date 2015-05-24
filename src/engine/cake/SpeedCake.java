@@ -22,6 +22,7 @@ public class SpeedCake extends AbstractCake {
     public boolean effect(Entity e) {
         if (e instanceof AbstractMovableEntity) {
             new IncreaseSpeedBuff((AbstractMovableEntity) e, 5).startBuff();
+            playSound();
             return true;
         }
 
