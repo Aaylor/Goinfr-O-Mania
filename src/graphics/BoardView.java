@@ -260,7 +260,7 @@ public class BoardView extends Background implements Observer {
                 }
             }
 
-            g2d.draw(new Line2D.Double(ame.getCenterX(), ame.getCenterY(), ame.getCenterX() + ame.getSize().getWidth()/2, ame.getCenterY()));
+            //g2d.draw(new Line2D.Double(ame.getCenterX(), ame.getCenterY(), ame.getCenterX() + ame.getSize().getWidth()/2, ame.getCenterY()));
             g2d.rotate(-angle, entity.getCenterX(), entity.getCenterY());
         } else {
             g2d.drawImage(ev.getCurrentDrawing(), t, null);
