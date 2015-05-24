@@ -2,6 +2,7 @@ package graphics;
 
 import engine.*;
 import log.IGLog;
+import sound.MMusic;
 import sound.MSound;
 import sound.SoundManager;
 
@@ -17,7 +18,7 @@ public class MainMenuController implements ActionListener {
      */
     private MainMenu mainMenu;
     private MainMenuView mainMenuView;
-    private MSound mainMusic;
+    private MMusic mainMusic;
     private MainFrame parent;
 
     /**
@@ -41,7 +42,7 @@ public class MainMenuController implements ActionListener {
         mainMenuView.setController(this);
         parent.addPanel(mainMenuView);
 
-        mainMusic = new MSound("erza","music/erza.mp3");
+        mainMusic = new MMusic("erza","music/erza.mp3");
         mainMusic.playInfinite();
 
         addControllers();
@@ -62,7 +63,7 @@ public class MainMenuController implements ActionListener {
         return level;
     }
 
-    public MSound getMainMusic() {
+    public MMusic getMainMusic() {
         return mainMusic;
     }
 

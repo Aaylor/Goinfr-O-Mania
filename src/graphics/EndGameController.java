@@ -4,6 +4,7 @@ import engine.Goal;
 import engine.Level;
 import engine.Score;
 import log.IGLog;
+import sound.MMusic;
 import sound.MSound;
 import sun.applet.Main;
 
@@ -13,12 +14,12 @@ import java.awt.event.ActionListener;
 public class EndGameController implements ActionListener {
 
     private EndGameView endGameView;
-    private MSound endGameMusic;
+    private MMusic endGameMusic;
     private Board currentState;
 
     public EndGameController(Board currentState) {
         endGameView  = new EndGameView(currentState.getLevel().getScore());
-        endGameMusic = new MSound("endGame", "music/endgame00.mp3");
+        endGameMusic = new MMusic("endGame", "music/endgame00.mp3");
 
         MainFrame.getCurrentInstance().addPanel(endGameView);
         registerListening();

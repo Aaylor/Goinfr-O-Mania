@@ -1,21 +1,19 @@
 package sound;
 
-import javafx.scene.media.AudioClip;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
 import java.util.Hashtable;
 import java.util.List;
 
-/**
- *  Class to handle sound, with memory.
- *  If a sound is created with the same name, it returns the save AudioClip.
- */
-public class MSound {
+public class MMusic {
 
     /**
      *  Save the AudioClip to the given name.
      */
-    private static Hashtable<String, AudioClip> memory;
+    private static Hashtable<String, MediaPlayer> memory;
 
     /**
      *  The prefix given to every file.
@@ -31,19 +29,19 @@ public class MSound {
     /**
      *  The saved clip.
      */
-    private AudioClip clip;
+    private MediaPlayer mp;
 
     /**
      *  Try to find the sound into the memory.
      *  @param name The sound name.
      *  @throws java.lang.IllegalArgumentException If the name doesn't exists.
      */
-    public MSound(String name) {
+    public MMusic(String name) {
         if (!memory.containsKey(name)) {
             throw new IllegalArgumentException("name doesn't exists in memory");
         }
 
-        this.clip = memory.get(name);
+        this.mp = memory.get(name);
     }
 
     /**
@@ -52,9 +50,10 @@ public class MSound {
      *  @param path The sound path.
      *  @throws java.lang.IllegalArgumentException If the path is not correct.
      */
-    public MSound(String name, String path) {
+    public MMusic(String name, String path) {
+        final JFXPanel fxPanel = new JFXPanel();
         if (memory.containsKey(name)) {
-            this.clip = memory.get(name);
+            this.mp = memory.get(name);
         } else {
             File file = new File(path);
             if (!file.exists() || file.isDirectory()) {
@@ -65,8 +64,10 @@ public class MSound {
                 path = file.getAbsolutePath();
             }
 
-            this.clip = new AudioClip(addPrefix(path));
-            memory.put(name, this.clip);
+
+            Media m = new Media(addPrefix(path));
+            this.mp = new MediaPlayer(m);
+            memory.put(name, this.mp);
         }
     }
 
@@ -83,8 +84,8 @@ public class MSound {
         }
     }
 
-    public static boolean soundCurrentlyPlayed(List<MSound> sounds) {
-        for (MSound m : sounds) {
+    public static boolean soundCurrentlyPlayed(List<MMusic> musics) {
+        for (MMusic m : musics) {
             if (m.isPlaying())
                 return true;
         }
@@ -96,7 +97,7 @@ public class MSound {
      *  Play the sound.
      */
     public void play() {
-        clip.play();
+        mp.play();
     }
 
     /**
@@ -104,16 +105,17 @@ public class MSound {
      *  @param volume The sound volume.
      */
     public void play(double volume) {
-        clip.play(volume);
+        mp.setVolume(volume);
+        mp.play();
     }
 
     public void playTimes(int cycle) {
-        clip.setCycleCount(cycle);
+        mp.setCycleCount(cycle);
         play();
     }
 
     public void playInfinite() {
-        clip.setCycleCount(AudioClip.INDEFINITE);
+        mp.setCycleCount(MediaPlayer.INDEFINITE);
         play();
     }
 
@@ -122,17 +124,21 @@ public class MSound {
      *  @return true if the sound is already playing.
      */
     public boolean isPlaying() {
-        return clip.isPlaying();
+        return (mp.getStatus() == MediaPlayer.Status.PLAYING);
     }
 
-    public void setVolume(double volume){
-        clip.setVolume(volume);
+    public void setVolume(double volume) {
+        mp.setVolume(volume);
+    }
+
+    public void pause() {
+        mp.pause();
     }
 
     /**
      *  Stop the sound.
      */
     public void stop() {
-        clip.stop();
+        mp.stop();
     }
 }
