@@ -2,6 +2,7 @@ package engine;
 
 import engine.cake.AbstractCake;
 import engine.cake.LifeCake;
+import engine.cake.SpeedCake;
 import engine.nutritionists.CakeChaserNutritionist;
 import engine.nutritionists.GluttonChaserNutritionist;
 import engine.traps.LifeTrap;
@@ -31,6 +32,7 @@ public final class EntityAssociation {
     public final static String DEFAULT_LIFECAKE      = "default_lifecake";
     public final static String SUPERLIFECAKE         = "superlifecake";
     public final static String HYPERLIFECAKE         = "hyperlifecake";
+    public final static String SPEEDCAKE             = "speedcake";
 
     /* Traps */
     public final static RandomCreation randomTraps = new RandomCreation();
@@ -206,14 +208,14 @@ public final class EntityAssociation {
         /* Hyper life cake */
         Skin skin6 = new Skin(20, 20);
         LifeCake hyperLifeCake = new LifeCake(null, new Dimension(15, 15),
-                new MSound(HYPERLIFECAKE, "music/pickupitem00.wav"), 1);
+                new MSound(HYPERLIFECAKE, "music/pickupitem00.wav"), 4);
         try {
             File img = new File(FILE_SUPER_CAKE);
             BufferedImage in = ImageIO.read(img);
             BufferedImage[] p6 = { in };
             skin6 = new Skin(p6, 0);
             hyperLifeCake = new LifeCake(null, new Dimension(p6[0].getWidth(), p6[0].getHeight()),
-                    new MSound(HYPERLIFECAKE, "music/pickupitem00.wav"), 1);
+                    new MSound(HYPERLIFECAKE, "music/pickupitem00.wav"), 4);
         }
         catch (Exception e){
             System.err.println("Error with image :" + FILE__HYPER_CAKE);
@@ -221,9 +223,17 @@ public final class EntityAssociation {
         EntityView hyperLifeCakeView = new EntityView(skin6);
         register(HYPERLIFECAKE, hyperLifeCake, hyperLifeCakeView);
 
+        /* speed cake */
+        Skin skinSC = new Skin(20, 20);
+        SpeedCake speedCake = new SpeedCake(null, new Dimension(15, 15),
+                new MSound(SPEEDCAKE, "music/pickupitem00.wav"));
+        EntityView speedCakeView = new EntityView(skinSC);
+        register(SPEEDCAKE, speedCake, speedCakeView);
+
         randomCakes.add(DEFAULT_LIFECAKE, 50);
         randomCakes.add(SUPERLIFECAKE, 30);
         randomCakes.add(HYPERLIFECAKE, 5);
+        randomCakes.add(SPEEDCAKE, 20);
 
 
         /* TRAPS */
@@ -270,7 +280,6 @@ public final class EntityAssociation {
         randomTraps.add(LIFETRAP, 30);
         randomTraps.add(BIGLIFETRAP, 15);
         randomTraps.add(SLOWTRAP, 90);
-
     }
 
 }
