@@ -229,8 +229,13 @@ public class EntityManager {
             return;
 
         LinkedList<Entity> all = new LinkedList<>();
-        all.add(player);
-        all.addAll(nutritionists);
+
+        if (!(e instanceof Glutton))
+            all.add(player);
+
+        if (!(e instanceof AbstractNutritionist))
+            all.addAll(nutritionists);
+
         all.addAll(others);
 
 

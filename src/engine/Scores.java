@@ -90,10 +90,10 @@ public class Scores {
     public void save() {
         int cpt;
 
-        /*
+
         if (!changed)
             return;
-        */
+
 
         for (Score score : scores) {
             System.out.println(score.getWho() + " -- " + score.getValue());
