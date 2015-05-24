@@ -293,6 +293,7 @@ public class EntityManager {
         others.add(e);
         e.setManager(this);
         othersView.put(e, view);
+        view.getSkin().start();
         view.setEntity(e);
     }
 
@@ -316,6 +317,7 @@ public class EntityManager {
         player = glutton;
         player.setManager(this);
         gluttonView = view;
+        gluttonView.getSkin().start();
         gluttonView.setEntity(glutton);
     }
 
@@ -327,6 +329,7 @@ public class EntityManager {
         nutritionists.add(n);
         n.setManager(this);
         nutritionistsView.put(n, view);
+        view.getSkin().start();
         view.setEntity(n);
     }
 
@@ -364,6 +367,7 @@ public class EntityManager {
         others.add(n);
         n.setManager(this);
         othersView.put(n, view);
+        view.getSkin().start();
         view.setEntity(n);
     }
 
