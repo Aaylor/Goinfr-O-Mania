@@ -30,7 +30,7 @@ public class MainFrame extends JFrame {
         super(bundle.getString("title"));
         this.bundle = bundle;
         this.mainMusic = null;
-        this.options = new Options(100);
+        this.options = new Options(100, Options.NORMAL);
         IGLog.write("Main frame creation.");
         stackPanel = new Stack<>();
         defaultFrameConfiguration(bundle);
