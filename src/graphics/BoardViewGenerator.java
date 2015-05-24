@@ -28,7 +28,7 @@ public class BoardViewGenerator {
     }
 
     public BoardView viewGeneration(){
-        int n = ExtMath.getRandomBewteen(ID_SKY, ID_WOOD);
+        int n = ExtMath.getRandomBewteen(ID_SKY, ID_WOOD+1);
         switch(n){
             case ID_SKY:
                 return new BoardView(board, SKY);
