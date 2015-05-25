@@ -25,10 +25,10 @@ public class SettingsView extends Background {
     private VolumeSlider volumeSlider;
 
     private JLabel difficultyLabel;
-    private JComboBox<Integer> difficultyComboBox;
+    private JComboBox<String> difficultyComboBox;
 
     private JLabel languageLabel;
-    private JComboBox<Integer> languageComboBox;
+    private JComboBox<String> languageComboBox;
 
     private JPanel commandsPanel;
 
@@ -87,6 +87,14 @@ public class SettingsView extends Background {
         return volumeSlider;
     }
 
+    public JComboBox<String> getDifficultyComboBox() {
+        return difficultyComboBox;
+    }
+
+    public JComboBox<String> getLanguageComboBox() {
+        return languageComboBox;
+    }
+
     /* Initialisation functionalities */
 
     private void instantiateTitle(){
@@ -133,13 +141,23 @@ public class SettingsView extends Background {
         difficultyLabel.setForeground(Color.WHITE);
         difficultyLabel.setFont(font);
 
-        difficultyComboBox = new JComboBox<>();
+        String[] difficultyChoices = {
+                bundle.getString("optionsComboDiffEasy"),
+                bundle.getString("optionsComboDiffNormal"),
+                bundle.getString("optionsComboDiffHard")
+        };
+        difficultyComboBox = new JComboBox<>(difficultyChoices);
+        difficultyComboBox.setSelectedIndex(currentSettings.getDifficulty());
 
         languageLabel = new JLabel(bundle.getString("optionsLanguageLabel"), SwingConstants.CENTER);
         languageLabel.setForeground(Color.WHITE);
         languageLabel.setFont(font);
 
-        languageComboBox = new JComboBox<>();
+        String[] langChoices = {
+                bundle.getString("optionsComboLangEn"),
+                bundle.getString("optionsComboLangFr")
+        };
+        languageComboBox = new JComboBox<>(langChoices);
 
         generalPanel.add(volumeLabel);
         generalPanel.add(volumePanel);

@@ -58,7 +58,8 @@ public class SettingsController implements ActionListener, ChangeListener{
         view.getBack().addActionListener(this);
         view.getOk().addActionListener(this);
         view.getMuteButton().addActionListener(this);
-        view.getVolumeSlider().addChangeListener(this);
+        view.getDifficultyComboBox().addActionListener(this);
+        view.getLanguageComboBox().addActionListener(this);
     }
 
     @Override
@@ -89,6 +90,17 @@ public class SettingsController implements ActionListener, ChangeListener{
                 view.getVolumeSlider().setValue(volumeUpdate);
                 updateSonorVolume(volumeUpdate);
             }
+        }
+        else if(e.getSource() == view.getDifficultyComboBox()){
+            IGLog.write("ScoreController::actionPerformed -> getDifficultyComboBox()");
+            try {
+                currentSettings.setDifficulty(view.getDifficultyComboBox().getSelectedIndex());
+            } catch (InvalidArgumentException e1) {
+                e1.printStackTrace();
+            }
+        }
+        else if(e.getSource() == view.getLanguageComboBox()){
+            IGLog.write("ScoreController::actionPerformed -> getLanguageComboBox()");
         }
         else {
             IGLog.error("ScoreController::actionPerformed -> "
