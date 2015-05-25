@@ -158,6 +158,7 @@ public class SettingsView extends Background {
                 bundle.getString("optionsComboLangEn")
         };
         languageComboBox = new JComboBox<>(langChoices);
+        languageComboBox.setSelectedIndex(currentSettings.getLang());
 
         generalPanel.add(volumeLabel);
         generalPanel.add(volumePanel);

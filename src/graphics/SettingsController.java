@@ -43,7 +43,7 @@ public class SettingsController implements ActionListener, ChangeListener{
         MainFrame frame = MainFrame.getCurrentInstance();
         frame.setSettings(currentSettings);
         frame.setBundle(ResourceBundle.getBundle("lang/bundle", currentSettings.getLocale()));
-        IGLog.info("" + currentSettings.getLocale());
+        frame.updateLangOnAllPanels();
     }
 
     public void updateSonorVolume(int volume){

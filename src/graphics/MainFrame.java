@@ -15,6 +15,7 @@ public class MainFrame extends JFrame {
     private static MainFrame instance;
 
     private Stack<JPanel> stackPanel;
+
     private ResourceBundle bundle;
 
     private MMusic mainMusic;
@@ -29,6 +30,7 @@ public class MainFrame extends JFrame {
         try {
             this.settings = new Settings(1, Settings.NORMAL);
         }
+
         catch(InvalidArgumentException e){
             IGLog.error("Invalid options");
             System.exit(1);
@@ -36,6 +38,7 @@ public class MainFrame extends JFrame {
 
         IGLog.write("Main frame creation.");
         stackPanel = new Stack<>();
+
         defaultFrameConfiguration(bundle);
 
         /* Scores setting */
@@ -215,6 +218,12 @@ public class MainFrame extends JFrame {
         pack();
     }
 
+    public void updateLangOnAllPanels(){
+        for(JPanel p: stackPanel){
+            if(p instanceof LanguageSwapable)
+                ((LanguageSwapable) p).swapLang(this.bundle);
+        }
+    }
 
 
     /* Main */

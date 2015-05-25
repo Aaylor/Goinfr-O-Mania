@@ -11,10 +11,12 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 
-public class MainMenuView extends Background implements Observer, Resumable {
+public class MainMenuView extends Background implements Observer, Resumable, LanguageSwapable {
 
     private MainFrame framep;
     private MainMenuController controller;
+
+    private JLabel title;
     private MainMenuButton play;
     private MainMenuButton load;
     private MainMenuButton options;
@@ -41,13 +43,6 @@ public class MainMenuView extends Background implements Observer, Resumable {
         sizeOfPictures();
     }
 
-    public MainMenuView(String img) {
-        super(img);
-        instantiateButtons();
-        this.add(play);
-        this.sizeOfPictures();
-    }
-
     public void setController(MainMenuController controller) {
         this.controller = controller;
     }
@@ -66,7 +61,7 @@ public class MainMenuView extends Background implements Observer, Resumable {
 
     private void instantiateTitle(){
         ResourceBundle bundle = framep.getBundle();
-        JLabel title = new JLabel(bundle.getString("gameMenuTitle"));
+        title = new JLabel(bundle.getString("gameMenuTitle"));
         if(this.font != null)
             title.setFont(font);
         title.setForeground(new Color(0x3B3B3B));
@@ -146,12 +141,18 @@ public class MainMenuView extends Background implements Observer, Resumable {
 
         reinitializeButton();
     }
-/*
+
+    /**
+     * Change all the language of all the texts visible on a component
+     *
+     * @param bundle The new bundle to use to get texts
+     */
     @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        if (background != null) {
-            background.paintComponent(g);
-        }
-    }*/
+    public void swapLang(ResourceBundle bundle) {
+        title.setText(bundle.getString("gameMenuTitle"));
+        play.setText(bundle.getString("gameMenuPlayButton"));
+        load.setText(bundle.getString("gameMenuLoadButton"));;
+        options.setText(bundle.getString("gameMenuOptionsButton"));;
+        scores.setText(bundle.getString("gameMenuScoresButton"));;
+    }
 }
