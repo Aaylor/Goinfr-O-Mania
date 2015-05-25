@@ -17,13 +17,18 @@ public abstract class AbstractBuff {
     }
 
     public void startBuff() {
-        System.out.println("Apply.");
+        final Class c = getClass();
+        if (entity.hasBuff(c))
+            return;
+
+
         apply();
+        entity.addBuff(c);
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                System.out.println("End.");
                 end();
+                entity.removeBuff(c);
             }
         }, timeSec * 1000);
     }

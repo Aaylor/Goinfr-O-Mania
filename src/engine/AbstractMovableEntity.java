@@ -1,11 +1,15 @@
 package engine;
 
+import engine.effects.AbstractBuff;
 import graphics.Circle;
 import log.IGLog;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.Collections;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -23,6 +27,10 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
     private float speed;
 
     private AtomicInteger speedModifier;
+
+    private Set<Class> buffs = Collections.newSetFromMap(new ConcurrentHashMap<>());
+
+
 
     /**
      *  Entity's direction.
@@ -141,6 +149,25 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
      */
     public void addDirection(float direction) {
         setDirection(getDirection() + direction);
+    }
+
+    public void addBuff(Class c) {
+        if (AbstractBuff.class.isAssignableFrom(c)) {
+            IGLog.info("AbstractMovableEntity::addBuf() -> add " + c.getName());
+            buffs.add(c);
+        } else {
+            IGLog.error("AbstractMovableEntity::addBuff() -> failure...");
+        }
+    }
+
+    public boolean removeBuff(Class c) {
+        IGLog.info("AbstractMovableEntity::removeBuff() -> remove " + c.getName());
+        return buffs.remove(c);
+    }
+
+    public boolean hasBuff(Class c) {
+        IGLog.info("AbstractMovableEntity::hasBuf() -> has " + c.getName() + "?");
+        return buffs.contains(c);
     }
 
     @Override
