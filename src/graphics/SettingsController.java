@@ -1,9 +1,8 @@
 package graphics;
 
 import com.sun.javaws.exceptions.InvalidArgumentException;
-import engine.Options;
+import engine.Settings;
 import log.IGLog;
-import sound.MSound;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -14,21 +13,21 @@ import java.awt.event.ActionListener;
 /**
  * Created by PixelMan on 23/05/15.
  */
-public class OptionsController implements ActionListener, ChangeListener{
+public class SettingsController implements ActionListener, ChangeListener{
 
     MainFrame parent;
-    OptionsView view;
+    SettingsView view;
 
-    Options currentSettings;
+    Settings currentSettings;
 
     boolean muting;
 
-    public OptionsController(JPanel previousView) {
+    public SettingsController(JPanel previousView) {
         parent = MainFrame.getCurrentInstance();
 
-        this.currentSettings = new Options(MainFrame.getCurrentInstance().getOptions());
+        this.currentSettings = new Settings(MainFrame.getCurrentInstance().getSettings());
 
-        view = new OptionsView(previousView);
+        view = new SettingsView(previousView, currentSettings);
         parent.addPanel(view);
 
         registerListening();
@@ -40,8 +39,7 @@ public class OptionsController implements ActionListener, ChangeListener{
      * of the settings modifications.
      */
     public void updateOptions(){
-        MainFrame.getCurrentInstance().setOptions(currentSettings);
-        MainFrame.getCurrentInstance().getMainMusic().setVolume(currentSettings.getVolume());
+        MainFrame.getCurrentInstance().setSettings(currentSettings);
     }
 
     public void updateSonorVolume(int volume){
@@ -49,6 +47,7 @@ public class OptionsController implements ActionListener, ChangeListener{
             double optionVolume = new Integer(volume).doubleValue() / 100;
             IGLog.info("Options updates <volume> : " + optionVolume);
             currentSettings.setVolume(optionVolume);
+            MainFrame.getCurrentInstance().getMainMusic().setVolume(currentSettings.getVolume());
         }
         catch (InvalidArgumentException e){
             IGLog.error("Invalide Sonor Volume");
@@ -66,11 +65,14 @@ public class OptionsController implements ActionListener, ChangeListener{
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == view.getBack()) {
             IGLog.write("ScoreController::actionPerformed -> getBack()");
+            MainFrame frame = MainFrame.getCurrentInstance();
+            frame.getMainMusic().setVolume(frame.getSettings().getVolume());
             parent.popPanel();
         }
         else if (e.getSource() == view.getOk()){
             IGLog.write("ScoreController::actionPerformed -> getOk()");
             updateOptions();
+            parent.popPanel();
         }
         else if (e.getSource() == view.getMuteButton()){
             IGLog.write("ScoreController::actionPerformed -> getMuteButton()");

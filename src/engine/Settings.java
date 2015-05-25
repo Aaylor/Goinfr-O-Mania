@@ -5,7 +5,7 @@ import com.sun.javaws.exceptions.InvalidArgumentException;
 /**
  * Created by PixelMan on 24/05/15.
  */
-public class Options {
+public class Settings {
 
     /* Difficulty */
     public static final int EASY    = 0;
@@ -17,13 +17,13 @@ public class Options {
 
     /* Constructors */
 
-    public Options(int volume, int difficulty) {
-        this.volume = volume;
-        this.difficulty = difficulty;
+    public Settings(int volume, int difficulty) throws InvalidArgumentException {
+        setVolume(volume);
+        setDifficulty(difficulty);
 
     }
 
-    public Options(Options toCopy){
+    public Settings(Settings toCopy){
         this.volume = toCopy.volume;
         this.difficulty = toCopy.difficulty;
     }

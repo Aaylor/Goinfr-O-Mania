@@ -1,19 +1,19 @@
 package graphics;
 
-import engine.Score;
-import engine.Scores;
+import engine.Settings;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.io.File;
-import java.util.Collections;
 import java.util.ResourceBundle;
 
 /**
  * Created by PixelMan on 22/05/15.
  */
-public class OptionsView extends Background {
+public class SettingsView extends Background {
+
+    private Settings currentSettings;
 
     private JTabbedPane tabs;
 
@@ -42,8 +42,10 @@ public class OptionsView extends Background {
 
     /* Constructors */
 
-    public OptionsView(JPanel previousView){
+    public SettingsView(JPanel previousView, Settings currentSettings){
         super("pictures/simpleBackground.png");
+
+        this.currentSettings = currentSettings;
 
         this.setLayout(new BorderLayout());
 
@@ -95,7 +97,7 @@ public class OptionsView extends Background {
         this.add(title, BorderLayout.NORTH);
     }
 
-    public void initGeneralPanel(){
+    private void initGeneralPanel(){
         GridLayout generalLayout = new GridLayout(3, 2);
         generalLayout.setHgap(40);
         generalLayout.setVgap(10);
@@ -122,8 +124,8 @@ public class OptionsView extends Background {
 
         volumePanel = new JPanel(new BorderLayout());
         volumePanel.setOpaque(false);
-        muteButton = new VolumeButton();
-        volumeSlider = new VolumeSlider();
+        muteButton = new VolumeButton(currentSettings.getVolume());
+        volumeSlider = new VolumeSlider(currentSettings.getVolume());
         volumePanel.add(muteButton, BorderLayout.WEST);
         volumePanel.add(volumeSlider, BorderLayout.CENTER);
 
@@ -149,7 +151,7 @@ public class OptionsView extends Background {
         generalPanel.setOpaque(false);
     }
 
-    public void initCommandPanel(){
+    private void initCommandPanel(){
         commandsPanel = new JPanel();
         JLabel label = new JLabel("Command Panel");
         label.setForeground(Color.white);
@@ -157,13 +159,13 @@ public class OptionsView extends Background {
         commandsPanel.setOpaque(false);
     }
 
-    public void initTabs(){
+    private void initTabs(){
         UIManager.put("TabbedPane.contentOpaque", false);
-        tabs = new OptionsTabs(this, generalPanel, commandsPanel);
+        tabs = new SettingsTabs(this, generalPanel, commandsPanel);
         this.add(tabs, BorderLayout.CENTER);
     }
 
-    public void initButtonPanel(){
+    private void initButtonPanel(){
         this.buttonPanel = new JPanel(new BorderLayout());
         buttonPanel.setOpaque(false);
 

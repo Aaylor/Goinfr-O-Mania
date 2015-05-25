@@ -19,15 +19,13 @@ public class VolumeButton extends JButton{
     /**
      * Creates a button with no set text or icon.
      */
-    public VolumeButton() {
+    public VolumeButton(double volume) {
         super();
-
-        muted = false;
 
         mute = new ImageIcon("pictures/Mute.png");
         soundy = new ImageIcon("pictures/Soundy.png");
 
-        this.setIcon(soundy);
+        setMuted(volume == 0);
 
         this.setBackground(null);
         this.setFocusPainted(false);

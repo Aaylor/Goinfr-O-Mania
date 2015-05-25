@@ -15,8 +15,8 @@ public class VolumeSlider extends JSlider {
      * Creates a horizontal slider with the range 0 to 100 and
      * an initial value of 100.
      */
-    public VolumeSlider() {
-        super(JSlider.HORIZONTAL, 0, 100, 100);
+    public VolumeSlider(double volume) {
+        super(JSlider.HORIZONTAL, 0, 100, (int) (volume*100));
 
     }
 

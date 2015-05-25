@@ -44,7 +44,7 @@ public class PauseController implements ActionListener {
             MainFrame.getCurrentInstance().backToFirstPanel();
         } else if (e.getSource() == view.getOptions()) {
             IGLog.write("PauseController::actionPerformed -> getOptions()");
-            new OptionsController(this.view);
+            new SettingsController(this.view);
         } else if (e.getSource() == view.getQuit()) {
             IGLog.write("PauseController::actionPerformed -> getQuit()");
             System.exit(0);

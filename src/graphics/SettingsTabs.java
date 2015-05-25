@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 /**
  * Created by PixelMan on 23/05/15.
  */
-public class OptionsTabs extends JTabbedPane{
+public class SettingsTabs extends JTabbedPane{
 
     /**
      * The UI decoration of the option basicTabbedPane
@@ -129,7 +129,7 @@ public class OptionsTabs extends JTabbedPane{
         }
     }
 
-    public OptionsTabs(JPanel parent, JPanel general, JPanel commands) {
+    public SettingsTabs(JPanel parent, JPanel general, JPanel commands) {
         super();
 
         ResourceBundle bundle = MainFrame.getCurrentInstance().getBundle();

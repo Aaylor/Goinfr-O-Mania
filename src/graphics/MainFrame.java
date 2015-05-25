@@ -1,17 +1,13 @@
 package graphics;
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import engine.*;
 import engine.weapons.Weapon;
 import log.IGLog;
-import sound.MSound;
-import sound.SoundManager;
+import sound.MMusic;
 
 import javax.swing.*;
-import javax.swing.plaf.metal.MetalIconFactory;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 public class MainFrame extends JFrame {
@@ -21,16 +17,23 @@ public class MainFrame extends JFrame {
     private Stack<JPanel> stackPanel;
     private ResourceBundle bundle;
 
-    private MSound mainMusic;
+    private MMusic mainMusic;
 
-    private Options options;
+    private Settings settings;
     private Scores scores;
 
     public MainFrame(ResourceBundle bundle) throws HeadlessException {
         super(bundle.getString("title"));
         this.bundle = bundle;
         this.mainMusic = null;
-        this.options = new Options(100, Options.NORMAL);
+        try {
+            this.settings = new Settings(1, Settings.NORMAL);
+        }
+        catch(InvalidArgumentException e){
+            IGLog.error("Invalid options");
+            System.exit(1);
+        }
+
         IGLog.write("Main frame creation.");
         stackPanel = new Stack<>();
         defaultFrameConfiguration(bundle);
@@ -65,23 +68,24 @@ public class MainFrame extends JFrame {
         return scores;
     }
 
-    public Options getOptions() {
-        return options;
+    public Settings getSettings() {
+        return settings;
     }
 
-    public MSound getMainMusic() {
+    public MMusic getMainMusic() {
         return mainMusic;
     }
 
-    public void setMainMusic(MSound mainMusic) {
+    public void setMainMusic(MMusic mainMusic) {
         if(this.mainMusic!=null && this.mainMusic.isPlaying())
             this.mainMusic.stop();
         this.mainMusic = mainMusic;
-        this.mainMusic.play(options.getVolume());
+        this.mainMusic.setVolume(settings.getVolume());
+        this.mainMusic.playInfinite();
     }
 
-    public void setOptions(Options options) {
-        this.options = options;
+    public void setSettings(Settings settings) {
+        this.settings = settings;
     }
 
     /* Frame Configuration */

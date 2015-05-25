@@ -1,9 +1,7 @@
 package graphics;
 
 import engine.*;
-import log.IGLog;
 import sound.MMusic;
-import sound.MSound;
 import sound.SoundManager;
 
 import java.awt.event.ActionEvent;
@@ -42,8 +40,7 @@ public class MainMenuController implements ActionListener {
         mainMenuView.setController(this);
         parent.addPanel(mainMenuView);
         mainMusic = new MMusic("erza","music/erza.mp3");
-        mainMusic.playInfinite();
-        //parent.setMainMusic(mainMusic);
+        parent.setMainMusic(mainMusic);
 
         addControllers();
 
@@ -124,7 +121,7 @@ public class MainMenuController implements ActionListener {
      * Launche the option menu
      */
     public void options(){
-        new OptionsController(this.mainMenuView);
+        new SettingsController(this.mainMenuView);
     }
 
     /**
