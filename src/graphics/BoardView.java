@@ -172,13 +172,15 @@ public class BoardView extends Background implements Observer {
             Weapon w = em.getGlutton().getWeapon();
             if (w == null) {
                 g2d.drawString(
-                        "*TODO*",
-                        current_distance + fm.stringWidth(weaponLabel) + 50, middle
+                        "X",
+                        current_distance + fm.stringWidth(weaponLabel) + 30, middle
                 );
             } else {
                 g2d.drawImage(w.getWeaponIcon().getImage(),
                         current_distance + fm.stringWidth(weaponLabel) + 30,
                         middle - (w.getWeaponIcon().getIconHeight() / 2) - 5, null);
+
+
             }
 
 
