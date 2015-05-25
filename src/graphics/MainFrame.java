@@ -110,6 +110,7 @@ public class MainFrame extends JFrame {
         setVisible(true);
 
         pack();
+        setLocationRelativeTo(null);
     }
 
     private static void setSystemProperties() {
