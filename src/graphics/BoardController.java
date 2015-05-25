@@ -71,7 +71,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
     public void pauseGame() {
         IGLog.info("BoardController, gamed paused.");
         boardView.setPaused(true);
-        gameSound.stop();
+        gameSound.pause();
 
         // Pause chrono and timer.
         getBoard().getLevel().getChrono().pause();
