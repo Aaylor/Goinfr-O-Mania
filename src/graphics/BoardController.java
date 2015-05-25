@@ -91,6 +91,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         // Resume chrono and timer.
         getBoard().getLevel().getChrono().resume();
         nextRandomPop.resumeTimer();
+        nextRandomTrap.resumeTimer();
         nextRandomNutritionists.resumeTimer();
 
         gameState = true;
