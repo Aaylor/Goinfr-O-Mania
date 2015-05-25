@@ -6,6 +6,7 @@ import log.IGLog;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *  An entity which allow to have movements.
@@ -21,6 +22,8 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
      */
     private float speed;
 
+    private AtomicInteger speedModifier;
+
     /**
      *  Entity's direction.
      *  It's in degree. It will always be between 0 and 360.
@@ -33,6 +36,7 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
     public AbstractMovableEntity() {
         super();
         speed = 0;
+        speedModifier = new AtomicInteger(100);
         direction = 0;
     }
 
@@ -44,6 +48,7 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
     public AbstractMovableEntity(float speed, float direction) {
         super();
         this.speed = speed;
+        speedModifier = new AtomicInteger(100);
         this.direction = direction;
     }
 
@@ -57,6 +62,7 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
     public AbstractMovableEntity(Point startPosition, Dimension size, float speed, float direction) {
         super(startPosition, size);
         this.speed = speed;
+        speedModifier = new AtomicInteger(100);
         this.direction = direction;
     }
 
@@ -96,6 +102,18 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
         return direction;
     }
 
+    public void addSpeedModifier(int modifier) {
+        System.out.println(
+                "AbstractMovableEntity -> Entity {" + this + "}," +
+                        " addSpeedModifier(" + modifier + "), new value = " +
+                        speedModifier.addAndGet(modifier)
+        );
+    }
+
+    public int getSpeedModifier() {
+        return speedModifier.get();
+    }
+
     /**
      *  Return entity's direction in Radian.
      *  @return entity's direction in Radian.
@@ -133,12 +151,14 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
         double angle = getDirectionRadian();
         Dimension entitySize = getSize();
 
+        double speed = getSpeed() * (((double)getSpeedModifier()) / 100.);
+
         Point2D newPoint = null;
         Circle newCircle = null;
         switch (d) {
             case FRONT:
-                nextX = position.getX() + (getSpeed() * Math.cos(angle));
-                nextY = position.getY() + (getSpeed() * Math.sin(angle));
+                nextX = position.getX() + (speed * Math.cos(angle));
+                nextY = position.getY() + (speed * Math.sin(angle));
                 newPoint = new Point2D.Double(nextX, nextY);
 
                 newCircle = new Circle(nextX, nextY, entitySize.getWidth() / 2);
@@ -150,8 +170,8 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
                 break;
 
             case BELOW:
-                nextX = position.getX() - ((getSpeed() * BACKWARD_MODIFIER) * Math.cos(angle));
-                nextY = position.getY() - ((getSpeed() * BACKWARD_MODIFIER) * Math.sin(angle));
+                nextX = position.getX() - ((speed * BACKWARD_MODIFIER) * Math.cos(angle));
+                nextY = position.getY() - ((speed * BACKWARD_MODIFIER) * Math.sin(angle));
                 newPoint = new Point2D.Double(nextX, nextY);
 
                 newCircle = new Circle(nextX, nextY, entitySize.getWidth() / 2);

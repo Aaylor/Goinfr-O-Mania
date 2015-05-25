@@ -5,9 +5,7 @@ import engine.Entity;
 
 public class SlowSpeedBuff extends AbstractBuff {
 
-    private final float SPEED_MODIFIER = 0.7f;
-
-    private float initialSpeed;
+    private static int SPEED_MODIFIER = -30;
 
     public SlowSpeedBuff(AbstractMovableEntity entity, long time) {
         super(entity, time);
@@ -15,13 +13,11 @@ public class SlowSpeedBuff extends AbstractBuff {
 
     @Override
     public void apply() {
-        AbstractMovableEntity ame = getAbstractMovableEntity();
-        initialSpeed = ame.getSpeed();
-        ame.setSpeed(initialSpeed * SPEED_MODIFIER);
+        getAbstractMovableEntity().addSpeedModifier(SPEED_MODIFIER);
     }
 
     @Override
     public void end() {
-        getAbstractMovableEntity().setSpeed(initialSpeed);
+        getAbstractMovableEntity().addSpeedModifier(-SPEED_MODIFIER);
     }
 }

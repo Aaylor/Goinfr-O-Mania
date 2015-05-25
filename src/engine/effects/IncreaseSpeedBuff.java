@@ -4,9 +4,7 @@ import engine.AbstractMovableEntity;
 
 public class IncreaseSpeedBuff extends AbstractBuff {
 
-    private static float SPEED_CHANGE = 1.5f;
-
-    private float speed;
+    private static int SPEED_MODIFIER = 50;
 
     public IncreaseSpeedBuff(AbstractMovableEntity entity, long time) {
         super(entity, time);
@@ -14,13 +12,12 @@ public class IncreaseSpeedBuff extends AbstractBuff {
 
     @Override
     public void apply() {
-        speed = getAbstractMovableEntity().getSpeed();
-        getAbstractMovableEntity().setSpeed(SPEED_CHANGE * speed);
+        getAbstractMovableEntity().addSpeedModifier(SPEED_MODIFIER);
     }
 
     @Override
     public void end() {
-        getAbstractMovableEntity().setSpeed(speed);
+        getAbstractMovableEntity().addSpeedModifier(-SPEED_MODIFIER);
     }
 
 }
