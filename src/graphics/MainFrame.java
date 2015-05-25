@@ -84,8 +84,14 @@ public class MainFrame extends JFrame {
         this.mainMusic.playInfinite();
     }
 
+    /* Setters */
+
     public void setSettings(Settings settings) {
         this.settings = settings;
+    }
+
+    public void setBundle(ResourceBundle bundle) {
+        this.bundle = bundle;
     }
 
     /* Frame Configuration */

@@ -154,8 +154,8 @@ public class SettingsView extends Background {
         languageLabel.setFont(font);
 
         String[] langChoices = {
-                bundle.getString("optionsComboLangEn"),
-                bundle.getString("optionsComboLangFr")
+                bundle.getString("optionsComboLangFr"),
+                bundle.getString("optionsComboLangEn")
         };
         languageComboBox = new JComboBox<>(langChoices);
 

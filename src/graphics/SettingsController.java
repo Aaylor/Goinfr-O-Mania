@@ -9,6 +9,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 
 /**
  * Created by PixelMan on 23/05/15.
@@ -39,7 +40,10 @@ public class SettingsController implements ActionListener, ChangeListener{
      * of the settings modifications.
      */
     public void updateOptions(){
-        MainFrame.getCurrentInstance().setSettings(currentSettings);
+        MainFrame frame = MainFrame.getCurrentInstance();
+        frame.setSettings(currentSettings);
+        frame.setBundle(ResourceBundle.getBundle("lang/bundle", currentSettings.getLocale()));
+        IGLog.info("" + currentSettings.getLocale());
     }
 
     public void updateSonorVolume(int volume){
@@ -58,6 +62,7 @@ public class SettingsController implements ActionListener, ChangeListener{
         view.getBack().addActionListener(this);
         view.getOk().addActionListener(this);
         view.getMuteButton().addActionListener(this);
+        view.getVolumeSlider().addChangeListener(this);
         view.getDifficultyComboBox().addActionListener(this);
         view.getLanguageComboBox().addActionListener(this);
     }
@@ -101,6 +106,11 @@ public class SettingsController implements ActionListener, ChangeListener{
         }
         else if(e.getSource() == view.getLanguageComboBox()){
             IGLog.write("ScoreController::actionPerformed -> getLanguageComboBox()");
+            try {
+                currentSettings.setLang(view.getLanguageComboBox().getSelectedIndex());
+            } catch (InvalidArgumentException e1) {
+                e1.printStackTrace();
+            }
         }
         else {
             IGLog.error("ScoreController::actionPerformed -> "
