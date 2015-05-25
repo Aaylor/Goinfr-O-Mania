@@ -4,11 +4,15 @@ import engine.Cooldown;
 import engine.Entity;
 import engine.EntityAssociation;
 import engine.Skin;
+import helpers.ExtGraphics;
 import log.IGLog;
 import sound.MSound;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.*;
+import java.util.List;
 
 public class Weapon {
 
@@ -31,9 +35,11 @@ public class Weapon {
 
     private Skin weaponSkin;
 
+    private ImageIcon weaponIcon;
+
 
     private Weapon(String name, List<MSound> sounds, double range,
-                  int minDamage, int maxDamage, long cooldown, Skin weaponSkin) {
+                  int minDamage, int maxDamage, long cooldown, Skin weaponSkin, ImageIcon weaponIcon) {
         this.name = name;
         owner = null;
         this.sounds = sounds;
@@ -43,6 +49,7 @@ public class Weapon {
         this.maxDamage = maxDamage;
         this.cooldown = new Cooldown(cooldown);
         this.weaponSkin = weaponSkin;
+        this.weaponIcon = weaponIcon;
     }
 
     private Weapon(Weapon weapon) {
@@ -59,10 +66,11 @@ public class Weapon {
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
+        weaponIcon = weapon.weaponIcon;
     }
 
     public static void register(String name, Map<String, String> sounds, double range,
-                                int minDamage, int maxDamage, long cooldown, Skin s) {
+                                int minDamage, int maxDamage, long cooldown, Skin s, String pathToIcon) {
         if (map.containsKey(name)) {
             throw new IllegalArgumentException("Weapon::register -> " +
                     name + " already registered.");
@@ -86,8 +94,12 @@ public class Weapon {
             }
         }
 
+        ImageIcon icon = new ImageIcon(
+                ExtGraphics.resizeInitialImage(pathToIcon, 30, true)
+        );
+
         map.put(name, new Weapon(name, createdSounds, range, minDamage,
-                maxDamage, cooldown, s));
+                maxDamage, cooldown, s, icon));
     }
 
     public static Weapon make(String name) {
@@ -111,7 +123,7 @@ public class Weapon {
             BufferedImage[] c = EntityAssociation.createCharacterFromFile("pictures/animation/", 7, ".png");
             skinPunch = new Skin(c, 4);
         } catch (Exception e){}
-        Weapon.register("punch", punchSounds, 10, 1, 2, 1000, skinPunch);
+        Weapon.register("punch", punchSounds, 10, 1, 2, 1000, skinPunch, "pictures/punch.png");
 
     }
 
@@ -152,6 +164,10 @@ public class Weapon {
 
     public BufferedImage getNextAnimation() {
         return weaponSkin.move();
+    }
+
+    public ImageIcon getWeaponIcon() {
+        return weaponIcon;
     }
 
     public boolean attack(Entity entity) {

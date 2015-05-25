@@ -2,6 +2,8 @@ package graphics;
 
 import engine.*;
 import engine.nutritionists.AbstractNutritionist;
+import engine.weapons.Weapon;
+import helpers.ExtGraphics;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,8 +51,8 @@ public class BoardView extends Background implements Observer {
             e.printStackTrace();
         }
 
-        gameUI = resizeInitialImage("pictures/frise00.png", FRISE_HEIGHT, true);
-        barUI  = resizeInitialImage("pictures/frise01.png", 6, false);
+        gameUI = ExtGraphics.resizeInitialImage("pictures/frise00.png", FRISE_HEIGHT, true);
+        barUI  = ExtGraphics.resizeInitialImage("pictures/frise01.png", 6, false);
 
         try {
             File file = new File("fonts/Viking_n.ttf");
@@ -60,8 +62,8 @@ public class BoardView extends Background implements Observer {
             fontUI = null;
         }
 
-        emptyHeart  = resizeInitialImage("pictures/heart00.png", 20, true);
-        filledHeart = resizeInitialImage("pictures/heart01.png", 20, true);
+        emptyHeart  = ExtGraphics.resizeInitialImage("pictures/heart00.png", 20, true);
+        filledHeart = ExtGraphics.resizeInitialImage("pictures/heart01.png", 20, true);
 
         ResourceBundle bundle = MainFrame.getCurrentInstance().getBundle();
         lifeLabel   = bundle.getString("lifeUI");
@@ -78,45 +80,6 @@ public class BoardView extends Background implements Observer {
 
     public void setPaused(boolean paused) {
         this.paused = paused;
-    }
-
-    private Image resizeInitialImage(String path, double newValue, boolean what) {
-        ImageIcon icon = new ImageIcon(path);
-
-        double alpha;
-        int nWidth;
-        int nHeight;
-
-        if (what) {
-            alpha   = newValue / icon.getIconHeight();
-            nWidth  = (int) (icon.getIconWidth() * alpha);
-            nHeight = (int) newValue;
-        } else {
-            alpha   = newValue / icon.getIconWidth();
-            nWidth  = (int) newValue;
-            nHeight = (int) (icon.getIconHeight() * alpha);
-        }
-
-        BufferedImage image =
-                new BufferedImage(nWidth, nHeight,
-                        BufferedImage.TYPE_INT_ARGB);
-
-        Graphics2D g = image.createGraphics();
-        g.setComposite(AlphaComposite.Src);
-
-        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        g.setRenderingHint(RenderingHints.KEY_RENDERING,
-                RenderingHints.VALUE_RENDER_QUALITY);
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
-
-        g.drawImage(
-                icon.getImage(),
-                0, 0, nWidth, nHeight, null
-        );
-
-        return image;
     }
 
     private int getRealHeight() {
@@ -205,10 +168,20 @@ public class BoardView extends Background implements Observer {
 
             // weapon
             g2d.drawString(weaponLabel, current_distance + 5, middle);
-            g2d.drawString(
-                    "*TODO*",
-                    current_distance + fm.stringWidth(weaponLabel) + 50, middle
-            );
+
+            Weapon w = em.getGlutton().getWeapon();
+            if (w == null) {
+                g2d.drawString(
+                        "*TODO*",
+                        current_distance + fm.stringWidth(weaponLabel) + 50, middle
+                );
+            } else {
+                g2d.drawImage(w.getWeaponIcon().getImage(),
+                        current_distance + fm.stringWidth(weaponLabel) + 30,
+                        middle - (w.getWeaponIcon().getIconHeight() / 2) - 5, null);
+            }
+
+
             current_distance += distance + barUI.getWidth(null);
 
             // chrono
