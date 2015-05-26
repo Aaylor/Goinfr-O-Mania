@@ -1,23 +1,16 @@
 package engine;
 
-import graphics.Board;
 import helpers.Chrono;
-import sound.MSound;
-import sound.SoundManager;
 
 public class Level {
 
     private Score actualScore;
-    private Goal goal;
     private EntityManager em;
-    private SoundManager sm;
     private Chrono chrono;
 
-    public Level(Score actualScore, Goal goal, SoundManager sm) {
+    public Level(Score actualScore) {
         this.actualScore = actualScore;
-        this.goal = goal;
         this.em = new EntityManager(this);
-        this.sm = sm;
         chrono = new Chrono();
     }
 

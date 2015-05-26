@@ -5,8 +5,6 @@ import engine.Level;
 import engine.Score;
 import log.IGLog;
 import sound.MMusic;
-import sound.MSound;
-import sun.applet.Main;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,7 +38,7 @@ public class EndGameController implements ActionListener {
         if (e.getSource() == endGameView.getReplay()) {
             IGLog.write("EndGameController::actionPerformed -> getReplay()");
             MainFrame.getCurrentInstance().popPanel(false);
-            Board b = new Board(currentState.getPlayer(), new Level(new Score(), new Goal(), null));
+            Board b = new Board(currentState.getPlayer(), new Level(new Score()));
             BoardView boardView = new BoardViewGenerator(b).viewGeneration();
             boardView.setSize(MainFrame.getCurrentInstance().getSize());
             BoardController bc = new BoardController(b, boardView);

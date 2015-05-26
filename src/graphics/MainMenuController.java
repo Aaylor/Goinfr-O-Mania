@@ -2,7 +2,6 @@ package graphics;
 
 import engine.*;
 import sound.MMusic;
-import sound.SoundManager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -73,11 +72,7 @@ public class MainMenuController implements ActionListener {
         mainMusic.stop();
         parent.setPreferredSize(parent.getSize());
 
-        Level level = new Level(
-                new Score(),
-                new Goal(),
-                new SoundManager()
-        );
+        Level level = new Level(new Score());
 
 
         Board board = new Board(new Player("Test"), level);
@@ -88,7 +83,6 @@ public class MainMenuController implements ActionListener {
         controller.start();
 
         view.setFocusable(true);
-        /* TODO : run() */
     }
 
 
