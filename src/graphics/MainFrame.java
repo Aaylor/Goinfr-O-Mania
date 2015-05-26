@@ -15,7 +15,6 @@ public class MainFrame extends JFrame {
     private static MainFrame instance;
 
     private Stack<JPanel> stackPanel;
-
     private ResourceBundle bundle;
 
     private MMusic mainMusic;
@@ -27,18 +26,10 @@ public class MainFrame extends JFrame {
         super(bundle.getString("title"));
         this.bundle = bundle;
         this.mainMusic = null;
-        try {
-            this.settings = new Settings(1, Settings.NORMAL);
-        }
-
-        catch(InvalidArgumentException e){
-            IGLog.error("Invalid options");
-            System.exit(1);
-        }
+        this.settings = new Settings();
 
         IGLog.write("Main frame creation.");
         stackPanel = new Stack<>();
-
         defaultFrameConfiguration(bundle);
 
         /* Scores setting */
@@ -110,10 +101,10 @@ public class MainFrame extends JFrame {
 
 
         new MainMenuController(this, null, null);
-        setVisible(true);
 
         pack();
         setLocationRelativeTo(null);
+        setVisible(true);
     }
 
     private static void setSystemProperties() {

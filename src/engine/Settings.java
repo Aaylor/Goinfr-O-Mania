@@ -3,6 +3,7 @@ package engine;
 import com.sun.javaws.exceptions.InvalidArgumentException;
 
 import java.util.Locale;
+import java.util.prefs.Preferences;
 
 /**
  * Created by PixelMan on 24/05/15.
@@ -18,24 +19,43 @@ public class Settings {
     public static final int FRENCH = 0;
     public static final int ENGLISH = 1;
 
+    /* Default values */
+    private static final double DEFAULT_VOLUME      = 1d;
+    private static final int    DEFAULT_DIFFICULTY  = NORMAL;
+    private static final int    DEFAULT_LANG        = ENGLISH;
+
+    private Preferences preferences;
+
     private double volume;
     private int difficulty;
     private int lang;
 
     /* Constructors */
 
-    public Settings(int volume, int difficulty) throws InvalidArgumentException {
-        setVolume(volume);
-        setDifficulty(difficulty);
+    public Settings() {
+        preferences = Preferences.userRoot().node(getClass().getName());
 
+        volume     = preferences.getDouble("volume", DEFAULT_VOLUME);
+        difficulty = preferences.getInt("difficulty", DEFAULT_DIFFICULTY);
+        lang       = preferences.getInt("lang", DEFAULT_LANG);
     }
 
     public Settings(Settings toCopy){
         this.volume = toCopy.volume;
         this.difficulty = toCopy.difficulty;
         this.lang = toCopy.lang;
+        this.preferences = toCopy.preferences;
     }
 
+    public void reset() {
+        try {
+            setVolume(DEFAULT_VOLUME);
+            setDifficulty(DEFAULT_DIFFICULTY);
+            setLang(DEFAULT_LANG);
+        } catch (InvalidArgumentException e) {
+            e.printStackTrace();
+        }
+    }
 
     /* Getters */
 
@@ -62,6 +82,7 @@ public class Settings {
         if(volume < 0. || volume > 1.)
             throw new InvalidArgumentException(null);
         this.volume = volume;
+        preferences.putDouble("volume", volume);
     }
 
     /**
@@ -73,6 +94,7 @@ public class Settings {
         if(difficulty < EASY || difficulty > HARD)
             throw new InvalidArgumentException(null);
         this.difficulty = difficulty;
+        preferences.putInt("difficulty", difficulty);
     }
 
     /**
@@ -84,6 +106,7 @@ public class Settings {
         if(lang < FRENCH || lang > ENGLISH)
             throw new InvalidArgumentException(null);
         this.lang = lang;
+        preferences.putInt("lang", lang);
     }
 
 
