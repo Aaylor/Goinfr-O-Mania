@@ -40,4 +40,26 @@ public class Level {
     public Score getScore() {
         return actualScore;
     }
+
+    public void addToScore(int score) {
+        int modifier;
+
+        switch (getDifficulty()) {
+            case EASY:
+                modifier = 1;
+                break;
+            case MEDIUM:
+                modifier = 2;
+                break;
+            case HARD:
+                modifier = 4;
+                break;
+            default:
+                modifier = 1;
+                break;
+        }
+
+        score = score > 0 ? score * modifier : score;
+        getScore().add(score);
+    }
 }

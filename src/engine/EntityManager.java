@@ -85,7 +85,7 @@ public class EntityManager {
 
                 /* if could add a score, then do it. */
                 if (entity instanceof Valuable) {
-                    level.getScore().add(((Valuable)entity).scoreValue());
+                    level.addToScore(((Valuable)entity).scoreValue());
                 }
 
             } else {
@@ -275,7 +275,7 @@ public class EntityManager {
                     }
 
                     if (e instanceof  Glutton && attackedEntity instanceof Valuable) {
-                        level.getScore().add(((Valuable) attackedEntity).scoreValue());
+                        level.addToScore(((Valuable) attackedEntity).scoreValue());
                     }
                 }
 
