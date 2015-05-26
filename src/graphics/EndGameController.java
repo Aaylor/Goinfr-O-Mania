@@ -1,6 +1,6 @@
 package graphics;
 
-import engine.Goal;
+import engine.Difficulties;
 import engine.Level;
 import engine.Score;
 import log.IGLog;
@@ -38,7 +38,7 @@ public class EndGameController implements ActionListener {
         if (e.getSource() == endGameView.getReplay()) {
             IGLog.write("EndGameController::actionPerformed -> getReplay()");
             MainFrame.getCurrentInstance().popPanel(false);
-            Board b = new Board(currentState.getPlayer(), new Level(new Score()));
+            Board b = new Board(currentState.getPlayer(), new Level(new Score(), Difficulties.MEDIUM)); /* FIXME */
             BoardView boardView = new BoardViewGenerator(b).viewGeneration();
             boardView.setSize(MainFrame.getCurrentInstance().getSize());
             BoardController bc = new BoardController(b, boardView);

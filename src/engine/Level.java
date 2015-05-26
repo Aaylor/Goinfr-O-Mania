@@ -7,15 +7,21 @@ public class Level {
     private Score actualScore;
     private EntityManager em;
     private Chrono chrono;
+    private Difficulties difficulty;
 
-    public Level(Score actualScore) {
+    public Level(Score actualScore, Difficulties difficulty) {
         this.actualScore = actualScore;
+        this.difficulty = difficulty;
         this.em = new EntityManager(this);
         chrono = new Chrono();
     }
 
     public EntityManager getEntityManager() {
         return em;
+    }
+
+    public Difficulties getDifficulty() {
+        return difficulty;
     }
 
     public Chrono getChrono() {

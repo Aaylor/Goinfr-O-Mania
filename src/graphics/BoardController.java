@@ -23,6 +23,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import static engine.Difficulties.*;
+
 
 public class BoardController extends Thread implements MouseListener, KeyListener {
 
@@ -37,8 +39,20 @@ public class BoardController extends Thread implements MouseListener, KeyListene
     private final Set<Integer> pressedKeys;
     private MMusic gameSound;
 
+    /* The pop timer */
+    private static final int CAKE_TIME_POP_EASY   = 1;    /* TODO */
+    private static final int CAKE_TIME_POP_MEDIUM = 2;    /* TODO */
+    private static final int CAKE_TIME_POP_HARD   = 3;    /* TODO */
     private PopTimer nextRandomPop;
+    
+    private static final int TRAP_TIME_POP_EASY   = 1;    /* TODO */
+    private static final int TRAP_TIME_POP_MEDIUM = 2;    /* TODO */
+    private static final int TRAP_TIME_POP_HARD   = 3;    /* TODO */
     private PopTimer nextRandomTrap;
+
+    private static final int NUTRITIONISTS_TIME_POP_EASY   = 1;    /* TODO */
+    private static final int NUTRITIONISTS_TIME_POP_MEDIUM = 2;    /* TODO */
+    private static final int NUTRITIONISTS_TIME_POP_HARD   = 3;    /* TODO */
     private PopTimer nextRandomNutritionists;
 
     /* Constructors */
@@ -167,6 +181,20 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         nextRandomNutritionists = new PopTimer(5);
     }
 
+    private int getCakePopTime() {
+        switch(getBoard().getLevel().getDifficulty()) {
+            case EASY:
+                return CAKE_TIME_POP_EASY;
+            case MEDIUM:
+                return CAKE_TIME_POP_MEDIUM;
+            case HARD:
+                return CAKE_TIME_POP_HARD;
+            default:
+                /* As same as MEDIUM */
+                return CAKE_TIME_POP_MEDIUM;
+        }
+    }
+    
     private void randomPop() {
         if (nextRandomPop.hasPassed()) {
             IGLog.write("BoardController::run -> Next Random Pop has to be done.");
@@ -177,10 +205,24 @@ public class BoardController extends Thread implements MouseListener, KeyListene
                     EntityAssociation.getEntityView(cakeName)
             );
 
-            nextRandomPop = new PopTimer(10);
+            nextRandomPop = new PopTimer(getCakePopTime());
         }
     }
-
+    
+    private int getTrapPopTime() {
+        switch(getBoard().getLevel().getDifficulty()) {
+            case EASY:
+                return TRAP_TIME_POP_EASY;
+            case MEDIUM:
+                return TRAP_TIME_POP_MEDIUM;
+            case HARD:
+                return TRAP_TIME_POP_HARD;
+            default:
+                /* As same as MEDIUM */
+                return TRAP_TIME_POP_MEDIUM;
+        }
+    }
+    
     private void randomTrapPop() {
         if (nextRandomTrap.hasPassed()) {
             IGLog.write("BoardController::run -> Next Random Trap has to be done.");
@@ -193,7 +235,21 @@ public class BoardController extends Thread implements MouseListener, KeyListene
             );
             getBoard().getLevel().getEntityManager().putLifeTime(a, a.getLifetime());
 
-            nextRandomTrap = new PopTimer(2);
+            nextRandomTrap = new PopTimer(getTrapPopTime());
+        }
+    }
+
+    private int getNutritonistsPopTime() {
+        switch(getBoard().getLevel().getDifficulty()) {
+            case EASY:
+                return NUTRITIONISTS_TIME_POP_EASY;
+            case MEDIUM:
+                return NUTRITIONISTS_TIME_POP_MEDIUM;
+            case HARD:
+                return NUTRITIONISTS_TIME_POP_HARD;
+            default:
+                /* As same as MEDIUM */
+                return NUTRITIONISTS_TIME_POP_MEDIUM;
         }
     }
 
@@ -215,7 +271,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
                     EntityAssociation.getEntityView(who)
             );
 
-            nextRandomNutritionists = new PopTimer(15);
+            nextRandomNutritionists = new PopTimer(getNutritonistsPopTime());
         }
     }
 
