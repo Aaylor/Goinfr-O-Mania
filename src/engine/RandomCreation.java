@@ -1,5 +1,6 @@
 package engine;
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import helpers.ExtMath;
 
 import java.util.HashMap;
@@ -30,10 +31,6 @@ public class RandomCreation {
         Tuple<Integer, Integer> t = new Tuple<>(total, prob + total - 1);
         map.put(s, t);
         total += prob;
-    }
-
-    public void remove(String s) {
-        /* TODO */
     }
 
     public String getRandomlyName() {

@@ -38,6 +38,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
     private boolean gameState;
     private final Set<Integer> pressedKeys;
     private MMusic gameSound;
+    private EntityAssociation ea;
 
     /* The pop timer */
     private static final int CAKE_TIME_POP_EASY   = 1;    /* TODO */
@@ -55,6 +56,9 @@ public class BoardController extends Thread implements MouseListener, KeyListene
     private static final int NUTRITIONISTS_TIME_POP_HARD   = 3;    /* TODO */
     private PopTimer nextRandomNutritionists;
 
+
+    private static final int FRAME_PER_SECONDS = 16;
+
     /* Constructors */
 
     public BoardController(Board board, BoardView view) {
@@ -68,6 +72,8 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         gameState = true;
 
         gameSound = new MMusic("ingame", "music/ingame00.wav");
+
+        ea = EntityAssociation.getInstance(getBoard().getLevel().getDifficulty());
 
         pressedKeys = new HashSet<>();
     }
@@ -168,8 +174,8 @@ public class BoardController extends Thread implements MouseListener, KeyListene
 
         /* Initialize every one. */
         manager.addAtRandomPosition(
-                EntityAssociation.getEntity("default_glutton"),
-                EntityAssociation.getEntityView("default_glutton"),
+                ea.getEntity("default_glutton"),
+                ea.getEntityView("default_glutton"),
                 0, boardView.getHeight(), 0, boardView.getWidth()
         );
         manager.getGlutton().setWeapon(Weapon.make("punch"));
@@ -199,10 +205,10 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         if (nextRandomPop.hasPassed()) {
             IGLog.write("BoardController::run -> Next Random Pop has to be done.");
 
-            String cakeName = EntityAssociation.randomCakes.getRandomlyName();
+            String cakeName = ea.randomCakes.getRandomlyName();
             getBoard().getLevel().getEntityManager().addAtRandomPosition(
-                    EntityAssociation.getEntity(cakeName),
-                    EntityAssociation.getEntityView(cakeName)
+                    ea.getEntity(cakeName),
+                    ea.getEntityView(cakeName)
             );
 
             nextRandomPop = new PopTimer(getCakePopTime());
@@ -227,11 +233,11 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         if (nextRandomTrap.hasPassed()) {
             IGLog.write("BoardController::run -> Next Random Trap has to be done.");
 
-            String trapName = EntityAssociation.randomTraps.getRandomlyName();
-            AbstractTrap a = (AbstractTrap) EntityAssociation.getEntity(trapName);
+            String trapName = ea.randomTraps.getRandomlyName();
+            AbstractTrap a = (AbstractTrap) ea.getEntity(trapName);
             getBoard().getLevel().getEntityManager().addAtRandomPosition(
                     a,
-                    EntityAssociation.getEntityView(trapName)
+                    ea.getEntityView(trapName)
             );
             getBoard().getLevel().getEntityManager().putLifeTime(a, a.getLifetime());
 
@@ -259,8 +265,8 @@ public class BoardController extends Thread implements MouseListener, KeyListene
 
             EntityManager manager = getBoard().getLevel().getEntityManager();
 
-            String who = EntityAssociation.randomNutritionist.getRandomlyName();
-            Entity e   = EntityAssociation.getEntity(who);
+            String who = ea.randomNutritionist.getRandomlyName();
+            Entity e   = ea.getEntity(who);
             manager.setRandomPosition(e, 0, boardView.getHeight(), 0, boardView.getWidth());
 
             /* FIXME */
@@ -268,7 +274,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
 
             board.getLevel().getEntityManager().addNutritionist(
                     (AbstractNutritionist)e,
-                    EntityAssociation.getEntityView(who)
+                    ea.getEntityView(who)
             );
 
             nextRandomNutritionists = new PopTimer(getNutritonistsPopTime());
@@ -285,6 +291,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         getBoard().getLevel().getChrono().start();
 
         while (true) {
+            long start = System.currentTimeMillis();
             waitForResume();
             if (board.getLevel().getEntityManager().getGlutton().getLife() <= 0) {
                 IGLog.info("Glutton is dead.");
@@ -314,10 +321,10 @@ public class BoardController extends Thread implements MouseListener, KeyListene
             if (manager.getCakes().size() == 0) {
                 IGLog.info("BoardController::run -> A new cake has to appear.");
 
-                String cakeName = EntityAssociation.randomCakes.getRandomlyName();
+                String cakeName = ea.randomCakes.getRandomlyName();
                 manager.addAtRandomPosition(
-                        EntityAssociation.getEntity(cakeName),
-                        EntityAssociation.getEntityView(cakeName)
+                        ea.getEntity(cakeName),
+                        ea.getEntityView(cakeName)
                 );
             }
 
@@ -326,7 +333,8 @@ public class BoardController extends Thread implements MouseListener, KeyListene
             randomTrapPop();
 
             board.notification();
-            sleepFor(15);
+
+            sleepFor(16);
         }
     }
 

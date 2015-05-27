@@ -23,19 +23,19 @@ public final class EntityAssociation {
     public final static String DEFAULT_GLUTTON       = "default_glutton";
 
     /* Nutritionists */
-    public final static RandomCreation randomNutritionist = new RandomCreation();
+    public final RandomCreation randomNutritionist = new RandomCreation();
     public final static String DEFAULT_CAKECHASER    = "default_cakechaser";
     public final static String DEFAULT_GLUTTONCHASER = "default_gluttonchaser";
 
     /* Cakes */
-    public final static RandomCreation randomCakes   = new RandomCreation();
+    public final RandomCreation randomCakes   = new RandomCreation();
     public final static String DEFAULT_LIFECAKE      = "default_lifecake";
     public final static String SUPERLIFECAKE         = "superlifecake";
     public final static String HYPERLIFECAKE         = "hyperlifecake";
     public final static String SPEEDCAKE             = "speedcake";
 
     /* Traps */
-    public final static RandomCreation randomTraps = new RandomCreation();
+    public final RandomCreation randomTraps = new RandomCreation();
     public final static String LIFETRAP    = "lifetrap";
     public final static String BIGLIFETRAP = "biglifetrap";
     public final static String SLOWTRAP    = "slowtrap";
@@ -65,7 +65,76 @@ public final class EntityAssociation {
         viewMap.put(name, ev);
     }
 
-    public final static Entity getEntity(String name) {
+
+    public final static EntityAssociation getInstance(Difficulties difficulty) {
+        EntityAssociation ea = new EntityAssociation();
+
+        final int cakeChaser;
+        final int gluttonChaser;
+
+        final int lifeCake;
+        final int superLifeCake;
+        final int hyperLifeCake;
+        final int speedCake;
+
+        final int lifeTrap;
+        final int bigLifeTrap;
+        final int slowTrap;
+
+        /* TODO FIXME XXX TODO FIXME XXX */
+        switch (difficulty) {
+            default:
+            case EASY:
+                cakeChaser = 20;
+                gluttonChaser = 60;
+                lifeCake = 50;
+                superLifeCake = 30;
+                hyperLifeCake = 5;
+                speedCake = 20;
+                lifeTrap = 20;
+                bigLifeTrap = 15;
+                slowTrap = 90;
+                break;
+            case MEDIUM:
+                cakeChaser = 20;
+                gluttonChaser = 60;
+                lifeCake = 50;
+                superLifeCake = 30;
+                hyperLifeCake = 5;
+                speedCake = 20;
+                lifeTrap = 20;
+                bigLifeTrap = 15;
+                slowTrap = 90;
+                break;
+            case HARD:
+                cakeChaser = 20;
+                gluttonChaser = 60;
+                lifeCake = 50;
+                superLifeCake = 30;
+                hyperLifeCake = 5;
+                speedCake = 20;
+                lifeTrap = 20;
+                bigLifeTrap = 15;
+                slowTrap = 90;
+                break;
+        }
+
+        ea.randomNutritionist.add(DEFAULT_CAKECHASER, cakeChaser);
+        ea.randomNutritionist.add(DEFAULT_GLUTTONCHASER, gluttonChaser);
+
+        ea.randomCakes.add(DEFAULT_LIFECAKE, lifeCake);
+        ea.randomCakes.add(SUPERLIFECAKE, superLifeCake);
+        ea.randomCakes.add(HYPERLIFECAKE, hyperLifeCake);
+        ea.randomCakes.add(SPEEDCAKE, speedCake);
+
+        ea.randomTraps.add(LIFETRAP, lifeTrap);
+        ea.randomTraps.add(BIGLIFETRAP, bigLifeTrap);
+        ea.randomTraps.add(SLOWTRAP, slowTrap);
+
+        return ea;
+    }
+
+    public final Entity getEntity(String name) {
         if (!entityMap.containsKey(name)) {
             throw new IllegalArgumentException(name + " doesn't exists.");
         }
@@ -78,7 +147,7 @@ public final class EntityAssociation {
         }
     }
 
-    public final static EntityView getEntityView(String name) {
+    public final EntityView getEntityView(String name) {
         if (!viewMap.containsKey(name)) {
             throw new IllegalArgumentException(name + " doesn't exists.");
         }
@@ -163,9 +232,6 @@ public final class EntityAssociation {
         EntityView gluttonChaserView = new EntityView(skin3);
         register(DEFAULT_GLUTTONCHASER, gluttonChaser, gluttonChaserView);
 
-        randomNutritionist.add(DEFAULT_CAKECHASER, 20);
-        randomNutritionist.add(DEFAULT_GLUTTONCHASER, 60);
-
 
         /* CAKES */
         /* DefaultCake */
@@ -236,16 +302,11 @@ public final class EntityAssociation {
             speedCake = new SpeedCake(null, new Dimension(pSC[0].getWidth(), pSC[0].getHeight()),
                     new MSound(SPEEDCAKE, "music/pickspeeditem00.wav"));
         }
-        catch (Exception e){
+        catch (Exception e) {
             System.err.println("Error with image :" + FILE_SPEED_CAKE);
         }
         EntityView speedCakeView = new EntityView(skinSC);
         register(SPEEDCAKE, speedCake, speedCakeView);
-
-        randomCakes.add(DEFAULT_LIFECAKE, 50);
-        randomCakes.add(SUPERLIFECAKE, 30);
-        randomCakes.add(HYPERLIFECAKE, 5);
-        randomCakes.add(SPEEDCAKE, 20);
 
 
         /* TRAPS */
@@ -289,9 +350,6 @@ public final class EntityAssociation {
         EntityView slowTrapView = new EntityView(skin9);
         register(SLOWTRAP, slowTrap, slowTrapView);
 
-        randomTraps.add(LIFETRAP, 30);
-        randomTraps.add(BIGLIFETRAP, 15);
-        randomTraps.add(SLOWTRAP, 90);
     }
 
 }
