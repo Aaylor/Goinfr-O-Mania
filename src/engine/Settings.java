@@ -1,6 +1,7 @@
 package engine;
 
 import com.sun.javaws.exceptions.InvalidArgumentException;
+import sound.MSound;
 
 import java.util.Locale;
 import java.util.prefs.Preferences;
@@ -27,6 +28,7 @@ public class Settings {
     private Preferences preferences;
 
     private double volume;
+    private double soundEffects;
     private int difficulty;
     private int lang;
 
@@ -35,13 +37,15 @@ public class Settings {
     public Settings() {
         preferences = Preferences.userRoot().node(getClass().getName());
 
-        volume     = preferences.getDouble("volume", DEFAULT_VOLUME);
-        difficulty = preferences.getInt("difficulty", DEFAULT_DIFFICULTY);
-        lang       = preferences.getInt("lang", DEFAULT_LANG);
+        volume          = preferences.getDouble("volume", DEFAULT_VOLUME);
+        soundEffects    = preferences.getDouble("soundEffects", DEFAULT_VOLUME);
+        difficulty      = preferences.getInt("difficulty", DEFAULT_DIFFICULTY);
+        lang            = preferences.getInt("lang", DEFAULT_LANG);
     }
 
     public Settings(Settings toCopy){
         this.volume = toCopy.volume;
+        this.soundEffects = toCopy.soundEffects;
         this.difficulty = toCopy.difficulty;
         this.lang = toCopy.lang;
         this.preferences = toCopy.preferences;
@@ -61,6 +65,10 @@ public class Settings {
 
     public double getVolume() {
         return volume;
+    }
+
+    public double getSoundEffects() {
+        return soundEffects;
     }
 
     public int getDifficulty() {
@@ -83,6 +91,18 @@ public class Settings {
             throw new InvalidArgumentException(null);
         this.volume = volume;
         preferences.putDouble("volume", volume);
+    }
+
+    /**
+     * Sets the options volume. It must be a value between 0.0 (mute) and 1.0 (maximum volume)
+     * @param soundEffects The new volume
+     * @throws InvalidArgumentException if volume is not between 0.0 and 1.0.
+     */
+    public void setSoundEffects(double soundEffects) throws InvalidArgumentException {
+        if(volume < 0. || volume > 1.)
+            throw new InvalidArgumentException(null);
+        this.soundEffects = soundEffects;
+        preferences.putDouble("soundEffects", soundEffects);
     }
 
     /**

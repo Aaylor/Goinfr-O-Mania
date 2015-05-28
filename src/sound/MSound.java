@@ -72,6 +72,10 @@ public class MSound {
         }
     }
 
+    public static void setVolumeGlobal(double volumeGlobal) {
+        MSound.volumeGlobal = volumeGlobal;
+    }
+
     /**
      * Add the prefix if it doesn't already exists.
      * @param path The path.

@@ -72,8 +72,8 @@ public abstract class AbstractVolumeController implements ActionListener, Change
                 view.getMuteButton().setMuted(vSlider.getValue()==0);
                 if(!muting)
                     vSlider.setVolume(vSlider.getValue());
+                updateSonorVolume(vSlider.getValue());
             }
-            updateSonorVolume(vSlider.getValue());
         }
     }
 }
