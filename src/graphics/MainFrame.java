@@ -22,11 +22,14 @@ public class MainFrame extends JFrame {
     private Settings settings;
     private Scores scores;
 
-    public MainFrame(ResourceBundle bundle) throws HeadlessException {
-        super(bundle.getString("title"));
+    public MainFrame() throws HeadlessException {
+        super();
         this.bundle = bundle;
         this.mainMusic = null;
         this.settings = new Settings();
+        this.bundle = ResourceBundle.getBundle("lang/bundle", settings.getLocale());
+
+        this.setTitle(bundle.getString("title"));
 
         IGLog.write("Main frame creation.");
         stackPanel = new Stack<>();
@@ -225,13 +228,11 @@ public class MainFrame extends JFrame {
             public void run() {
                 IGLog.write("Launching the interface.");
                 IGLog.info("Searching for bundle.");
-                ResourceBundle bundle =
-                        ResourceBundle.getBundle("lang/bundle");
                 IGLog.info("Bundle loaded.");
                 setSystemProperties();
                 loadInternalResources();
                 loadExternalResources();
-                new MainFrame(bundle);
+                new MainFrame();
             }
         });
     }
