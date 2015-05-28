@@ -14,14 +14,12 @@ import java.util.ResourceBundle;
 /**
  * Created by PixelMan on 23/05/15.
  */
-public class SettingsController implements ActionListener, ChangeListener{
+public class SettingsController implements ActionListener{
 
     MainFrame parent;
     SettingsView view;
 
     Settings currentSettings;
-
-    boolean muting;
 
     public SettingsController(JPanel previousView) {
         parent = MainFrame.getCurrentInstance();
@@ -34,11 +32,6 @@ public class SettingsController implements ActionListener, ChangeListener{
         registerListening();
     }
 
-
-    /**
-     * update the mainFrame options and operate the immediate effects
-     * of the settings modifications.
-     */
     public void updateOptions(){
         MainFrame frame = MainFrame.getCurrentInstance();
         frame.setSettings(currentSettings);
@@ -46,23 +39,10 @@ public class SettingsController implements ActionListener, ChangeListener{
         frame.updateLangOnAllPanels();
     }
 
-    public void updateSonorVolume(int volume){
-        try {
-            double optionVolume = new Integer(volume).doubleValue() / 100;
-            IGLog.info("Options updates <volume> : " + optionVolume);
-            currentSettings.setVolume(optionVolume);
-            MainFrame.getCurrentInstance().getMainMusic().setVolume(currentSettings.getVolume());
-        }
-        catch (InvalidArgumentException e){
-            IGLog.error("Invalide Sonor Volume");
-        }
-    }
 
     private void registerListening(){
         view.getBack().addActionListener(this);
         view.getOk().addActionListener(this);
-        view.getMuteButton().addActionListener(this);
-        view.getVolumeSlider().addChangeListener(this);
         view.getDifficultyComboBox().addActionListener(this);
         view.getLanguageComboBox().addActionListener(this);
     }
@@ -80,22 +60,7 @@ public class SettingsController implements ActionListener, ChangeListener{
             updateOptions();
             parent.popPanel();
         }
-        else if (e.getSource() == view.getMuteButton()){
-            IGLog.write("ScoreController::actionPerformed -> getMuteButton()");
-            VolumeButton vButton = view.getMuteButton();
-            vButton.setMuted(!vButton.isMuted());
-            if(vButton.isMuted()){
-                muting = true;
-                view.getVolumeSlider().setValue(0);
-                muting = false;
-                updateSonorVolume(0);
-            }
-            else{
-                int volumeUpdate = view.getVolumeSlider().getVolume();
-                view.getVolumeSlider().setValue(volumeUpdate);
-                updateSonorVolume(volumeUpdate);
-            }
-        }
+
         else if(e.getSource() == view.getDifficultyComboBox()){
             IGLog.write("ScoreController::actionPerformed -> getDifficultyComboBox()");
             try {
@@ -118,21 +83,5 @@ public class SettingsController implements ActionListener, ChangeListener{
         }
     }
 
-    /**
-     * Invoked when the target of the listener has changed its state.
-     *
-     * @param e a ChangeEvent object
-     */
-    @Override
-    public void stateChanged(ChangeEvent e) {
-        VolumeSlider vSlider = view.getVolumeSlider();
-        if (e.getSource() == vSlider){
-            if(!vSlider.getValueIsAdjusting()){
-                view.getMuteButton().setMuted(vSlider.getValue()==0);
-                if(!muting)
-                    vSlider.setVolume(vSlider.getValue());
-            }
-            updateSonorVolume(vSlider.getValue());
-        }
-    }
+
 }

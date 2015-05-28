@@ -19,10 +19,11 @@ public class SettingsView extends Background {
 
     private JPanel generalPanel;
 
-    private JPanel volumePanel;
+    private VolumeView volumePanel;
     private JLabel volumeLabel;
-    private VolumeButton muteButton;
-    private VolumeSlider volumeSlider;
+
+    private VolumeView soundEffectPanel;
+    private JLabel soundEffectLabel;
 
     private JLabel difficultyLabel;
     private JComboBox<String> difficultyComboBox;
@@ -52,7 +53,7 @@ public class SettingsView extends Background {
         try {
             File file = new File("fonts/newyorkescape.ttf");
             font = Font.createFont(Font.TRUETYPE_FONT, file)
-                    .deriveFont(Font.PLAIN, 20);
+                    .deriveFont(Font.PLAIN, 18);
         } catch (Exception e) {
             font = null;
         }
@@ -79,14 +80,6 @@ public class SettingsView extends Background {
         return back;
     }
 
-    public VolumeButton getMuteButton() {
-        return muteButton;
-    }
-
-    public VolumeSlider getVolumeSlider() {
-        return volumeSlider;
-    }
-
     public JComboBox<String> getDifficultyComboBox() {
         return difficultyComboBox;
     }
@@ -106,7 +99,7 @@ public class SettingsView extends Background {
     }
 
     private void initGeneralPanel(){
-        GridLayout generalLayout = new GridLayout(3, 2);
+        GridLayout generalLayout = new GridLayout(4, 2);
         generalLayout.setHgap(40);
         generalLayout.setVgap(10);
 
@@ -129,13 +122,12 @@ public class SettingsView extends Background {
         volumeLabel = new JLabel(bundle.getString("optionsVolumeLabel"), SwingConstants.CENTER);
         volumeLabel.setForeground(Color.WHITE);
         volumeLabel.setFont(font);
+        volumePanel = new VolumeController(currentSettings).getView();
 
-        volumePanel = new JPanel(new BorderLayout());
-        volumePanel.setOpaque(false);
-        muteButton = new VolumeButton(currentSettings.getVolume());
-        volumeSlider = new VolumeSlider(currentSettings.getVolume());
-        volumePanel.add(muteButton, BorderLayout.WEST);
-        volumePanel.add(volumeSlider, BorderLayout.CENTER);
+        soundEffectLabel = new JLabel(bundle.getString("optionsSoundEffectLabel"), SwingConstants.CENTER);
+        soundEffectLabel.setForeground(Color.WHITE);
+        soundEffectLabel.setFont(font);
+        soundEffectPanel = new SoundEffectController(currentSettings).getView();
 
         difficultyLabel = new JLabel(bundle.getString("optionsDifficultyLabel"), SwingConstants.CENTER);
         difficultyLabel.setForeground(Color.WHITE);
@@ -162,6 +154,8 @@ public class SettingsView extends Background {
 
         generalPanel.add(volumeLabel);
         generalPanel.add(volumePanel);
+        generalPanel.add(soundEffectLabel);
+        generalPanel.add(soundEffectPanel);
         generalPanel.add(difficultyLabel);
         generalPanel.add(difficultyComboBox);
         generalPanel.add(languageLabel);
