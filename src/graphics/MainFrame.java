@@ -1,6 +1,5 @@
 package graphics;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import engine.*;
 import engine.weapons.Weapon;
 import log.IGLog;
@@ -15,6 +14,8 @@ public class MainFrame extends JFrame {
     private static MainFrame instance;
 
     private Stack<JPanel> stackPanel;
+
+    private ClassLoaderUTF8 classLoaderUTF8;
     private ResourceBundle bundle;
 
     private MMusic mainMusic;
@@ -27,7 +28,8 @@ public class MainFrame extends JFrame {
         this.bundle = bundle;
         this.mainMusic = null;
         this.settings = new Settings();
-        this.bundle = ResourceBundle.getBundle("lang/bundle", settings.getLocale());
+        classLoaderUTF8 = new ClassLoaderUTF8(getClass().getClassLoader());
+        this.bundle = ResourceBundle.getBundle("lang/bundle", settings.getLocale(), classLoaderUTF8);
 
         this.setTitle(bundle.getString("title"));
 
@@ -71,6 +73,10 @@ public class MainFrame extends JFrame {
 
     public MMusic getMainMusic() {
         return mainMusic;
+    }
+
+    public ClassLoaderUTF8 getClassLoaderUTF8() {
+        return classLoaderUTF8;
     }
 
     public void setMainMusic(MMusic mainMusic) {
@@ -223,9 +229,11 @@ public class MainFrame extends JFrame {
     /* Main */
 
     public static void main(String[] args) {
+
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
+                System.setProperty( "file.encoding", "UTF-8" );
                 IGLog.write("Launching the interface.");
                 IGLog.info("Searching for bundle.");
                 IGLog.info("Bundle loaded.");

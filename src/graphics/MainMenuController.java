@@ -3,6 +3,7 @@ package graphics;
 import engine.*;
 import sound.MMusic;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -107,7 +108,12 @@ public class MainMenuController implements ActionListener {
             run();
         }
         else if(e.getSource()==mainMenuView.getLoad()){
-            System.out.println("load !");
+            JOptionPane.showMessageDialog(
+                    null,
+                    MainFrame.getCurrentInstance().getBundle().getString("LoadingDialogMessage"),
+                    "",
+                    JOptionPane.INFORMATION_MESSAGE,
+                    new ImageIcon("pictures/SaveIcon.png"));
         }
         else if(e.getSource()==mainMenuView.getOptions()){
             options();

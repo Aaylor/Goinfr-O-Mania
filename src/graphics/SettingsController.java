@@ -35,7 +35,11 @@ public class SettingsController implements ActionListener{
     public void updateOptions(){
         MainFrame frame = MainFrame.getCurrentInstance();
         frame.setSettings(currentSettings);
-        frame.setBundle(ResourceBundle.getBundle("lang/bundle", currentSettings.getLocale()));
+        frame.setBundle(ResourceBundle.getBundle(
+                "lang/bundle",
+                currentSettings.getLocale(),
+                frame.getClassLoaderUTF8()
+        ));
         frame.updateLangOnAllPanels();
     }
 
