@@ -1,10 +1,13 @@
 package graphics;
 
+import engine.KeyConfiguration;
 import engine.Settings;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.util.ResourceBundle;
 
@@ -32,6 +35,24 @@ public class SettingsView extends Background {
     private JComboBox<String> languageComboBox;
 
     private JPanel commandsPanel;
+
+    private JLabel up;
+    private JLabel down;
+    private JLabel left;
+    private JLabel right;
+    private JLabel attack;
+    private JLabel quit;
+    private JLabel pause;
+    private JLabel menu;
+
+    private JButton upBut;
+    private JButton downBut;
+    private JButton leftBut;
+    private JButton rightBut;
+    private JButton attackBut;
+    private JButton quitBut;
+    private JButton pauseBut;
+    private JButton menuBut;
 
     private JPanel buttonPanel;
     private MainMenuButton back;
@@ -78,6 +99,38 @@ public class SettingsView extends Background {
 
     public MainMenuButton getBack() {
         return back;
+    }
+
+    public JButton getMenuBut() {
+        return menuBut;
+    }
+
+    public JButton getPauseBut() {
+        return pauseBut;
+    }
+
+    public JButton getQuitBut() {
+        return quitBut;
+    }
+
+    public JButton getAttackBut() {
+        return attackBut;
+    }
+
+    public JButton getRightBut() {
+        return rightBut;
+    }
+
+    public JButton getLeftBut() {
+        return leftBut;
+    }
+
+    public JButton getDownBut() {
+        return downBut;
+    }
+
+    public JButton getUpBut() {
+        return upBut;
     }
 
     public JComboBox<String> getDifficultyComboBox() {
@@ -168,7 +221,87 @@ public class SettingsView extends Background {
         commandsPanel = new JPanel();
         JLabel label = new JLabel("Command Panel");
         label.setForeground(Color.white);
-        commandsPanel.add(label);
+
+        GridLayout commandLayout = new GridLayout(7, 2);
+        commandLayout.setHgap(40);
+        commandLayout.setVgap(10);
+        commandsPanel.setLayout(commandLayout);
+
+        up = new JLabel(bundle.getString("upControl"), SwingConstants.CENTER);
+        up.setFont(font);
+        up.setForeground(Color.white);
+        down = new JLabel(bundle.getString("downControl"), SwingConstants.CENTER);
+        down.setFont(font);
+        down.setForeground(Color.white);
+        left = new JLabel(bundle.getString("leftControl"), SwingConstants.CENTER);
+        left.setFont(font);
+        left.setForeground(Color.white);
+        right = new JLabel(bundle.getString("rightControl"), SwingConstants.CENTER);
+        right.setFont(font);
+        right.setForeground(Color.white);
+        attack = new JLabel(bundle.getString("attackControl"), SwingConstants.CENTER);
+        attack.setFont(font);
+        attack.setForeground(Color.white);pause = new JLabel(bundle.getString("pauseControl"), SwingConstants.CENTER);
+        menu = new JLabel(bundle.getString("menuControl"), SwingConstants.CENTER);
+        menu.setFont(font);
+        menu.setForeground(Color.white);
+        pause = new JLabel(bundle.getString("pauseControl"), SwingConstants.CENTER);
+        pause.setFont(font);
+        pause.setForeground(Color.white);
+
+        KeyConfiguration kg = currentSettings.getKeyConfiguration();
+
+        upBut = new JButton(KeyEvent.getKeyText(kg.getUp()));
+        upBut.setOpaque(false);
+        upBut.setContentAreaFilled(false);
+        upBut.setBorderPainted(false);
+        upBut.setForeground(Color.white);
+        downBut = new JButton(KeyEvent.getKeyText(kg.getDown()));
+        downBut.setOpaque(false);
+        downBut.setContentAreaFilled(false);
+        downBut.setBorderPainted(false);
+        downBut.setForeground(Color.white);
+        leftBut = new JButton(KeyEvent.getKeyText(kg.getLeft()));
+        leftBut.setOpaque(false);
+        leftBut.setContentAreaFilled(false);
+        leftBut.setBorderPainted(false);
+        leftBut.setForeground(Color.white);
+        rightBut = new JButton(KeyEvent.getKeyText(kg.getRight()));
+        rightBut.setOpaque(false);
+        rightBut.setContentAreaFilled(false);
+        rightBut.setBorderPainted(false);
+        rightBut.setForeground(Color.white);
+        attackBut = new JButton(KeyEvent.getKeyText(kg.getAttack()));
+        attackBut.setOpaque(false);
+        attackBut.setContentAreaFilled(false);
+        attackBut.setBorderPainted(false);
+        attackBut.setForeground(Color.white);
+        pauseBut = new JButton(KeyEvent.getKeyText(kg.getPause()));
+        pauseBut.setOpaque(false);
+        pauseBut.setContentAreaFilled(false);
+        pauseBut.setBorderPainted(false);
+        pauseBut.setForeground(Color.white);
+        menuBut = new JButton(KeyEvent.getKeyText(kg.getMenu()));
+        menuBut.setOpaque(false);
+        menuBut.setContentAreaFilled(false);
+        menuBut.setBorderPainted(false);
+        menuBut.setForeground(Color.white);
+
+        commandsPanel.add(up);
+        commandsPanel.add(upBut);
+        commandsPanel.add(down);
+        commandsPanel.add(downBut);
+        commandsPanel.add(left);
+        commandsPanel.add(leftBut);
+        commandsPanel.add(right);
+        commandsPanel.add(rightBut);
+        commandsPanel.add(attack);
+        commandsPanel.add(attackBut);
+        commandsPanel.add(pause);
+        commandsPanel.add(pauseBut);
+        commandsPanel.add(menu);
+        commandsPanel.add(menuBut);
+
         commandsPanel.setOpaque(false);
     }
 

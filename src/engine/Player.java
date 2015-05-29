@@ -33,7 +33,7 @@ public class Player extends Observable {
             // TODO
             throw new UnsupportedOperationException();
         } else {
-            this.keyConfiguration = KeyConfiguration.getDefaultConfiguration();
+            this.keyConfiguration = new KeyConfiguration();
         }
     }
 

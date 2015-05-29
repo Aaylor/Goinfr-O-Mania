@@ -1,10 +1,9 @@
 package engine;
 
 import java.awt.event.KeyEvent;
+import java.util.prefs.Preferences;
 
 public class KeyConfiguration {
-
-    private static final KeyConfiguration defaultConfiguration = new KeyConfiguration();
 
     private int up;
     private int down;
@@ -12,29 +11,55 @@ public class KeyConfiguration {
     private int right;
     private int attack;
 
-    private int quit;
-    private int save;
-    private int load;
+    private Preferences preferences;
+
+    //private int quit;
+    //private int save;
+    //private int load;
     private int pause;
 
     private int menu;
 
     public KeyConfiguration() {
+        preferences = Preferences.userRoot().node(getClass().getName());
+
+        up     = preferences.getInt("up", KeyEvent.VK_UP);
+        down   = preferences.getInt("down", KeyEvent.VK_DOWN);
+        left   = preferences.getInt("left", KeyEvent.VK_LEFT);
+        right  = preferences.getInt("right", KeyEvent.VK_RIGHT);
+        attack = preferences.getInt("attack", KeyEvent.VK_SPACE);
+        //quit   = preferences.getInt("quit", KeyEvent.VK_Q);
+        //save   = preferences.getInt("save", KeyEvent.VK_S);
+        //load   = preferences.getInt("load", KeyEvent.VK_L);
+        pause  = preferences.getInt("pause", KeyEvent.VK_P);
+        menu   = preferences.getInt("menu", KeyEvent.VK_ESCAPE);
+    }
+
+
+    public void defaultConfiguration() {
         up     = KeyEvent.VK_UP;
         down   = KeyEvent.VK_DOWN;
         left   = KeyEvent.VK_LEFT;
         right  = KeyEvent.VK_RIGHT;
         attack = KeyEvent.VK_SPACE;
-        quit   = KeyEvent.VK_Q;
-        save   = KeyEvent.VK_S;
-        load   = KeyEvent.VK_L;
+        //quit   = KeyEvent.VK_Q;
+        //preferences.putInt("quit", KeyEvent.VK_Q);
+        //save   = KeyEvent.VK_S;
+        //preferences.putInt("save", KeyEvent.VK_S);
+        //load   = KeyEvent.VK_L;
+        //preferences.putInt("load", KeyEvent.VK_L);
         pause  = KeyEvent.VK_P;
         menu   = KeyEvent.VK_ESCAPE;
     }
 
-
-    public static KeyConfiguration getDefaultConfiguration() {
-        return defaultConfiguration;
+    public void savePreferences() {
+        preferences.putInt("up", up);
+        preferences.putInt("down", down);
+        preferences.putInt("left", left);
+        preferences.putInt("right", right);
+        preferences.putInt("attack", attack);
+        preferences.putInt("pause", pause);
+        preferences.putInt("menu", menu);
     }
 
     public int getUp() {
@@ -77,11 +102,12 @@ public class KeyConfiguration {
         this.attack = attack;
     }
 
-    public int getQuit() {
+    /*public int getQuit() {
         return quit;
     }
 
     public void setQuit(int quit) {
+        preferences.putInt("quit", quit);
         this.quit = quit;
     }
 
@@ -90,6 +116,7 @@ public class KeyConfiguration {
     }
 
     public void setSave(int save) {
+        preferences.putInt("save", save);
         this.save = save;
     }
 
@@ -98,8 +125,9 @@ public class KeyConfiguration {
     }
 
     public void setLoad(int load) {
+        preferences.putInt("load", load);
         this.load = load;
-    }
+    }*/
 
     public int getPause() {
         return pause;

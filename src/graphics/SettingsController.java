@@ -1,6 +1,7 @@
 package graphics;
 
 import com.sun.javaws.exceptions.InvalidArgumentException;
+import engine.KeyConfiguration;
 import engine.Settings;
 import log.IGLog;
 
@@ -9,6 +10,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ResourceBundle;
 
 /**
@@ -41,6 +44,7 @@ public class SettingsController implements ActionListener{
                 frame.getClassLoaderUTF8()
         ));
         frame.updateLangOnAllPanels();
+        currentSettings.getKeyConfiguration().savePreferences();
     }
 
 
@@ -49,6 +53,13 @@ public class SettingsController implements ActionListener{
         view.getOk().addActionListener(this);
         view.getDifficultyComboBox().addActionListener(this);
         view.getLanguageComboBox().addActionListener(this);
+        view.getAttackBut().addActionListener(react(view.getAttackBut(), "attack"));
+        view.getDownBut().addActionListener(react(view.getDownBut(), "down"));
+        view.getLeftBut().addActionListener(react(view.getLeftBut(), "left"));
+        view.getMenuBut().addActionListener(react(view.getMenuBut(), "menu"));
+        view.getRightBut().addActionListener(react(view.getRightBut(), "right"));
+        view.getUpBut().addActionListener(react(view.getUpBut(), "up"));
+        view.getPauseBut().addActionListener(react(view.getPauseBut(), "pause"));
     }
 
     @Override
@@ -73,7 +84,7 @@ public class SettingsController implements ActionListener{
                 e1.printStackTrace();
             }
         }
-        else if(e.getSource() == view.getLanguageComboBox()){
+        else if (e.getSource() == view.getLanguageComboBox()) {
             IGLog.write("ScoreController::actionPerformed -> getLanguageComboBox()");
             try {
                 currentSettings.setLang(view.getLanguageComboBox().getSelectedIndex());
@@ -85,6 +96,63 @@ public class SettingsController implements ActionListener{
             IGLog.error("ScoreController::actionPerformed -> "
                     + "unknown action (" + e + ").");
         }
+    }
+
+
+    private ActionListener react(JButton j, String t){
+        return (new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                j.requestFocus();
+                j.setText("?");
+                j.addKeyListener(hearListener(j, t));
+            }
+        });
+    }
+
+    private KeyListener hearListener(JButton j, String t){
+        return (new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                int code = e.getKeyCode();
+                switch(t) {
+                    case "attack":
+                        currentSettings.getKeyConfiguration().setAttack(code);
+                        break;
+                    case "pause":
+                        currentSettings.getKeyConfiguration().setPause(code);
+                        break;
+                    case "menu":
+                        currentSettings.getKeyConfiguration().setMenu(code);
+                        break;
+                    case "up":
+                        currentSettings.getKeyConfiguration().setUp(code);
+                        break;
+                    case "down":
+                        currentSettings.getKeyConfiguration().setDown(code);
+                        break;
+                    case "left":
+                        currentSettings.getKeyConfiguration().setLeft(code);
+                        break;
+                    case "right":
+                        currentSettings.getKeyConfiguration().setRight(code);
+                        break;
+                    default:
+                        System.err.println("Ne devrait pas entrer dans cette configuration de clef");
+                }
+                j.setText(KeyEvent.getKeyText(code));
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                j.removeKeyListener(this);
+            }
+        });
     }
 
 

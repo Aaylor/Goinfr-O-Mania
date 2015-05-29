@@ -31,16 +31,18 @@ public class Settings {
     private double soundEffects;
     private int difficulty;
     private int lang;
+    private KeyConfiguration keyConfiguration;
 
     /* Constructors */
 
     public Settings() {
         preferences = Preferences.userRoot().node(getClass().getName());
 
-        volume          = preferences.getDouble("volume", DEFAULT_VOLUME);
-        soundEffects    = preferences.getDouble("soundEffects", DEFAULT_VOLUME);
-        difficulty      = preferences.getInt("difficulty", DEFAULT_DIFFICULTY);
-        lang            = preferences.getInt("lang", DEFAULT_LANG);
+        volume           = preferences.getDouble("volume", DEFAULT_VOLUME);
+        soundEffects     = preferences.getDouble("soundEffects", DEFAULT_VOLUME);
+        difficulty       = preferences.getInt("difficulty", DEFAULT_DIFFICULTY);
+        lang             = preferences.getInt("lang", DEFAULT_LANG);
+        keyConfiguration = new KeyConfiguration();
     }
 
     public Settings(Settings toCopy){
@@ -48,6 +50,7 @@ public class Settings {
         this.soundEffects = toCopy.soundEffects;
         this.difficulty = toCopy.difficulty;
         this.lang = toCopy.lang;
+        this.keyConfiguration = toCopy.keyConfiguration;
         this.preferences = toCopy.preferences;
     }
 
@@ -79,6 +82,8 @@ public class Settings {
         return lang;
     }
 
+    public KeyConfiguration getKeyConfiguration(){ return keyConfiguration; }
+
     /* Setters */
 
     /**
@@ -91,6 +96,10 @@ public class Settings {
             throw new InvalidArgumentException(null);
         this.volume = volume;
         preferences.putDouble("volume", volume);
+    }
+
+    public void setKeyConfiguration(KeyConfiguration keys){
+        keyConfiguration = keys;
     }
 
     /**

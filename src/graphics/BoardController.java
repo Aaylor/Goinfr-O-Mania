@@ -386,11 +386,10 @@ public class BoardController extends Thread implements MouseListener, KeyListene
                 pauseGame();
 
             new PauseController(boardView, this, getBoard().getPlayer());
-        } else if (code == kc.getQuit()) {
-            /* TODO: Maybe ask to save ?? */
+        } /*else if (code == kc.getQuit()) {
             getBoard().getLevel().getChrono().stop();
             System.exit(0);
-        } else {
+        }*/ else {
             synchronized (pressedKeys) {
                 if (code == kc.getUp() && pressedKeys.contains(kc.getDown())) {
                     pressedKeys.remove(kc.getDown());
