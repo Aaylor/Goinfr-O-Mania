@@ -44,7 +44,7 @@ public class SettingsController implements ActionListener{
                 frame.getClassLoaderUTF8()
         ));
         frame.updateLangOnAllPanels();
-        currentSettings.getKeyConfiguration().savePreferences();
+        currentSettings.savePreferences();
     }
 
 

@@ -95,7 +95,6 @@ public class Settings {
         if(volume < 0. || volume > 1.)
             throw new InvalidArgumentException(null);
         this.volume = volume;
-        preferences.putDouble("volume", volume);
     }
 
     public void setKeyConfiguration(KeyConfiguration keys){
@@ -111,7 +110,6 @@ public class Settings {
         if(volume < 0. || volume > 1.)
             throw new InvalidArgumentException(null);
         this.soundEffects = soundEffects;
-        preferences.putDouble("soundEffects", soundEffects);
     }
 
     /**
@@ -123,7 +121,6 @@ public class Settings {
         if(difficulty < EASY || difficulty > HARD)
             throw new InvalidArgumentException(null);
         this.difficulty = difficulty;
-        preferences.putInt("difficulty", difficulty);
     }
 
     /**
@@ -135,7 +132,14 @@ public class Settings {
         if(lang < FRENCH || lang > ENGLISH)
             throw new InvalidArgumentException(null);
         this.lang = lang;
+    }
+
+    public void savePreferences(){
+        preferences.putDouble("volume", volume);
+        preferences.putDouble("soundEffects", soundEffects);
+        preferences.putInt("difficulty", difficulty);
         preferences.putInt("lang", lang);
+        keyConfiguration.savePreferences();
     }
 
 

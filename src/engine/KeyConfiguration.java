@@ -58,7 +58,7 @@ public class KeyConfiguration {
         //save   = KeyEvent.VK_S;
         //preferences.putInt("save", KeyEvent.VK_S);
         //load   = KeyEvent.VK_L;
-        //preferences.putInt("load", KeyEvent.VK_L);
+        //preferences.putInt("load", KeyEvent.VeK_L);
         pause  = KeyEvent.VK_P;
         menu   = KeyEvent.VK_ESCAPE;
     }
