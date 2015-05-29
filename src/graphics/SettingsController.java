@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.security.Key;
 import java.util.ResourceBundle;
 
 /**
@@ -21,6 +22,13 @@ public class SettingsController implements ActionListener{
 
     MainFrame parent;
     SettingsView view;
+    KeyListener ka = null;
+    KeyListener kp = null;
+    KeyListener kl = null;
+    KeyListener kr = null;
+    KeyListener ku = null;
+    KeyListener kd = null;
+    KeyListener km = null;
 
     Settings currentSettings;
 
@@ -60,6 +68,48 @@ public class SettingsController implements ActionListener{
         view.getRightBut().addActionListener(react(view.getRightBut(), "right"));
         view.getUpBut().addActionListener(react(view.getUpBut(), "up"));
         view.getPauseBut().addActionListener(react(view.getPauseBut(), "pause"));
+    }
+
+    private void reloadKeys(){
+        KeyConfiguration key = currentSettings.getKeyConfiguration();
+        view.getAttackBut().setText(KeyEvent.getKeyText(key.getAttack()));
+        view.getDownBut().setText(KeyEvent.getKeyText(key.getDown()));
+        view.getLeftBut().setText(KeyEvent.getKeyText(key.getLeft()));
+        view.getMenuBut().setText(KeyEvent.getKeyText(key.getMenu()));
+        view.getRightBut().setText(KeyEvent.getKeyText(key.getRight()));
+        view.getUpBut().setText(KeyEvent.getKeyText(key.getUp()));
+        view.getPauseBut().setText(KeyEvent.getKeyText(key.getPause()));
+    }
+
+    private void removesListener(){
+        if(ka != null){
+            view.getAttackBut().removeKeyListener(ka);
+            ka = null;
+        }
+        if(km != null){
+            view.getMenuBut().removeKeyListener(km);
+            km = null;
+        }
+        if(kp != null){
+            view.getPauseBut().removeKeyListener(kp);
+            kp = null;
+        }
+        if(ku != null){
+            view.getUpBut().removeKeyListener(ku);
+            ku = null;
+        }
+        if(kd != null){
+            view.getDownBut().removeKeyListener(kd);
+            kd = null;
+        }
+        if(kl != null){
+            view.getLeftBut().removeKeyListener(kl);
+            kl = null;
+        }
+        if(kr != null){
+            view.getRightBut().removeKeyListener(kr);
+            kr = null;
+        }
     }
 
     @Override
@@ -103,9 +153,44 @@ public class SettingsController implements ActionListener{
         return (new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                j.requestFocus();
-                j.setText("?");
-                j.addKeyListener(hearListener(j, t));
+                if(e.getModifiers() != 0) {
+                    j.requestFocus();
+                    removesListener();
+                    reloadKeys();
+                    j.setText("?");
+                    switch(t) {
+                        case "attack":
+                            ka = hearListener(j, t);
+                            j.addKeyListener(ka);
+                            break;
+                        case "pause":
+                            kp = hearListener(j, t);
+                            j.addKeyListener(kp);
+                            break;
+                        case "menu":
+                            km = hearListener(j, t);
+                            j.addKeyListener(km);
+                            break;
+                        case "up":
+                            ku = hearListener(j, t);
+                            j.addKeyListener(ku);
+                            break;
+                        case "down":
+                            kd = hearListener(j, t);
+                            j.addKeyListener(kd);
+                            break;
+                        case "left":
+                            kl = hearListener(j, t);
+                            j.addKeyListener(kl);
+                            break;
+                        case "right":
+                            kr = hearListener(j, t);
+                            j.addKeyListener(kr);
+                            break;
+                        default:
+                            System.err.println("Ne devrait pas entrer dans cette configuration de clef");
+                    }
+                }
             }
         });
     }
@@ -150,7 +235,10 @@ public class SettingsController implements ActionListener{
 
             @Override
             public void keyReleased(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_SPACE)
+                    j.setText(KeyEvent.getKeyText(KeyEvent.VK_SPACE));
                 j.removeKeyListener(this);
+                j.requestFocus(false);
             }
         });
     }
