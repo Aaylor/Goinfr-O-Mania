@@ -4,6 +4,7 @@ import engine.Player;
 import engine.Score;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.io.File;
 import java.util.ResourceBundle;
@@ -12,6 +13,7 @@ public class EndGameView extends Background {
 
     private Font globalFont;
     private Font scoreFont;
+    private Font nameFont;
 
     private MainMenuButton replay;
     private MainMenuButton score;
@@ -20,9 +22,13 @@ public class EndGameView extends Background {
 
     private Score gameScore;
 
+    ResourceBundle bundle;
+
 
     public EndGameView(Score score) {
-        super("pictures/cake.jpg");
+        super("pictures/simpleBackground.png");
+
+        bundle = MainFrame.getCurrentInstance().getBundle();
 
         try {
             File file = new File("fonts/newyorkescape.ttf");
@@ -40,16 +46,22 @@ public class EndGameView extends Background {
             scoreFont = null;
         }
 
+        try {
+            File file = new File("fonts/newyorkescape.ttf");
+            nameFont = Font.createFont(Font.TRUETYPE_FONT, file)
+                    .deriveFont(Font.PLAIN, 30);
+        } catch (Exception e) {
+            scoreFont = null;
+        }
+
         this.gameScore = score;
 
         instantiateTitle();
-        instantiateButtons();
+        instantiateContent();
         sizeOfPictures();
     }
 
-    public void instantiateTitle() {
-        ResourceBundle bundle = MainFrame.getCurrentInstance().getBundle();
-
+    private void instantiateTitle() {
         JLabel title = new JLabel(bundle.getString("endGameTitle"));
         if (globalFont != null) {
             title.setFont(globalFont.deriveFont(Font.PLAIN, 64));
@@ -57,21 +69,76 @@ public class EndGameView extends Background {
 
         title.setForeground(new Color(255, 0, 0));
         this.add(title, BorderLayout.NORTH);
+    }
+
+    private void instantiateContent() {
+        JPanel content = new JPanel();
+
+        content.setBorder(new Border() {
+            @Override
+            public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {}
+            @Override
+            public Insets getBorderInsets(Component c) {
+                return new Insets(50, 0, 0, 0);
+            }
+            @Override
+            public boolean isBorderOpaque() {
+                return false;
+            }
+        });
+
+        content.setOpaque(false);
+        BorderLayout layout = new BorderLayout();
+        content.setLayout(layout);
+        content.add(instantiateScores(), BorderLayout.WEST);
+        content.add(instantiateButtons(), BorderLayout.EAST);
+        this.add(content, BorderLayout.CENTER);
+    }
+
+    private JPanel instantiateScores(){
+        JPanel scorePanel = new JPanel();
+        scorePanel.setPreferredSize(new Dimension(350, 120));
+        scorePanel.setLayout(new BorderLayout());
+        scorePanel.setOpaque(false);
+
+        scorePanel.setBorder(new Border() {
+            @Override
+            public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {}
+            @Override
+            public Insets getBorderInsets(Component c) {
+                return new Insets(80, 0, 110, 0);
+            }
+            @Override
+            public boolean isBorderOpaque() {
+                return false;
+            }
+        });
 
         JLabel score = new JLabel(
                 bundle.getString("endGameScoreLabel") +
-                " : " + gameScore.getValue()
+                        " : " + gameScore.getValue()
         );
+        score.setForeground(Color.RED);
+        score.setHorizontalAlignment(SwingConstants.CENTER);
         if (scoreFont != null)
             score.setFont(scoreFont);
-        score.setForeground(new Color(255, 0, 0));
-        this.add(score, BorderLayout.WEST);
+
+        JTextField playerName = new JTextField("Player Name");
+        playerName.setForeground(Color.RED);
+        playerName.setOpaque(false);
+        playerName.setBackground(new Color(255, 255, 255, 20));
+        playerName.setHorizontalAlignment(SwingConstants.CENTER);
+        if (nameFont != null)
+            playerName.setFont(nameFont);
+
+        scorePanel.add(score, BorderLayout.CENTER);
+        scorePanel.add(playerName, BorderLayout.SOUTH);
+        return scorePanel;
     }
 
-    private void instantiateButtons() {
-        ResourceBundle bundle = MainFrame.getCurrentInstance().getBundle();
-
+    private JPanel instantiateButtons() {
         JPanel buttonPanel = new JPanel();
+        buttonPanel.setPreferredSize(new Dimension(501, 360));
 
         replay = new MainMenuButton(
                 "pictures/GameMenuSleepButton.png",
@@ -104,7 +171,7 @@ public class EndGameView extends Background {
         buttonPanel.add(score);
         buttonPanel.add(menu);
         buttonPanel.add(quit);
-        this.add(buttonPanel, BorderLayout.EAST);
+        return buttonPanel;
     }
 
     //GETTER

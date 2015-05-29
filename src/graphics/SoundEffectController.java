@@ -6,9 +6,6 @@ import engine.Settings;
 import log.IGLog;
 import sound.MSound;
 
-/**
- * Created by PixelMan on 28/05/15.
- */
 public class SoundEffectController extends AbstractVolumeController {
 
     public SoundEffectController(Settings currentSettings) {
