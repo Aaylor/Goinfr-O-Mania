@@ -50,7 +50,7 @@ public class Settings {
         this.soundEffects = toCopy.soundEffects;
         this.difficulty = toCopy.difficulty;
         this.lang = toCopy.lang;
-        this.keyConfiguration = toCopy.keyConfiguration;
+        this.keyConfiguration = new KeyConfiguration(toCopy.keyConfiguration);
         this.preferences = toCopy.preferences;
     }
 

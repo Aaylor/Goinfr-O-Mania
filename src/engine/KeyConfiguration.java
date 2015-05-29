@@ -35,6 +35,17 @@ public class KeyConfiguration {
         menu   = preferences.getInt("menu", KeyEvent.VK_ESCAPE);
     }
 
+    public KeyConfiguration(KeyConfiguration toCopy) {
+        preferences = toCopy.preferences;
+        up = toCopy.getUp();
+        down = toCopy.getDown();
+        left = toCopy.getLeft();
+        right = toCopy.getRight();
+        attack = toCopy.getAttack();
+        pause = toCopy.getPause();
+        menu = toCopy.getMenu();
+
+    }
 
     public void defaultConfiguration() {
         up     = KeyEvent.VK_UP;
