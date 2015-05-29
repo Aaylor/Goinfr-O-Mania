@@ -149,7 +149,8 @@ public class BoardController extends Thread implements MouseListener, KeyListene
     }
 
     private void movePlayer() {
-        KeyConfiguration keyConfiguration = board.getPlayer().getKeyConfiguration();
+        KeyConfiguration keyConfiguration =
+                MainFrame.getCurrentInstance().getSettings().getKeyConfiguration();
 
         synchronized (pressedKeys) {
             for (Integer pressedKey : pressedKeys) {
@@ -373,7 +374,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         e.consume();
 
         Integer code = e.getKeyCode();
-        KeyConfiguration kc = getBoard().getPlayer().getKeyConfiguration();
+        KeyConfiguration kc = MainFrame.getCurrentInstance().getSettings().getKeyConfiguration();
 
         if (code == kc.getPause()) {
             if (gameState) {
