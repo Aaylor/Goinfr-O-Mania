@@ -12,7 +12,7 @@ import sound.MSound;
 public class SoundEffectController extends AbstractVolumeController {
 
     public SoundEffectController(Settings currentSettings) {
-        super(currentSettings);
+        super(currentSettings, currentSettings.getSoundEffects());
     }
 
     @Override

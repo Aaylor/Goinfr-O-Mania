@@ -15,10 +15,10 @@ public abstract class AbstractVolumeController implements ActionListener, Change
     protected boolean muting;
     protected Settings currentSettings;
 
-    public AbstractVolumeController(Settings currentSettings) {
+    public AbstractVolumeController(Settings currentSettings, double initialVolume) {
         this.currentSettings = currentSettings;
 
-        view = new VolumeView(currentSettings);
+        view = new VolumeView(initialVolume);
         registerListening();
 
     }

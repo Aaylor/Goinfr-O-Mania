@@ -10,18 +10,15 @@ import java.awt.*;
  */
 public class VolumeView extends JPanel {
 
-    Settings currentSettings;
-
     VolumeButton muteButton;
     VolumeSlider volumeSlider;
 
-    public VolumeView(Settings currentSettings) {
+    public VolumeView(double initialVolume) {
         super(new BorderLayout());
         this.setOpaque(false);
 
-        this.currentSettings = currentSettings;
-        this.muteButton = new VolumeButton(currentSettings.getVolume());
-        this.volumeSlider = new VolumeSlider(currentSettings.getVolume());
+        this.muteButton = new VolumeButton(initialVolume);
+        this.volumeSlider = new VolumeSlider(initialVolume);
         this.add(muteButton, BorderLayout.WEST);
         this.add(volumeSlider, BorderLayout.CENTER);
     }

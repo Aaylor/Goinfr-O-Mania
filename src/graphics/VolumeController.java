@@ -10,7 +10,7 @@ import log.IGLog;
 public class VolumeController extends AbstractVolumeController {
 
     public VolumeController(Settings currentSettings) {
-        super(currentSettings);
+        super(currentSettings, currentSettings.getVolume());
     }
 
     @Override
