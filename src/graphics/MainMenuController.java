@@ -23,13 +23,6 @@ public class MainMenuController implements ActionListener {
      */
     private Level level;
 
-    /* TODO : Add those attributes :
-        - Difficulty controller
-        - Scores controller
-        - Save controller
-        - Level edition controller
-     */
-
 
     /* Constructors */
 
@@ -63,7 +56,7 @@ public class MainMenuController implements ActionListener {
         return mainMusic;
     }
 
-/* Main Menu Controller functionalities */
+    /* Main Menu Controller functionalities */
 
     /**
      * Runs the main menu.
@@ -86,31 +79,6 @@ public class MainMenuController implements ActionListener {
     }
 
 
-
-
-    /* /!\ Not implemented yet /!\ */
-
-    /**
-     * Changes the difficulty of the game
-     */
-    public void changeDifficulty(){
-        /* TODO : changeDifficulty() */
-    }
-
-    /**
-     * Load a game.
-     */
-    public void loadGame(){
-        /* TODO : loadGame() */
-    }
-
-    /**
-     * Save the current game.
-     */
-    public void saveGame(){
-        /* TODO : saveGame() */
-    }
-
     /**
      * Launche the option menu
      */
@@ -130,6 +98,7 @@ public class MainMenuController implements ActionListener {
         mainMenuView.getLoad().addActionListener(this);
         mainMenuView.getOptions().addActionListener(this);
         mainMenuView.getScores().addActionListener(this);
+        mainMenuView.getQuit().addActionListener(this);
     }
 
     @Override
@@ -142,15 +111,24 @@ public class MainMenuController implements ActionListener {
         }
         else if(e.getSource()==mainMenuView.getOptions()){
             options();
-        } else if(e.getSource()==mainMenuView.getScores()){
+        }
+        else if(e.getSource()==mainMenuView.getScores()){
             showScores();
+        }
+        else if(e.getSource()==mainMenuView.getQuit()){
+            MainFrame.getCurrentInstance().dispose();
+            MainFrame.getCurrentInstance().getMainMusic().stop();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
+            System.exit(0);
         }
         else{
             System.out.println("Erreur !!");
         }
     }
-
-     /* /!\ Not implemented yet /!\ */
 
 
 }

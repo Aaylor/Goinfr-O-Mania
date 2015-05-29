@@ -21,6 +21,7 @@ public class MainMenuView extends Background implements Observer, Resumable, Lan
     private MainMenuButton load;
     private MainMenuButton options;
     private MainMenuButton scores;
+    private MainMenuButton quit;
     private GridBagConstraints gbc;
     private Font font;
 
@@ -56,7 +57,7 @@ public class MainMenuView extends Background implements Observer, Resumable, Lan
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.insets = new Insets(0, 10, 0, 10);
     }
 
     private void instantiateTitle(){
@@ -94,10 +95,17 @@ public class MainMenuView extends Background implements Observer, Resumable, Lan
                 "pictures/GameMenuFocusButton.png",
                 bundle.getString("gameMenuScoresButton"),
                 font);
+        quit = new MainMenuButton(
+                "pictures/GameMenuSleepButton.png",
+                "pictures/GameMenuPressedButton.png",
+                "pictures/GameMenuFocusButton.png",
+                bundle.getString("gameMenuQuitButton"),
+                font);
         this.add(play, gbc);
         this.add(load, gbc);
         this.add(options, gbc);
         this.add(scores, gbc);
+        this.add(quit, gbc);
     }
 
     public void reinitializeButton() {
@@ -105,6 +113,7 @@ public class MainMenuView extends Background implements Observer, Resumable, Lan
         load.reinit();
         options.reinit();
         scores.reinit();
+        quit.reinit();
     }
 
     //GETTER
@@ -123,6 +132,10 @@ public class MainMenuView extends Background implements Observer, Resumable, Lan
 
     public MainMenuButton getScores() {
         return  scores;
+    }
+
+    public MainMenuButton getQuit() {
+        return quit;
     }
 
     //UPDATE
@@ -154,5 +167,6 @@ public class MainMenuView extends Background implements Observer, Resumable, Lan
         load.setText(bundle.getString("gameMenuLoadButton"));;
         options.setText(bundle.getString("gameMenuOptionsButton"));;
         scores.setText(bundle.getString("gameMenuScoresButton"));;
+        quit.setText(bundle.getString("gameMenuQuitButton"));
     }
 }

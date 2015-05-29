@@ -17,7 +17,7 @@ public class VolumeSlider extends JSlider {
      */
     public VolumeSlider(double volume) {
         super(JSlider.HORIZONTAL, 0, 100, (int) (volume*100));
-
+        this.setOpaque(false);
     }
 
     public int getVolume() {
