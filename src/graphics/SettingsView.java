@@ -7,7 +7,6 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.File;
 import java.util.ResourceBundle;
 
@@ -50,7 +49,6 @@ public class SettingsView extends Background {
     private JButton leftBut;
     private JButton rightBut;
     private JButton attackBut;
-    private JButton quitBut;
     private JButton pauseBut;
     private JButton menuBut;
 
@@ -60,6 +58,7 @@ public class SettingsView extends Background {
 
     private ResourceBundle bundle;
     private Font font;
+    private Font fontKey;
 
 
     /* Constructors */
@@ -78,6 +77,8 @@ public class SettingsView extends Background {
         } catch (Exception e) {
             font = null;
         }
+
+        fontKey = new Font(Font.SANS_SERIF, Font.BOLD, 18);
 
         this.setPreferredSize(previousView.getSize());
 
@@ -107,10 +108,6 @@ public class SettingsView extends Background {
 
     public JButton getPauseBut() {
         return pauseBut;
-    }
-
-    public JButton getQuitBut() {
-        return quitBut;
     }
 
     public JButton getAttackBut() {
@@ -223,69 +220,27 @@ public class SettingsView extends Background {
         label.setForeground(Color.white);
 
         GridLayout commandLayout = new GridLayout(7, 2);
-        commandLayout.setHgap(40);
+        commandLayout.setHgap(150);
         commandLayout.setVgap(10);
         commandsPanel.setLayout(commandLayout);
 
-        up = new JLabel(bundle.getString("upControl"), SwingConstants.CENTER);
-        up.setFont(font);
-        up.setForeground(Color.white);
-        down = new JLabel(bundle.getString("downControl"), SwingConstants.CENTER);
-        down.setFont(font);
-        down.setForeground(Color.white);
-        left = new JLabel(bundle.getString("leftControl"), SwingConstants.CENTER);
-        left.setFont(font);
-        left.setForeground(Color.white);
-        right = new JLabel(bundle.getString("rightControl"), SwingConstants.CENTER);
-        right.setFont(font);
-        right.setForeground(Color.white);
-        attack = new JLabel(bundle.getString("attackControl"), SwingConstants.CENTER);
-        attack.setFont(font);
-        attack.setForeground(Color.white);pause = new JLabel(bundle.getString("pauseControl"), SwingConstants.CENTER);
-        menu = new JLabel(bundle.getString("menuControl"), SwingConstants.CENTER);
-        menu.setFont(font);
-        menu.setForeground(Color.white);
-        pause = new JLabel(bundle.getString("pauseControl"), SwingConstants.CENTER);
-        pause.setFont(font);
-        pause.setForeground(Color.white);
+        up = initKeyLabel("upControl");
+        down = initKeyLabel("downControl");
+        left = initKeyLabel("leftControl");
+        right = initKeyLabel("rightControl");
+        attack = initKeyLabel("attackControl");
+        menu = initKeyLabel("menuControl");
+        pause = initKeyLabel("pauseControl");
 
         KeyConfiguration kg = currentSettings.getKeyConfiguration();
 
-        upBut = new JButton(KeyEvent.getKeyText(kg.getUp()));
-        upBut.setOpaque(false);
-        upBut.setContentAreaFilled(false);
-        upBut.setBorderPainted(false);
-        upBut.setForeground(Color.white);
-        downBut = new JButton(KeyEvent.getKeyText(kg.getDown()));
-        downBut.setOpaque(false);
-        downBut.setContentAreaFilled(false);
-        downBut.setBorderPainted(false);
-        downBut.setForeground(Color.white);
-        leftBut = new JButton(KeyEvent.getKeyText(kg.getLeft()));
-        leftBut.setOpaque(false);
-        leftBut.setContentAreaFilled(false);
-        leftBut.setBorderPainted(false);
-        leftBut.setForeground(Color.white);
-        rightBut = new JButton(KeyEvent.getKeyText(kg.getRight()));
-        rightBut.setOpaque(false);
-        rightBut.setContentAreaFilled(false);
-        rightBut.setBorderPainted(false);
-        rightBut.setForeground(Color.white);
-        attackBut = new JButton(KeyEvent.getKeyText(kg.getAttack()));
-        attackBut.setOpaque(false);
-        attackBut.setContentAreaFilled(false);
-        attackBut.setBorderPainted(false);
-        attackBut.setForeground(Color.white);
-        pauseBut = new JButton(KeyEvent.getKeyText(kg.getPause()));
-        pauseBut.setOpaque(false);
-        pauseBut.setContentAreaFilled(false);
-        pauseBut.setBorderPainted(false);
-        pauseBut.setForeground(Color.white);
-        menuBut = new JButton(KeyEvent.getKeyText(kg.getMenu()));
-        menuBut.setOpaque(false);
-        menuBut.setContentAreaFilled(false);
-        menuBut.setBorderPainted(false);
-        menuBut.setForeground(Color.white);
+        upBut = initKeyButton(kg.getUp());
+        downBut = initKeyButton(kg.getDown());
+        leftBut = initKeyButton(kg.getLeft());
+        rightBut = initKeyButton(kg.getRight());
+        attackBut = initKeyButton(kg.getAttack());
+        pauseBut = initKeyButton(kg.getPause());
+        menuBut = initKeyButton(kg.getMenu());
 
         commandsPanel.add(up);
         commandsPanel.add(upBut);
@@ -309,6 +264,24 @@ public class SettingsView extends Background {
         UIManager.put("TabbedPane.contentOpaque", false);
         tabs = new SettingsTabs(this, generalPanel, commandsPanel);
         this.add(tabs, BorderLayout.CENTER);
+    }
+
+    private JButton initKeyButton(int keyCode){
+        JButton button = new JButton(KeyEvent.getKeyText(keyCode));
+        button.setFont(fontKey);
+        button.setHorizontalAlignment(SwingConstants.LEFT);
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBorderPainted(false);
+        button.setForeground(Color.white);
+        return button;
+    }
+
+    private JLabel initKeyLabel(String bundleKey){
+        JLabel label = new JLabel(bundle.getString(bundleKey), SwingConstants.RIGHT);
+        label.setFont(font);
+        label.setForeground(Color.white);
+        return label;
     }
 
     private void initButtonPanel(){
