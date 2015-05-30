@@ -10,15 +10,13 @@ public class KeyConfiguration {
     private int left;
     private int right;
     private int attack;
+    private int pause;
+    private int menu;
+
+    private boolean inversed;
 
     private Preferences preferences;
 
-    //private int quit;
-    //private int save;
-    //private int load;
-    private int pause;
-
-    private int menu;
 
     public KeyConfiguration() {
         preferences = Preferences.userRoot().node(getClass().getName());
@@ -28,9 +26,6 @@ public class KeyConfiguration {
         left   = preferences.getInt("left", KeyEvent.VK_LEFT);
         right  = preferences.getInt("right", KeyEvent.VK_RIGHT);
         attack = preferences.getInt("attack", KeyEvent.VK_SPACE);
-        //quit   = preferences.getInt("quit", KeyEvent.VK_Q);
-        //save   = preferences.getInt("save", KeyEvent.VK_S);
-        //load   = preferences.getInt("load", KeyEvent.VK_L);
         pause  = preferences.getInt("pause", KeyEvent.VK_P);
         menu   = preferences.getInt("menu", KeyEvent.VK_ESCAPE);
     }
@@ -53,12 +48,6 @@ public class KeyConfiguration {
         left   = KeyEvent.VK_LEFT;
         right  = KeyEvent.VK_RIGHT;
         attack = KeyEvent.VK_SPACE;
-        //quit   = KeyEvent.VK_Q;
-        //preferences.putInt("quit", KeyEvent.VK_Q);
-        //save   = KeyEvent.VK_S;
-        //preferences.putInt("save", KeyEvent.VK_S);
-        //load   = KeyEvent.VK_L;
-        //preferences.putInt("load", KeyEvent.VeK_L);
         pause  = KeyEvent.VK_P;
         menu   = KeyEvent.VK_ESCAPE;
     }
@@ -113,33 +102,6 @@ public class KeyConfiguration {
         this.attack = attack;
     }
 
-    /*public int getQuit() {
-        return quit;
-    }
-
-    public void setQuit(int quit) {
-        preferences.putInt("quit", quit);
-        this.quit = quit;
-    }
-
-    public int getSave() {
-        return save;
-    }
-
-    public void setSave(int save) {
-        preferences.putInt("save", save);
-        this.save = save;
-    }
-
-    public int getLoad() {
-        return load;
-    }
-
-    public void setLoad(int load) {
-        preferences.putInt("load", load);
-        this.load = load;
-    }*/
-
     public int getPause() {
         return pause;
     }
@@ -156,4 +118,20 @@ public class KeyConfiguration {
         this.menu = menu;
     }
 
+
+    public void inverseMovements() {
+        int up = getUp();
+        setUp(getDown());
+        setDown(up);
+
+        int left = getLeft();
+        setLeft(getRight());
+        setRight(left);
+
+        inversed = !inversed;
+    }
+
+    public boolean isInversed() {
+        return inversed;
+    }
 }

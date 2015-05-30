@@ -87,6 +87,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
 
 
     /* Others */
+    private boolean reinverse = false;
 
     public void pauseGame() {
         IGLog.info("BoardController, gamed paused.");
@@ -98,6 +99,14 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         nextRandomPop.pauseTimer();
         nextRandomTrap.pauseTimer();
         nextRandomNutritionists.pauseTimer();
+
+        // Inverse key trap has been made ??
+        KeyConfiguration kc =
+                MainFrame.getCurrentInstance().getSettings().getKeyConfiguration();
+        if (kc.isInversed()) {
+            reinverse = true;
+            kc.inverseMovements();
+        }
 
         board.notification();
         gameState = false;
@@ -113,6 +122,14 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         nextRandomPop.resumeTimer();
         nextRandomTrap.resumeTimer();
         nextRandomNutritionists.resumeTimer();
+
+        // Has been inversed ?? Do it again.
+        KeyConfiguration kc =
+                MainFrame.getCurrentInstance().getSettings().getKeyConfiguration();
+        if (kc.isInversed()) {
+            reinverse = false;
+            kc.inverseMovements();
+        }
 
         gameState = true;
         notify();
