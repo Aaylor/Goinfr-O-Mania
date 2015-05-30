@@ -20,6 +20,8 @@ public class EndGameView extends Background {
     private MainMenuButton menu;
     private MainMenuButton quit;
 
+    private JTextField playerName;
+
     private Score gameScore;
 
     ResourceBundle bundle;
@@ -123,7 +125,7 @@ public class EndGameView extends Background {
         if (scoreFont != null)
             score.setFont(scoreFont);
 
-        JTextField playerName = new JTextField("Player Name");
+        playerName = new JTextField("Player Name");
         playerName.setForeground(Color.RED);
         playerName.setOpaque(false);
         playerName.setBackground(new Color(255, 255, 255, 20));
@@ -190,5 +192,9 @@ public class EndGameView extends Background {
 
     public MainMenuButton getQuit() {
         return quit;
+    }
+
+    public String getPlayerName(){
+        return playerName.getText();
     }
 }

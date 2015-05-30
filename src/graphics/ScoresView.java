@@ -9,9 +9,7 @@ import java.io.File;
 import java.util.Collections;
 import java.util.ResourceBundle;
 
-/**
- * Created by PixelMan on 22/05/15.
- */
+
 public class ScoresView extends Background {
 
     private MainMenuButton back;
@@ -55,7 +53,7 @@ public class ScoresView extends Background {
 
         scoreLabels = new JLabel[10][2];
 
-        for(int i = 0; i<10; i++){
+        for(int i = 0; i<10 && i<s.getScores().size(); i++){
             String player = s.getScores().get(i).getWho();
             String score = Integer.toString(s.getScores().get(i).getValue());
 
