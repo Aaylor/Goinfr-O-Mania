@@ -41,11 +41,14 @@ public abstract class AbstractNutritionist extends AbstractMovableEntity
 
     @Override
     public boolean takeDamage(int damage) {
-        setLife(getLife() - damage);
-
-        IGLog.info(this + " a pris " + damage + " dommages. " + getLife() + " pv restants.");
-
-        return getLife() <= 0;
+        if (!getInvulnerable()) {
+            setLife(getLife() - damage);
+            IGLog.info(this + " a pris " + damage + " dommages. " + getLife() + " pv restants.");
+            return getLife() <= 0;
+        } else {
+            IGLog.info(this + " a pris des dommages, mais est invulnérable. Dommage !");
+            return false;
+        }
     }
 
 

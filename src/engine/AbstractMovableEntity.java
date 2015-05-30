@@ -10,6 +10,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -27,6 +28,8 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
     private float speed;
 
     private AtomicInteger speedModifier;
+
+    private AtomicBoolean invulnerable;
 
     private Set<Class> buffs = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
@@ -120,6 +123,18 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
 
     public int getSpeedModifier() {
         return speedModifier.get();
+    }
+
+    public boolean getInvulnerable() {
+        return invulnerable.get();
+    }
+
+    public void setInvulnerable(boolean invulnerable) {
+        System.out.println(
+                "AbstractMovableEntity::setInvulnerable -> Entity {" + this + "}, " +
+                        "setInvulnerable(" + invulnerable + ")"
+        );
+        this.invulnerable.set(invulnerable);
     }
 
     /**
