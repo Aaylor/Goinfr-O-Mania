@@ -2,6 +2,7 @@ package engine;
 
 import engine.cake.AbstractCake;
 import engine.nutritionists.AbstractNutritionist;
+import engine.traps.AbstractTrap;
 import engine.weapons.Weapon;
 import graphics.Board;
 import graphics.BoardController;
@@ -283,6 +284,32 @@ public class EntityManager {
 
         }
 
+    }
+
+    public void addRandomTrapBehindEntity(Entity entity) {
+        if (!(entity instanceof AbstractMovableEntity))
+            return;
+
+        AbstractMovableEntity a = (AbstractMovableEntity)entity;
+
+        Point2D position = a.getCenter();
+        Circle circle = a.getBoundsCircle();
+        double angle = a.getDirectionRadian();
+
+        double nextX = position.getX() + (circle.getRadius() * Math.cos(angle));
+        double nextY = position.getY() + (circle.getRadius() * Math.sin(angle));
+
+        Point2D newPoint = new Point2D.Double(nextX, nextY);
+        a.setPoint(newPoint);
+
+        EntityAssociation ea = EntityAssociation.getInstance(level.getDifficulty());
+        String trapName = ea.randomTraps.getRandomlyName();
+        AbstractTrap trap = (AbstractTrap) ea.getEntity(trapName);
+        addEntity(
+                trap,
+                ea.getEntityView(trapName)
+        );
+        putLifeTime(trap, trap.getLifetime());
     }
 
     /**

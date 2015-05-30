@@ -2,6 +2,7 @@ package engine.nutritionists;
 
 
 import engine.Entity;
+import engine.weapons.Weapon;
 
 import java.awt.*;
 
@@ -9,14 +10,17 @@ import java.awt.*;
 public class GluttonChaserNutritionist extends AbstractNutritionist {
     public GluttonChaserNutritionist(int nbLifes) {
         super(nbLifes);
+        setWeapon(Weapon.make("punch"));
     }
 
     public GluttonChaserNutritionist(float speed, float direction, int nbLifes) {
         super(speed, direction, nbLifes);
+        setWeapon(Weapon.make("punch"));
     }
 
     public GluttonChaserNutritionist(Point startPosition, Dimension size, float speed, float direction, int nbLifes) {
         super(startPosition, size, speed, direction, nbLifes);
+        setWeapon(Weapon.make("punch"));
     }
 
     @Override

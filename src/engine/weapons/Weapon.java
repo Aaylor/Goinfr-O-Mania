@@ -38,7 +38,7 @@ public class Weapon {
     private ImageIcon weaponIcon;
 
 
-    private Weapon(String name, List<MSound> sounds, double range,
+    protected Weapon(String name, List<MSound> sounds, double range,
                   int minDamage, int maxDamage, long cooldown, Skin weaponSkin, ImageIcon weaponIcon) {
         this.name = name;
         owner = null;
@@ -52,7 +52,7 @@ public class Weapon {
         this.weaponIcon = weaponIcon;
     }
 
-    private Weapon(Weapon weapon) {
+    protected Weapon(Weapon weapon) {
         name       = weapon.name;
         owner      = null;
         sounds     = new LinkedList<>(weapon.sounds);
@@ -100,6 +100,17 @@ public class Weapon {
 
         map.put(name, new Weapon(name, createdSounds, range, minDamage,
                 maxDamage, cooldown, s, icon));
+
+
+    }
+
+    public static void register(String name, Weapon w) {
+        if (map.containsKey(name)) {
+            throw new IllegalArgumentException("Weapon::register -> " +
+                    name + " already registered.");
+        }
+
+        map.put(name, w);
     }
 
     public static Weapon make(String name) {
@@ -125,9 +136,25 @@ public class Weapon {
         } catch (Exception e){}
         Weapon.register("punch", punchSounds, 10, 1, 2, 1000, skinPunch, "pictures/punch.png");
 
+
+        /* Trap Weapon */
+        HashMap<String, String> trapSounds = new HashMap<>();
+        trapSounds.put("left-punch", "sounds/left-punch.mp3");
+        trapSounds.put("right-punch", "sounds/right-punch.mp3");
+        /* FIXME */
+        Skin trapPunch = new Skin(20,20);
+        /*try {
+            BufferedImage[] c = EntityAssociation.createCharacterFromFile("pictures/animation/", 7, ".png");
+            skinPunch = new Skin(c, 4);
+        } catch (Exception e){}*/
+        ImageIcon icon = new ImageIcon(
+                ExtGraphics.resizeInitialImage("picutres/punch.png", 30, true)
+        );
+        Weapon.register("trap-weapon",
+                new TrapWeapon("trap-weapon", new LinkedList<>(), 10, 2000, skinPunch, icon));
     }
 
-    private void playNextSound() {
+    protected void playNextSound() {
         ++soundsCpt;
         if (soundsCpt >= sounds.size())
             soundsCpt = 0;
@@ -168,6 +195,14 @@ public class Weapon {
 
     public ImageIcon getWeaponIcon() {
         return weaponIcon;
+    }
+
+    public Skin getWeaponSkin() {
+        return weaponSkin;
+    }
+
+    public Cooldown getCooldown() {
+        return cooldown;
     }
 
     public boolean attack(Entity entity) {
