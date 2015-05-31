@@ -20,7 +20,7 @@ public class EndGameController implements ActionListener {
 
     public EndGameController(Board currentState) {
         endGameView  = new EndGameView(currentState.getLevel().getScore());
-        endGameMusic = new MMusic("endGame", "music/endgame00.mp3");
+        endGameMusic = new MMusic("endGame", "music/endgame00.wav");
 
         bundle = MainFrame.getCurrentInstance().getBundle();
         scoreSaved = false;

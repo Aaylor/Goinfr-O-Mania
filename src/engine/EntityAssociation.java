@@ -347,14 +347,14 @@ public final class EntityAssociation {
          /* invul cake */
         Skin invulSkin = new Skin(20, 20);
         InvulnerabilityCake invulCake= new InvulnerabilityCake(null, new Dimension(20, 20),
-                new MSound(INVULCAKE, "music/pickspeeditem00.wav"));
+                new MSound(INVULCAKE, "music/pickupitem00.wav"));
         try {
             File img = new File(FILE_INVULCAKE);
             BufferedImage in = ImageIO.read(img);
             BufferedImage[] pi = { in };
             invulSkin = new Skin(pi, 0);
             invulCake = new InvulnerabilityCake(null, new Dimension(pi[0].getWidth(), pi[0].getHeight()),
-                    new MSound(INVULCAKE, "music/pickspeeditem00.wav"));
+                    new MSound(INVULCAKE, "music/pickupitem00.wav"));
         }
         catch (Exception e) {
             System.err.println("Error with image :" + FILE_SPEED_CAKE);
@@ -418,8 +418,6 @@ public final class EntityAssociation {
         catch (Exception e){}
         EntityView invKeyTrapView = new EntityView(skinInvKeyTrap);
         register(INVKEYTRAP, invKeyTrap, invKeyTrapView);
-
-
     }
 
 }

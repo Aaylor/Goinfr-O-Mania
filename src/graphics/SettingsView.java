@@ -40,7 +40,7 @@ public class SettingsView extends Background {
     private JLabel left;
     private JLabel right;
     private JLabel attack;
-    private JLabel quit;
+    //private JLabel quit;
     private JLabel pause;
     private JLabel menu;
 
@@ -59,6 +59,8 @@ public class SettingsView extends Background {
     private ResourceBundle bundle;
     private Font font;
     private Font fontKey;
+
+    private JMenuItem rDC;
 
 
     /* Constructors */
@@ -84,12 +86,20 @@ public class SettingsView extends Background {
 
         this.bundle = MainFrame.getCurrentInstance().getBundle();
 
+        JMenuBar bar = MainFrame.getCurrentInstance().getJMenuBar();
+        rDC = new JMenuItem(bundle.getString("defaultControl"));
+        bar.add(rDC);
+
         instantiateTitle();
         initCommandPanel();
         initGeneralPanel();
         initTabs();
         initButtonPanel();
 
+    }
+
+    public JMenuItem getDefaultControls(){
+        return rDC;
     }
 
     /* Accessors */
