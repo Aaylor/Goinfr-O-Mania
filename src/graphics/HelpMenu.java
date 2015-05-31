@@ -16,39 +16,60 @@ public class HelpMenu extends JDialog {
         return text.replace("\n", "<br />");
     }
 
+    private JLabel createLabel(String path) {
+        try {
+            BufferedImage bufferedImage =
+                    ImageIO.read(new File(path));
+            return new JLabel(new ImageIcon(bufferedImage));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    private void make(JPanel panel, GridBagConstraints gbc, int y,
+                      String path, String bundleLabel) {
+        JLabel icon = createLabel(path);
+
+        gbc.gridx = 0;
+        gbc.gridy = y;
+        panel.add(icon, gbc);
+
+        gbc.gridx = 1;
+        JLabel text = new JLabel(
+                "<html>" +
+                        "<p>" + replaceByBr(bundle.getString(bundleLabel)) + "</p>" +
+                        "</html>"
+        );
+        text.setOpaque(false);
+        panel.add(text, gbc);
+    }
+
     private class GluttonPanel extends JPanel {
-        JLabel icon;
+        GridBagConstraints gbc;
 
         public GluttonPanel() {
             setLayout(new GridLayout(1, 1));
-            try {
-                BufferedImage bufferedImage =
-                        ImageIO.read(new File("pictures/Characters/goinfre/an3.png"));
-                icon = new JLabel(new ImageIcon(bufferedImage));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            make();
+            gbc = new GridBagConstraints();
+            make(this, gbc, 0, "pictures/Characters/goinfre/an3.png", "gluttonText");
         }
+    }
 
-        private void make() {
-            GridBagConstraints gbc = new GridBagConstraints();
+    private class NutritionistPanel extends JPanel {
+        GridBagConstraints gbc;
 
-            gbc.gridx = 0;
-            gbc.gridy = 0;
-            add(icon, gbc);
+        public NutritionistPanel() {
+            setLayout(new GridLayout(3, 3));
+            gbc = new GridBagConstraints();
 
-            gbc.gridx = 1;
-            JLabel text = new JLabel(
-                    "<html>" +
-                    "<p>" + replaceByBr(bundle.getString("gluttonText")) + "</p>" +
-                    "</html>"
-            );
-            text.setOpaque(false);
-            add(text, gbc);
+            make(this, gbc, 0, "pictures/Characters/Nutritioniste1/an3.png",
+                    "cakeChaserText");
+            make(this, gbc, 1, "pictures/Characters/Nutritioniste2/an3.png",
+                    "gluttonChaserText");
+            make(this, gbc, 2, "pictures/Characters/Nutritioniste3/an3.png",
+                    "trapShooterText");
         }
-
     }
 
     public HelpMenu(ResourceBundle bundle) {
@@ -62,7 +83,7 @@ public class HelpMenu extends JDialog {
 
         JTabbedPane p = new JTabbedPane();
         p.addTab("Test1", new GluttonPanel());
-        p.addTab("Test2", new JPanel());
+        p.addTab("Test2", new NutritionistPanel());
         add(p);
 
         setResizable(false);
