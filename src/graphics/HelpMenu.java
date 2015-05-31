@@ -87,9 +87,23 @@ public class HelpMenu extends JDialog {
         }
     }
 
+    private class TrapPanel extends JPanel {
+        GridBagConstraints gbc;
+
+        public TrapPanel() {
+            setLayout(new GridLayout(4, 4));
+            gbc = new GridBagConstraints();
+
+            make(this, gbc, 0, "pictures/trap/shuriken/an1.png", "lifeTrapText");
+            make(this, gbc, 1, "pictures/trap/katon/an1.png", "bigLifeTrapText");
+            make(this, gbc, 2, "pictures/trap/mw1/an1.png", "slowTrapText");
+            make(this, gbc, 3, "pictures/trap/mw2/an1.png", "invKeyText");
+        }
+    }
+
     public HelpMenu(ResourceBundle bundle) {
-        setPreferredSize(new Dimension(400, 700));
-        setSize(new Dimension(400, 700));
+        setPreferredSize(new Dimension(550, 730));
+        setSize(new Dimension(550, 730));
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setModal(true);
@@ -97,14 +111,15 @@ public class HelpMenu extends JDialog {
         this.bundle = bundle;
 
         JTabbedPane p = new JTabbedPane();
-        p.addTab("Test1", new GluttonPanel());
-        p.addTab("Test2", new NutritionistPanel());
-        p.addTab("Test3", new CakePanel());
-        p.addTab("Test4", new NutritionistPanel());
+        p.addTab(bundle.getString("gluttonLabel"), new GluttonPanel());
+        p.addTab(bundle.getString("nutritionistLabel"), new NutritionistPanel());
+        p.addTab(bundle.getString("cakeLabel"), new CakePanel());
+        p.addTab(bundle.getString("trapLabel"), new TrapPanel());
         add(p);
 
         setResizable(false);
         setVisible(true);
+        pack();
     }
 
 }
