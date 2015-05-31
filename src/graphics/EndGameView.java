@@ -78,11 +78,14 @@ public class EndGameView extends Background {
 
         content.setBorder(new Border() {
             @Override
-            public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {}
+            public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+            }
+
             @Override
             public Insets getBorderInsets(Component c) {
                 return new Insets(50, 0, 0, 0);
             }
+
             @Override
             public boolean isBorderOpaque() {
                 return false;
@@ -125,7 +128,7 @@ public class EndGameView extends Background {
         if (scoreFont != null)
             score.setFont(scoreFont);
 
-        playerName = new JTextField("Player Name");
+        playerName = new JTextField(bundle.getString("playerName"));
         playerName.setForeground(Color.RED);
         playerName.setOpaque(false);
         playerName.setBackground(new Color(255, 255, 255, 20));

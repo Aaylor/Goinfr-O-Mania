@@ -2,6 +2,7 @@ package graphics;
 
 import engine.Score;
 import engine.Scores;
+import log.IGLog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -53,15 +54,22 @@ public class ScoresView extends Background {
 
         scoreLabels = new JLabel[10][2];
 
+        for(int i = 0; i<10; i++){
+            scoreLabels[i][0] = new JLabel();
+            scoreLabels[i][1] = new JLabel();
+        }
+
+        IGLog.info("" + s.getScores().size());
+
         for(int i = 0; i<10 && i<s.getScores().size(); i++){
             String player = s.getScores().get(i).getWho();
             String score = Integer.toString(s.getScores().get(i).getValue());
 
-            scoreLabels[i][0] = new JLabel(player);
+            scoreLabels[i][0].setText(player);
             scoreLabels[i][0].setHorizontalAlignment(SwingConstants.RIGHT);
             scoreLabels[i][0].setForeground(Color.WHITE);
 
-            scoreLabels[i][1] = new JLabel(score);
+            scoreLabels[i][1].setText(score);
             scoreLabels[i][1].setHorizontalAlignment(SwingConstants.LEFT);
             scoreLabels[i][1].setForeground(Color.WHITE);
 

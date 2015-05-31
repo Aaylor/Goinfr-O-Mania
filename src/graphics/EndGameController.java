@@ -16,12 +16,14 @@ public class EndGameController implements ActionListener {
     private MMusic endGameMusic;
     private Board currentState;
     private ResourceBundle bundle;
+    private boolean scoreSaved;
 
     public EndGameController(Board currentState) {
         endGameView  = new EndGameView(currentState.getLevel().getScore());
         endGameMusic = new MMusic("endGame", "music/endgame00.mp3");
 
         bundle = MainFrame.getCurrentInstance().getBundle();
+        scoreSaved = false;
 
         MainFrame.getCurrentInstance().addPanel(endGameView);
         registerListening();
@@ -37,11 +39,12 @@ public class EndGameController implements ActionListener {
     }
 
     private void saveScore(String name){
-        if(!name.equals(bundle.getString("playerName"))) {
+        if(!scoreSaved && !name.equals(bundle.getString("playerName"))) {
             MainFrame.getCurrentInstance().getScores().addScore(
                     name,
                     currentState.getLevel().getScore()
             );
+            scoreSaved = true;
         }
     }
 
@@ -60,6 +63,7 @@ public class EndGameController implements ActionListener {
             bc.start();
         } else if (e.getSource() == endGameView.getScore()) {
             IGLog.write("EndGameController::actionPerformed -> getScore()");
+            saveScore(endGameView.getPlayerName());
             new ScoresController(this.endGameView);
         } else if (e.getSource() == endGameView.getMenu()) {
             IGLog.write("EndGameController::actionPerformed -> getMenu()");
