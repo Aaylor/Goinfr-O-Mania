@@ -290,6 +290,8 @@ public class EntityManager {
         if (!(entity instanceof AbstractMovableEntity))
             return;
 
+        IGLog.info("EntityManager::addRandomTrapBehindEntity(" + entity + ").");
+
         AbstractMovableEntity a = (AbstractMovableEntity)entity;
 
         Point2D position = a.getCenter();

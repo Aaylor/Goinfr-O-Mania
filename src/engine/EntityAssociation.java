@@ -1,10 +1,14 @@
 package engine;
 
 import engine.cake.AbstractCake;
+import engine.cake.InvulnerabilityCake;
 import engine.cake.LifeCake;
 import engine.cake.SpeedCake;
+import engine.effects.InverseKeyBuff;
 import engine.nutritionists.CakeChaserNutritionist;
 import engine.nutritionists.GluttonChaserNutritionist;
+import engine.nutritionists.TrapShooterNutritionist;
+import engine.traps.InverseKeyTrap;
 import engine.traps.LifeTrap;
 import engine.traps.SlowTrap;
 import sound.MSound;
@@ -26,6 +30,7 @@ public final class EntityAssociation {
     public final RandomCreation randomNutritionist = new RandomCreation();
     public final static String DEFAULT_CAKECHASER    = "default_cakechaser";
     public final static String DEFAULT_GLUTTONCHASER = "default_gluttonchaser";
+    public final static String TRAP_SHOOTER          = "trap_shooter";
 
     /* Cakes */
     public final RandomCreation randomCakes   = new RandomCreation();
@@ -33,12 +38,14 @@ public final class EntityAssociation {
     public final static String SUPERLIFECAKE         = "superlifecake";
     public final static String HYPERLIFECAKE         = "hyperlifecake";
     public final static String SPEEDCAKE             = "speedcake";
+    public final static String INVULCAKE             = "invulcake";
 
     /* Traps */
     public final RandomCreation randomTraps = new RandomCreation();
     public final static String LIFETRAP    = "lifetrap";
     public final static String BIGLIFETRAP = "biglifetrap";
     public final static String SLOWTRAP    = "slowtrap";
+    public final static String INVKEYTRAP  = "invkeytrap";
 
     private final static String FOLDER_GLUTTON = "pictures/Characters/goinfre";
     private final static String FOLDER_CAKE_CHASER = "pictures/Characters/Nutritioniste1";
@@ -71,15 +78,18 @@ public final class EntityAssociation {
 
         final int cakeChaser;
         final int gluttonChaser;
+        final int trapShooter;
 
         final int lifeCake;
         final int superLifeCake;
         final int hyperLifeCake;
+        final int invulCake;
         final int speedCake;
 
         final int lifeTrap;
         final int bigLifeTrap;
         final int slowTrap;
+        final int invKeyTrap;
 
         /* TODO FIXME XXX TODO FIXME XXX */
         switch (difficulty) {
@@ -87,49 +97,61 @@ public final class EntityAssociation {
             case EASY:
                 cakeChaser = 20;
                 gluttonChaser = 60;
+                trapShooter = 200;
                 lifeCake = 50;
                 superLifeCake = 30;
                 hyperLifeCake = 5;
+                invulCake = 200;
                 speedCake = 20;
                 lifeTrap = 20;
                 bigLifeTrap = 15;
                 slowTrap = 90;
+                invKeyTrap = 300;
                 break;
             case MEDIUM:
                 cakeChaser = 20;
                 gluttonChaser = 60;
+                trapShooter = 0;
                 lifeCake = 50;
                 superLifeCake = 30;
                 hyperLifeCake = 5;
+                invulCake = 200;
                 speedCake = 20;
                 lifeTrap = 20;
                 bigLifeTrap = 15;
                 slowTrap = 90;
+                invKeyTrap = 300;
                 break;
             case HARD:
                 cakeChaser = 20;
                 gluttonChaser = 60;
+                trapShooter = 200;
                 lifeCake = 50;
                 superLifeCake = 30;
                 hyperLifeCake = 5;
+                invulCake = 200;
                 speedCake = 20;
                 lifeTrap = 20;
                 bigLifeTrap = 15;
                 slowTrap = 90;
+                invKeyTrap = 300;
                 break;
         }
 
         ea.randomNutritionist.add(DEFAULT_CAKECHASER, cakeChaser);
         ea.randomNutritionist.add(DEFAULT_GLUTTONCHASER, gluttonChaser);
+        ea.randomNutritionist.add(TRAP_SHOOTER, trapShooter);
 
         ea.randomCakes.add(DEFAULT_LIFECAKE, lifeCake);
         ea.randomCakes.add(SUPERLIFECAKE, superLifeCake);
         ea.randomCakes.add(HYPERLIFECAKE, hyperLifeCake);
         ea.randomCakes.add(SPEEDCAKE, speedCake);
+        ea.randomCakes.add(INVULCAKE, invulCake);
 
         ea.randomTraps.add(LIFETRAP, lifeTrap);
         ea.randomTraps.add(BIGLIFETRAP, bigLifeTrap);
         ea.randomTraps.add(SLOWTRAP, slowTrap);
+        ea.randomTraps.add(INVKEYTRAP, invKeyTrap);
 
         return ea;
     }
@@ -187,8 +209,6 @@ public final class EntityAssociation {
     }
 
     public final static void defaults() {
-        /* TODO */
-
         /* Default Glutton */
 
         Skin skin = new Skin(30, 30);
@@ -231,6 +251,12 @@ public final class EntityAssociation {
         catch (Exception e){}
         EntityView gluttonChaserView = new EntityView(skin3);
         register(DEFAULT_GLUTTONCHASER, gluttonChaser, gluttonChaserView);
+
+        /* Trap Shooter */
+        Skin skinShooter = new Skin(30, 30);
+        TrapShooterNutritionist tsn = new TrapShooterNutritionist(null, new Dimension(30, 30), 2f, 0f, 3);
+        EntityView tsnView = new EntityView(skinShooter);
+        register(TRAP_SHOOTER, tsn, tsnView);
 
 
         /* CAKES */
@@ -308,6 +334,24 @@ public final class EntityAssociation {
         EntityView speedCakeView = new EntityView(skinSC);
         register(SPEEDCAKE, speedCake, speedCakeView);
 
+         /* invul cake */
+        Skin invulSkin = new Skin(20, 20);
+        InvulnerabilityCake invulCake= new InvulnerabilityCake(null, new Dimension(20, 20),
+                new MSound(INVULCAKE, "music/pickspeeditem00.wav"));
+        /*try {
+            File img = new File(FILE_SPEED_CAKE);
+            BufferedImage in = ImageIO.read(img);
+            BufferedImage[] pSC = { in };
+            skinSC = new Skin(pSC, 0);
+            speedCake = new SpeedCake(null, new Dimension(pSC[0].getWidth(), pSC[0].getHeight()),
+                    new MSound(SPEEDCAKE, "music/pickspeeditem00.wav"));
+        }
+        catch (Exception e) {
+            System.err.println("Error with image :" + FILE_SPEED_CAKE);
+        }*/
+        EntityView invulCakeView = new EntityView(invulSkin);
+        register(INVULCAKE, invulCake, invulCakeView);
+
 
         /* TRAPS */
         /* Life trap */
@@ -349,6 +393,20 @@ public final class EntityAssociation {
         catch (Exception e){}
         EntityView slowTrapView = new EntityView(skin9);
         register(SLOWTRAP, slowTrap, slowTrapView);
+
+        /* Inv key trap */
+        Skin skinInvKeyTrap = new Skin(15, 15);
+        InverseKeyTrap invKeyTrap =
+                new InverseKeyTrap(null, new Dimension(15, 15), true, null, 2000, 10000);
+        /*try {
+            BufferedImage[] p9 = createCharacterFromFile(FOLDER_SLOW_TRAP, 4, ".png");
+            skin9 = new Skin(p9, 6);
+            slowTrap = new SlowTrap(null, new Dimension(7, 7), true, null, 2000, 7000);
+        }
+        catch (Exception e){}*/
+        EntityView invKeyTrapView = new EntityView(skinInvKeyTrap);
+        register(INVKEYTRAP, invKeyTrap, invKeyTrapView);
+
 
     }
 

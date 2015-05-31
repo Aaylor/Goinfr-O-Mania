@@ -29,7 +29,7 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
 
     private AtomicInteger speedModifier;
 
-    private AtomicBoolean invulnerable;
+    private AtomicBoolean invulnerable = new AtomicBoolean(false);
 
     private Set<Class> buffs = Collections.newSetFromMap(new ConcurrentHashMap<>());
 

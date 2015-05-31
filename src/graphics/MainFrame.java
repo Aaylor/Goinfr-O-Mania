@@ -134,8 +134,8 @@ public class MainFrame extends JFrame {
     }
 
     private static void loadInternalResources() {
-        EntityAssociation.defaults();
         Weapon.defaults();
+        EntityAssociation.defaults();
     }
 
     private static void loadExternalResources() {
