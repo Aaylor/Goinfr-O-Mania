@@ -1,7 +1,6 @@
 package engine;
 
 import graphics.Circle;
-import log.IGLog;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

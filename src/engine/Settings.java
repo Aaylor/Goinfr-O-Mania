@@ -1,7 +1,6 @@
 package engine;
 
 import com.sun.javaws.exceptions.InvalidArgumentException;
-import sound.MSound;
 
 import java.util.Locale;
 import java.util.prefs.Preferences;
@@ -9,6 +8,7 @@ import java.util.prefs.Preferences;
 /**
  * Created by PixelMan on 24/05/15.
  */
+@SuppressWarnings("DefaultFileTemplate")
 public class Settings {
 
     /* Langues */

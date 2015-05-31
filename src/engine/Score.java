@@ -1,7 +1,8 @@
 package engine;
 
+import com.sun.istack.internal.NotNull;
+
 import java.util.Comparator;
-import java.util.Observable;
 
 public class Score implements Comparable<Score>, Comparator<Score> {
 
@@ -48,7 +49,7 @@ public class Score implements Comparable<Score>, Comparator<Score> {
     }
 
     @Override
-    public int compareTo(Score o) {
+    public int compareTo(@NotNull Score o) {
         if (o.value - value == 0) {
             return o.who.compareTo(who);
         }

@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by PixelMan on 23/05/15.
  */
+@SuppressWarnings("DefaultFileTemplate")
 public class ScoresController implements ActionListener{
 
     MainFrame parent;

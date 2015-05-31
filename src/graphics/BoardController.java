@@ -146,7 +146,6 @@ public class BoardController extends Thread implements MouseListener, KeyListene
                     wait();
                 } catch (InterruptedException e) {
                     IGLog.info("BoardController, wait interruption. Continuing.");
-                    continue;
                 }
             }
         }

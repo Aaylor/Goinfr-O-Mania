@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 /**
  * Created by PixelMan on 25/05/15.
  */
+@SuppressWarnings("DefaultFileTemplate")
 public interface LanguageSwapable {
 
     /**

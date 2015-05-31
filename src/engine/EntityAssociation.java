@@ -63,7 +63,7 @@ public final class EntityAssociation {
     private static Map<String, Entity> entityMap   = new HashMap<>();
     private static Map<String, EntityView> viewMap = new HashMap<>();
 
-    public final static void register(String name, Entity e, EntityView ev) {
+    public static void register(String name, Entity e, EntityView ev) {
         if (entityMap.containsKey(name)) {
             throw new IllegalArgumentException(name + " already exists.");
         }
@@ -73,7 +73,7 @@ public final class EntityAssociation {
     }
 
 
-    public final static EntityAssociation getInstance(Difficulties difficulty) {
+    public static EntityAssociation getInstance(Difficulties difficulty) {
         EntityAssociation ea = new EntityAssociation();
 
         final int cakeChaser;
@@ -208,7 +208,7 @@ public final class EntityAssociation {
         return tab;
     }
 
-    public final static void defaults() {
+    public static void defaults() {
         /* Default Glutton */
 
         Skin skin = new Skin(30, 30);

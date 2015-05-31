@@ -21,8 +21,7 @@ public class BoardView extends Background implements Observer {
 
     private static final int    UI_HEIGHT    = 50;
     private static final double FRISE_HEIGHT = 10;
-
-    private final int HEART_PADDING = 5;
+    private static final int    HEART_PADDING = 5;
 
     private String lifeLabel;
     private String scoreLabel;

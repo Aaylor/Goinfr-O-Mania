@@ -9,6 +9,7 @@ import java.awt.event.MouseListener;
 /**
  * Created by PixelMan on 24/05/15.
  */
+@SuppressWarnings("DefaultFileTemplate")
 public class VolumeButton extends JButton{
 
     private Icon mute;

@@ -7,6 +7,7 @@ import log.IGLog;
 /**
  * Created by PixelMan on 28/05/15.
  */
+@SuppressWarnings("DefaultFileTemplate")
 public class VolumeController extends AbstractVolumeController {
 
     public VolumeController(Settings currentSettings) {

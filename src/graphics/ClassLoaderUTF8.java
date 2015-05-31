@@ -5,9 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
-/**
- * Created by PixelMan on 29/05/15.
- */
 public class ClassLoaderUTF8 extends ClassLoader {
     public ClassLoaderUTF8(ClassLoader parent) {
         super(parent);

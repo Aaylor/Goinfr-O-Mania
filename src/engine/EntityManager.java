@@ -382,7 +382,7 @@ public class EntityManager {
     public boolean removeNutritionist(List<AbstractNutritionist> es) {
         nutritionists.removeAll(es);
 
-        for (Entity e : es) {
+        for (AbstractNutritionist e : es) {
             nutritionistsView.remove(e);
         }
 

@@ -1,13 +1,12 @@
 package graphics;
 
-import engine.Settings;
-
 import javax.swing.*;
 import java.awt.*;
 
 /**
  * Created by PixelMan on 26/05/15.
  */
+@SuppressWarnings("DefaultFileTemplate")
 public class VolumeView extends JPanel {
 
     VolumeButton muteButton;

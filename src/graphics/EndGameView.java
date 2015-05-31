@@ -1,6 +1,5 @@
 package graphics;
 
-import engine.Player;
 import engine.Score;
 
 import javax.swing.*;

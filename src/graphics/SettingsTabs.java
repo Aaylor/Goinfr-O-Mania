@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 /**
  * Created by PixelMan on 23/05/15.
  */
+@SuppressWarnings("DefaultFileTemplate")
 public class SettingsTabs extends JTabbedPane{
 
     /**

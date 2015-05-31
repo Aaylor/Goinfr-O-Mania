@@ -1,7 +1,6 @@
 package engine.effects;
 
 import engine.AbstractMovableEntity;
-import engine.Entity;
 
 public class SlowSpeedBuff extends AbstractBuff {
 

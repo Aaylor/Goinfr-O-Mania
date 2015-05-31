@@ -100,7 +100,7 @@ public class MainFrame extends JFrame {
     /* Frame Configuration */
 
     private void defaultFrameConfiguration(ResourceBundle bundle) {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
 
         ToolbarView bar = new ToolbarView(bundle);

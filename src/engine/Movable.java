@@ -7,7 +7,7 @@ public interface Movable {
 
     public enum Direction {
         FRONT, BELOW, LEFT, RIGHT
-    };
+    }
 
     /**
      *  Movement effects.

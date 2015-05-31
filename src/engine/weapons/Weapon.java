@@ -9,7 +9,6 @@ import log.IGLog;
 import sound.MSound;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;

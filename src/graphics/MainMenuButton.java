@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 /**
  * Created by Aaylor, Tratost, Pixelman on 16/04/15.
  */
+@SuppressWarnings("DefaultFileTemplate")
 public class MainMenuButton extends JButton {
 
     private ImageIcon imgOnClick;

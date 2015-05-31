@@ -99,7 +99,6 @@ public abstract class AbstractNutritionist extends AbstractMovableEntity
 
             if (weaponCircle.intersects(who.getBoundsCircle())) {
                 getManager().attack(this);
-                return;
             }
         }
     }

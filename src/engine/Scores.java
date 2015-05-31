@@ -156,7 +156,6 @@ public class Scores {
         } catch (TransformerException e) {
             e.printStackTrace();
             IGLog.error("Scores::save() -> fail to transform.");
-            return;
         }
     }
 

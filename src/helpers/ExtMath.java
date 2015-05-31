@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class ExtMath {
 
-    private ExtMath(){};
+    private ExtMath(){}
 
     private static final Random r = new Random();
 

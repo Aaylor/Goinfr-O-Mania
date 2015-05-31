@@ -1,7 +1,6 @@
 package engine.effects;
 
 import engine.AbstractMovableEntity;
-import engine.Cooldown;
 
 import java.util.Timer;
 import java.util.TimerTask;

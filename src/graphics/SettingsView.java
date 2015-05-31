@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 /**
  * Created by PixelMan on 22/05/15.
  */
+@SuppressWarnings("DefaultFileTemplate")
 public class SettingsView extends Background {
 
     private Settings currentSettings;

@@ -7,6 +7,7 @@ import javax.swing.event.ChangeListener;
 /**
  * Created by PixelMan on 24/05/15.
  */
+@SuppressWarnings("DefaultFileTemplate")
 public class VolumeSlider extends JSlider {
 
     private int volume;

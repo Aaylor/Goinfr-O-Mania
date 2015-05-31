@@ -164,9 +164,9 @@ public class MainMenuView extends Background implements Observer, Resumable, Lan
     public void swapLang(ResourceBundle bundle) {
         title.setText(bundle.getString("gameMenuTitle"));
         play.setText(bundle.getString("gameMenuPlayButton"));
-        load.setText(bundle.getString("gameMenuLoadButton"));;
-        options.setText(bundle.getString("gameMenuOptionsButton"));;
-        scores.setText(bundle.getString("gameMenuScoresButton"));;
+        load.setText(bundle.getString("gameMenuLoadButton"));
+        options.setText(bundle.getString("gameMenuOptionsButton"));
+        scores.setText(bundle.getString("gameMenuScoresButton"));
         quit.setText(bundle.getString("gameMenuQuitButton"));
     }
 }
