@@ -56,7 +56,7 @@ public final class EntityAssociation {
     private final static String FILE__HYPER_CAKE = "pictures/cake/cake_choco.png";
     private final static String FILE_SPEED_CAKE ="pictures/cake/cake_fraise.png";
 
-    private final static String FOLDER_LIFE_TRAP = "pictures/trap/mw2";
+    private final static String FOLDER_LIFE_TRAP = "pictures/trap/shuriken";
     private final static String FOLDER_BIG_LIFE_TRAP = "pictures/trap/katon";
     private final static String FOLDER_SLOW_TRAP = "pictures/trap/mw1";
 
@@ -359,7 +359,7 @@ public final class EntityAssociation {
         LifeTrap lifeTrap = new LifeTrap(null, new Dimension(23, 23), true,
                 null, 1000, 5000, 1);
         try {
-            BufferedImage[] p7 = createCharacterFromFile(FOLDER_LIFE_TRAP, 4, ".png");
+            BufferedImage[] p7 = createCharacterFromFile(FOLDER_LIFE_TRAP, 7, ".png");
             skin7 = new Skin(p7, 6);
             lifeTrap = new LifeTrap(null, new Dimension(p7[0].getWidth(), p7[0].getHeight()), true,
                     null, 1000, 5000, 1);
