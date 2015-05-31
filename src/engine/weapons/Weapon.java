@@ -11,7 +11,6 @@ import sound.MSound;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.util.*;
-import java.util.List;
 
 public class Weapon implements Cloneable {
 

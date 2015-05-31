@@ -25,7 +25,6 @@ public class MainFrame extends JFrame {
 
     public MainFrame() throws HeadlessException {
         super();
-        this.bundle = bundle;
         this.mainMusic = null;
         this.settings = new Settings();
         classLoaderUTF8 = new ClassLoaderUTF8(getClass().getClassLoader());

@@ -98,46 +98,46 @@ public final class EntityAssociation {
         switch (difficulty) {
             default:
             case EASY:
-                cakeChaser = 20;
-                gluttonChaser = 60;
-                trapShooter = 200;
-                lifeCake = 50;
-                superLifeCake = 30;
-                hyperLifeCake = 5;
-                invulCake = 200;
+                cakeChaser = 15;
+                gluttonChaser = 30;
+                trapShooter = 5;
+                lifeCake = 40;
+                superLifeCake = 20;
+                hyperLifeCake = 10;
+                invulCake = 10;
                 speedCake = 20;
                 lifeTrap = 20;
-                bigLifeTrap = 15;
-                slowTrap = 90;
-                invKeyTrap = 300;
+                bigLifeTrap = 5;
+                slowTrap = 20;
+                invKeyTrap = 5;
                 break;
             case MEDIUM:
-                cakeChaser = 20;
-                gluttonChaser = 60;
-                trapShooter = 300;
-                lifeCake = 50;
-                superLifeCake = 30;
+                cakeChaser = 10;
+                gluttonChaser = 30;
+                trapShooter = 10;
+                lifeCake = 30;
+                superLifeCake = 10;
                 hyperLifeCake = 5;
-                invulCake = 200;
-                speedCake = 20;
-                lifeTrap = 20;
+                invulCake = 2;
+                speedCake = 15;
+                lifeTrap = 30;
                 bigLifeTrap = 15;
-                slowTrap = 90;
-                invKeyTrap = 300;
+                slowTrap = 20;
+                invKeyTrap = 10;
                 break;
             case HARD:
                 cakeChaser = 20;
-                gluttonChaser = 60;
-                trapShooter = 200;
-                lifeCake = 50;
-                superLifeCake = 30;
-                hyperLifeCake = 5;
-                invulCake = 200;
-                speedCake = 20;
-                lifeTrap = 20;
-                bigLifeTrap = 15;
-                slowTrap = 90;
-                invKeyTrap = 300;
+                gluttonChaser = 50;
+                trapShooter = 30;
+                lifeCake = 30;
+                superLifeCake = 5;
+                hyperLifeCake = 1;
+                invulCake = 1;
+                speedCake = 5;
+                lifeTrap = 10;
+                bigLifeTrap = 25;
+                slowTrap = 10;
+                invKeyTrap = 20;
                 break;
         }
 

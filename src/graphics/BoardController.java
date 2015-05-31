@@ -41,18 +41,18 @@ public class BoardController extends Thread implements MouseListener, KeyListene
     private EntityAssociation ea;
 
     /* The pop timer */
-    private static final int CAKE_TIME_POP_EASY   = 1;    /* TODO */
-    private static final int CAKE_TIME_POP_MEDIUM = 2;    /* TODO */
-    private static final int CAKE_TIME_POP_HARD   = 3;    /* TODO */
+    private static final int CAKE_TIME_POP_EASY   = 3;    /* TODO */
+    private static final int CAKE_TIME_POP_MEDIUM = 6;    /* TODO */
+    private static final int CAKE_TIME_POP_HARD   = 8;    /* TODO */
     private PopTimer nextRandomPop;
     
-    private static final int TRAP_TIME_POP_EASY   = 1;    /* TODO */
-    private static final int TRAP_TIME_POP_MEDIUM = 2;    /* TODO */
-    private static final int TRAP_TIME_POP_HARD   = 3;    /* TODO */
+    private static final int TRAP_TIME_POP_EASY   = 13;    /* TODO */
+    private static final int TRAP_TIME_POP_MEDIUM = 9;    /* TODO */
+    private static final int TRAP_TIME_POP_HARD   = 5;    /* TODO */
     private PopTimer nextRandomTrap;
 
-    private static final int NUTRITIONISTS_TIME_POP_EASY   = 1;    /* TODO */
-    private static final int NUTRITIONISTS_TIME_POP_MEDIUM = 2;    /* TODO */
+    private static final int NUTRITIONISTS_TIME_POP_EASY   = 8;    /* TODO */
+    private static final int NUTRITIONISTS_TIME_POP_MEDIUM = 5;    /* TODO */
     private static final int NUTRITIONISTS_TIME_POP_HARD   = 3;    /* TODO */
     private PopTimer nextRandomNutritionists;
 
@@ -126,7 +126,7 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         // Has been inversed ?? Do it again.
         KeyConfiguration kc =
                 MainFrame.getCurrentInstance().getSettings().getKeyConfiguration();
-        if (kc.isInversed()) {
+        if (reinverse) {
             reinverse = false;
             kc.inverseMovements();
         }
