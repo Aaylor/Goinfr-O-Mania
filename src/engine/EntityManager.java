@@ -298,15 +298,17 @@ public class EntityManager {
         Circle circle = a.getBoundsCircle();
         double angle = a.getDirectionRadian();
 
-        double nextX = position.getX() + (circle.getRadius() * Math.cos(angle));
-        double nextY = position.getY() + (circle.getRadius() * Math.sin(angle));
-
-        Point2D newPoint = new Point2D.Double(nextX, nextY);
-        a.setPoint(newPoint);
-
         EntityAssociation ea = EntityAssociation.getInstance(level.getDifficulty());
         String trapName = ea.randomTraps.getRandomlyName();
+
         AbstractTrap trap = (AbstractTrap) ea.getEntity(trapName);
+        EntityView view = ea.getEntityView(trapName);
+
+        double nextX = position.getX() + (circle.getRadius() * Math.cos(angle));
+        double nextY = position.getY() + (circle.getRadius() * Math.sin(angle));
+        Point2D newPoint = new Point2D.Double(nextX, nextY);
+
+        trap.setPoint(newPoint);
         addEntity(
                 trap,
                 ea.getEntityView(trapName)

@@ -10,17 +10,23 @@ import java.awt.*;
 public class GluttonChaserNutritionist extends AbstractNutritionist {
     public GluttonChaserNutritionist(int nbLifes) {
         super(nbLifes);
-        setWeapon(Weapon.make("punch"));
+        w();
     }
 
     public GluttonChaserNutritionist(float speed, float direction, int nbLifes) {
         super(speed, direction, nbLifes);
-        setWeapon(Weapon.make("punch"));
+        w();
     }
 
     public GluttonChaserNutritionist(Point startPosition, Dimension size, float speed, float direction, int nbLifes) {
         super(startPosition, size, speed, direction, nbLifes);
-        setWeapon(Weapon.make("punch"));
+        w();
+    }
+
+    private void w() {
+        Weapon w = Weapon.make("punch");
+        w.setOwner(this);
+        setWeapon(w);
     }
 
     @Override

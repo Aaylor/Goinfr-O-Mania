@@ -66,7 +66,12 @@ public abstract class Entity extends Observable implements Cloneable {
         e.maxLife   = getMaxLife();
         e.life      = getMaxLife();
         e.crossable = isCrossable();
-        e.weapon    = null;
+
+        if (getWeapon() != null) {
+            e.weapon = Weapon.make(getWeapon().getName());
+        } else {
+            e.weapon = null;
+        }
 
         return e;
     }

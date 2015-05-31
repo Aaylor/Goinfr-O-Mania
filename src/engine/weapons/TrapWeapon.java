@@ -2,13 +2,14 @@ package engine.weapons;
 
 import engine.Entity;
 import engine.Skin;
+import log.IGLog;
 import sound.MSound;
 
 import javax.swing.*;
 import java.util.HashMap;
 import java.util.List;
 
-public class TrapWeapon extends Weapon{
+public class TrapWeapon extends Weapon implements Cloneable {
     protected TrapWeapon(String name, List<MSound> sounds, double range, long cooldown, Skin weaponSkin, ImageIcon weaponIcon) {
         super(name, sounds, range, 0, 0, cooldown, weaponSkin, weaponIcon);
     }

@@ -287,9 +287,6 @@ public class BoardController extends Thread implements MouseListener, KeyListene
             Entity e   = ea.getEntity(who);
             manager.setRandomPosition(e, 0, boardView.getHeight(), 0, boardView.getWidth());
 
-            /* FIXME */
-            e.setWeapon(Weapon.make("punch"));
-
             board.getLevel().getEntityManager().addNutritionist(
                     (AbstractNutritionist)e,
                     ea.getEntityView(who)

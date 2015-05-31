@@ -111,7 +111,7 @@ public final class EntityAssociation {
             case MEDIUM:
                 cakeChaser = 20;
                 gluttonChaser = 60;
-                trapShooter = 0;
+                trapShooter = 300;
                 lifeCake = 50;
                 superLifeCake = 30;
                 hyperLifeCake = 5;

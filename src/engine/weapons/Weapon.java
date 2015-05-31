@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
 
-public class Weapon {
+public class Weapon implements Cloneable {
 
     private static final Map<String, Weapon> map = new HashMap<>();
 
@@ -69,6 +69,28 @@ public class Weapon {
         weaponIcon = weapon.weaponIcon;
     }
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        Weapon w = (Weapon) super.clone();
+
+        w.name       = name;
+        w.owner      = null;
+        w.sounds     = new LinkedList<>(sounds);
+        w.soundsCpt  = 0;
+        w.range      = range;
+        w.minDamage  = minDamage;
+        w.maxDamage  = maxDamage;
+        w.cooldown   = new Cooldown(cooldown.getTime());
+        try {
+            w.weaponSkin = (Skin)weaponSkin.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        w.weaponIcon = weaponIcon;
+        
+        return w;
+    }
+
     public static void register(String name, Map<String, String> sounds, double range,
                                 int minDamage, int maxDamage, long cooldown, Skin s, String pathToIcon) {
         if (map.containsKey(name)) {
@@ -120,7 +142,11 @@ public class Weapon {
             );
         }
 
-        return new Weapon(map.get(name));
+        try {
+            return (Weapon) map.get(name).clone();
+        } catch (CloneNotSupportedException e) {
+            return null;
+        }
     }
 
     public static void defaults() {
@@ -148,7 +174,7 @@ public class Weapon {
             skinPunch = new Skin(c, 4);
         } catch (Exception e){}*/
         ImageIcon icon = new ImageIcon(
-                ExtGraphics.resizeInitialImage("picutres/punch.png", 30, true)
+                ExtGraphics.resizeInitialImage("pictures/punch.png", 30, true)
         );
         Weapon.register("trap-weapon",
                 new TrapWeapon("trap-weapon", new LinkedList<>(), 10, 2000, skinPunch, icon));
@@ -203,6 +229,10 @@ public class Weapon {
 
     public Cooldown getCooldown() {
         return cooldown;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public boolean attack(Entity entity) {
