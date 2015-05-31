@@ -6,6 +6,8 @@ import engine.Score;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ResourceBundle;
 
@@ -129,6 +131,7 @@ public class EndGameView extends Background {
             score.setFont(scoreFont);
 
         playerName = new JTextField(bundle.getString("playerName"));
+        playerName.addMouseListener(new TextFieldMouseController(playerName));
         playerName.setForeground(Color.RED);
         playerName.setOpaque(false);
         playerName.setBackground(new Color(255, 255, 255, 20));
@@ -200,4 +203,24 @@ public class EndGameView extends Background {
     public String getPlayerName(){
         return playerName.getText();
     }
+
+
+
+    private class TextFieldMouseController extends MouseAdapter {
+
+        JTextField textField;
+
+        public TextFieldMouseController(JTextField textField) {
+            super();
+            this.textField = textField;
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if(textField.getText().equals(bundle.getString("playerName"))) {
+                textField.setText("");
+            }
+        }
+    }
+
 }

@@ -39,7 +39,7 @@ public class EndGameController implements ActionListener {
     }
 
     private void saveScore(String name){
-        if(!scoreSaved && !name.equals(bundle.getString("playerName"))) {
+        if(!scoreSaved && !name.equals(bundle.getString("playerName")) && !name.equals("")) {
             MainFrame.getCurrentInstance().getScores().addScore(
                     name,
                     currentState.getLevel().getScore()
