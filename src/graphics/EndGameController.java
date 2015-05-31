@@ -54,11 +54,12 @@ public class EndGameController implements ActionListener {
         if (e.getSource() == endGameView.getReplay()) {
             IGLog.write("EndGameController::actionPerformed -> getReplay()");
             saveScore(endGameView.getPlayerName());
-            MainFrame.getCurrentInstance().popPanel(false);
-            Board b = new Board(currentState.getPlayer(), new Level(new Score(), Difficulties.MEDIUM));
+            Board b = new Board(currentState.getPlayer(), new Level(new Score(),
+                    currentState.getLevel().getDifficulty()));
             BoardView boardView = new BoardViewGenerator(b).viewGeneration();
             boardView.setSize(MainFrame.getCurrentInstance().getSize());
             BoardController bc = new BoardController(b, boardView);
+            MainFrame.getCurrentInstance().popPanel(false);
             MainFrame.getCurrentInstance().addPanel(boardView);
             bc.start();
         } else if (e.getSource() == endGameView.getScore()) {
