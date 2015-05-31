@@ -50,15 +50,18 @@ public final class EntityAssociation {
     private final static String FOLDER_GLUTTON = "pictures/Characters/goinfre";
     private final static String FOLDER_CAKE_CHASER = "pictures/Characters/Nutritioniste1";
     private final static String FOLDER_GLUTTON_CHASER = "pictures/Characters/Nutritioniste2";
+    private final static String FOLDER_TRAP_SHOOTER = "pictures/Characters/Nutritioniste3";
 
     private final static String FILE_CAKE = "pictures/cake/cake_cream.png";
     private final static String FILE_SUPER_CAKE = "pictures/cake/cake_citron.png";
     private final static String FILE__HYPER_CAKE = "pictures/cake/cake_choco.png";
     private final static String FILE_SPEED_CAKE ="pictures/cake/cake_fraise.png";
+    private final static String FILE_INVULCAKE = "pictures/cake/cake_citrus.png";
 
     private final static String FOLDER_LIFE_TRAP = "pictures/trap/shuriken";
     private final static String FOLDER_BIG_LIFE_TRAP = "pictures/trap/katon";
     private final static String FOLDER_SLOW_TRAP = "pictures/trap/mw1";
+    private final static String FOLDER_INVKEYTRAP = "pictures/trap/mw2";
 
     private static Map<String, Entity> entityMap   = new HashMap<>();
     private static Map<String, EntityView> viewMap = new HashMap<>();
@@ -255,6 +258,13 @@ public final class EntityAssociation {
         /* Trap Shooter */
         Skin skinShooter = new Skin(30, 30);
         TrapShooterNutritionist tsn = new TrapShooterNutritionist(null, new Dimension(30, 30), 2f, 0f, 3);
+        try {
+            BufferedImage[] pTSN = createCharacterFromFile(FOLDER_TRAP_SHOOTER, 16, ".png");
+            skinShooter = new Skin(pTSN, 3);
+            tsn =
+                    new TrapShooterNutritionist(null, new Dimension(pTSN[0].getWidth(), pTSN[0].getHeight()), 2f, 0f, 3);
+        }
+        catch (Exception e){}
         EntityView tsnView = new EntityView(skinShooter);
         register(TRAP_SHOOTER, tsn, tsnView);
 
@@ -338,17 +348,17 @@ public final class EntityAssociation {
         Skin invulSkin = new Skin(20, 20);
         InvulnerabilityCake invulCake= new InvulnerabilityCake(null, new Dimension(20, 20),
                 new MSound(INVULCAKE, "music/pickspeeditem00.wav"));
-        /*try {
-            File img = new File(FILE_SPEED_CAKE);
+        try {
+            File img = new File(FILE_INVULCAKE);
             BufferedImage in = ImageIO.read(img);
-            BufferedImage[] pSC = { in };
-            skinSC = new Skin(pSC, 0);
-            speedCake = new SpeedCake(null, new Dimension(pSC[0].getWidth(), pSC[0].getHeight()),
-                    new MSound(SPEEDCAKE, "music/pickspeeditem00.wav"));
+            BufferedImage[] pi = { in };
+            invulSkin = new Skin(pi, 0);
+            invulCake = new InvulnerabilityCake(null, new Dimension(pi[0].getWidth(), pi[0].getHeight()),
+                    new MSound(INVULCAKE, "music/pickspeeditem00.wav"));
         }
         catch (Exception e) {
             System.err.println("Error with image :" + FILE_SPEED_CAKE);
-        }*/
+        }
         EntityView invulCakeView = new EntityView(invulSkin);
         register(INVULCAKE, invulCake, invulCakeView);
 
@@ -388,7 +398,8 @@ public final class EntityAssociation {
         try {
             BufferedImage[] p9 = createCharacterFromFile(FOLDER_SLOW_TRAP, 4, ".png");
             skin9 = new Skin(p9, 6);
-            slowTrap = new SlowTrap(null, new Dimension(7, 7), true, null, 2000, 7000);
+            slowTrap = new SlowTrap(null, new Dimension(p9[0].getWidth(), p9[0].getHeight()), true,
+                    null, 2000, 7000);
         }
         catch (Exception e){}
         EntityView slowTrapView = new EntityView(skin9);
@@ -398,12 +409,13 @@ public final class EntityAssociation {
         Skin skinInvKeyTrap = new Skin(15, 15);
         InverseKeyTrap invKeyTrap =
                 new InverseKeyTrap(null, new Dimension(15, 15), true, null, 2000, 10000);
-        /*try {
-            BufferedImage[] p9 = createCharacterFromFile(FOLDER_SLOW_TRAP, 4, ".png");
-            skin9 = new Skin(p9, 6);
-            slowTrap = new SlowTrap(null, new Dimension(7, 7), true, null, 2000, 7000);
+        try {
+            BufferedImage[] pIT = createCharacterFromFile(FOLDER_INVKEYTRAP, 4, ".png");
+            skinInvKeyTrap = new Skin(pIT, 6);
+            invKeyTrap = new InverseKeyTrap(null, new Dimension(pIT[0].getWidth(), pIT[0].getHeight()), true,
+                    null, 2000, 7000);
         }
-        catch (Exception e){}*/
+        catch (Exception e){}
         EntityView invKeyTrapView = new EntityView(skinInvKeyTrap);
         register(INVKEYTRAP, invKeyTrap, invKeyTrapView);
 
