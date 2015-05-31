@@ -69,6 +69,8 @@ public class SettingsController implements ActionListener{
         view.getRightBut().addActionListener(react(view.getRightBut(), "right"));
         view.getUpBut().addActionListener(react(view.getUpBut(), "up"));
         view.getPauseBut().addActionListener(react(view.getPauseBut(), "pause"));
+        view.getDefaultControls().addActionListener(this);
+        view.getDefaultControls().setAccelerator(KeyStroke.getKeyStroke("alt J"));
     }
 
     private void reloadKeys(){
@@ -120,11 +122,17 @@ public class SettingsController implements ActionListener{
             MainFrame frame = MainFrame.getCurrentInstance();
             frame.getMainMusic().setVolume(frame.getSettings().getVolume());
             parent.popPanel();
+            JMenuBar b = MainFrame.getCurrentInstance().getJMenuBar();
+            b.remove(view.getDefaultControls());
+            MainFrame.getCurrentInstance().setJMenuBar(b);
         }
         else if (e.getSource() == view.getOk()){
             IGLog.write("ScoreController::actionPerformed -> getOk()");
             updateOptions();
             parent.popPanel();
+            JMenuBar b = MainFrame.getCurrentInstance().getJMenuBar();
+            b.remove(view.getDefaultControls());
+            MainFrame.getCurrentInstance().setJMenuBar(b);
         }
 
         else if(e.getSource() == view.getDifficultyComboBox()){
@@ -141,6 +149,18 @@ public class SettingsController implements ActionListener{
                 currentSettings.setLang(view.getLanguageComboBox().getSelectedIndex());
             } catch (InvalidArgumentException e1) {
                 e1.printStackTrace();
+            }
+        }
+        else if (e.getSource() == view.getDefaultControls()){
+            ResourceBundle b = MainFrame.getCurrentInstance().getBundle();
+            int t = JOptionPane.showConfirmDialog(null,
+                    new JLabel(b.getString("defaultDialog")),
+                    "defaultControl",
+                    JOptionPane.YES_NO_OPTION);
+            if(t == 0) {
+                currentSettings.getKeyConfiguration().defaultConfiguration();
+                removesListener();
+                reloadKeys();
             }
         }
         else {

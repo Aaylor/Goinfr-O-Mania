@@ -4,6 +4,9 @@ import engine.Score;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -216,8 +219,27 @@ public class EndGameView extends Background {
 
         @Override
         public void mouseClicked(MouseEvent e) {
+            System.out.println("Textfield clicked");
             if(textField.getText().equals(bundle.getString("playerName"))) {
+                playerName.setDocument(new JTextFieldLimit(8));
                 textField.setText("");
+            }
+        }
+    }
+
+    private class JTextFieldLimit extends PlainDocument {
+        private int limit;
+
+        JTextFieldLimit(int limit) {
+            super();
+            this.limit = limit;
+        }
+
+        public void insertString( int offset, String  str, AttributeSet attr ) throws BadLocationException {
+            if (str == null) return;
+
+            if ((getLength() + str.length()) <= limit) {
+                super.insertString(offset, str, attr);
             }
         }
     }

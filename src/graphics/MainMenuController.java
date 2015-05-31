@@ -32,7 +32,7 @@ public class MainMenuController implements ActionListener {
         this.mainMenuView = new MainMenuView(parent);
         mainMenuView.setController(this);
         parent.addPanel(mainMenuView);
-        mainMusic = new MMusic("erza","music/erza.mp3");
+        mainMusic = new MMusic("erza","music/erza.wav");
         parent.setMainMusic(mainMusic);
 
         addControllers();
