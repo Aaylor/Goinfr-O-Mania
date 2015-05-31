@@ -1,5 +1,6 @@
 package graphics;
 
+import engine.Difficulties;
 import engine.KeyConfiguration;
 import engine.Settings;
 
@@ -189,7 +190,9 @@ public class SettingsView extends Background {
                 bundle.getString("optionsComboDiffHard")
         };
         difficultyComboBox = new JComboBox<>(difficultyChoices);
-        difficultyComboBox.setSelectedIndex(currentSettings.getDifficulty());
+        difficultyComboBox.setSelectedIndex(
+                Difficulties.intOfDifficulty(currentSettings.getDifficulty())
+        );
 
         languageLabel = new JLabel(bundle.getString("optionsLanguageLabel"), SwingConstants.CENTER);
         languageLabel.setForeground(Color.WHITE);

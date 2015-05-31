@@ -66,7 +66,8 @@ public class MainMenuController implements ActionListener {
         mainMusic.stop();
         parent.setPreferredSize(parent.getSize());
 
-        Level level = new Level(new Score(), Difficulties.MEDIUM); /* FIXME */
+        Level level = new Level(new Score(),
+                MainFrame.getCurrentInstance().getSettings().getDifficulty());
 
 
         Board board = new Board(new Player("Test"), level);

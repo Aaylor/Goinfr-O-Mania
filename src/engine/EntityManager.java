@@ -302,7 +302,6 @@ public class EntityManager {
         String trapName = ea.randomTraps.getRandomlyName();
 
         AbstractTrap trap = (AbstractTrap) ea.getEntity(trapName);
-        EntityView view = ea.getEntityView(trapName);
 
         double nextX = position.getX() + (circle.getRadius() * Math.cos(angle));
         double nextY = position.getY() + (circle.getRadius() * Math.sin(angle));

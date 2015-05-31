@@ -303,6 +303,10 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         /* Game initialization */
         initialization(manager);
 
+        IGLog.info(" | Start the game with difficulty : " +
+                board.getLevel().getDifficulty()
+        );
+
         getBoard().getLevel().getChrono().start();
 
         while (true) {

@@ -11,25 +11,20 @@ import java.util.prefs.Preferences;
  */
 public class Settings {
 
-    /* Difficulty */
-    public static final int EASY    = 0;
-    public static final int NORMAL  = 1;
-    public static final int HARD    = 2;
-
     /* Langues */
     public static final int FRENCH = 0;
     public static final int ENGLISH = 1;
 
     /* Default values */
-    private static final double DEFAULT_VOLUME      = 1d;
-    private static final int    DEFAULT_DIFFICULTY  = NORMAL;
-    private static final int    DEFAULT_LANG        = ENGLISH;
+    private static final double       DEFAULT_VOLUME      = 1d;
+    private static final Difficulties DEFAULT_DIFFICULTY  = Difficulties.MEDIUM;
+    private static final int          DEFAULT_LANG        = ENGLISH;
 
     private Preferences preferences;
 
     private double volume;
     private double soundEffects;
-    private int difficulty;
+    private Difficulties difficulty;
     private int lang;
     private KeyConfiguration keyConfiguration;
 
@@ -40,7 +35,9 @@ public class Settings {
 
         volume           = preferences.getDouble("volume", DEFAULT_VOLUME);
         soundEffects     = preferences.getDouble("soundEffects", DEFAULT_VOLUME);
-        difficulty       = preferences.getInt("difficulty", DEFAULT_DIFFICULTY);
+        difficulty       = Difficulties.difficultyOfInt(
+                preferences.getInt("difficulty",Difficulties.intOfDifficulty(DEFAULT_DIFFICULTY))
+        );
         lang             = preferences.getInt("lang", DEFAULT_LANG);
         keyConfiguration = new KeyConfiguration();
     }
@@ -74,7 +71,7 @@ public class Settings {
         return soundEffects;
     }
 
-    public int getDifficulty() {
+    public Difficulties getDifficulty() {
         return difficulty;
     }
 
@@ -118,9 +115,13 @@ public class Settings {
      * @throws InvalidArgumentException if the new difficulty is not EASY, NORMAL, or HARD.
      */
     public void setDifficulty(int difficulty) throws InvalidArgumentException {
-        if(difficulty < EASY || difficulty > HARD)
+        if (difficulty < 0 || difficulty > 2)
             throw new InvalidArgumentException(null);
-        this.difficulty = difficulty;
+        this.difficulty = Difficulties.difficultyOfInt(difficulty);
+    }
+
+    public void setDifficulty(Difficulties d) {
+        this.difficulty = d;
     }
 
     /**
@@ -137,7 +138,7 @@ public class Settings {
     public void savePreferences(){
         preferences.putDouble("volume", volume);
         preferences.putDouble("soundEffects", soundEffects);
-        preferences.putInt("difficulty", difficulty);
+        preferences.putInt("difficulty", Difficulties.intOfDifficulty(difficulty));
         preferences.putInt("lang", lang);
         keyConfiguration.savePreferences();
     }
