@@ -40,7 +40,7 @@ public class TrapShooterNutritionist extends AbstractNutritionist {
 
     @Override
     public boolean effect(Entity e) {
-        return false;
+        return getLife() <= 0;
     }
 
     @Override

@@ -36,10 +36,10 @@ public class CakeChaserNutritionist extends AbstractNutritionist {
     public boolean effect(Entity e) {
         if (e instanceof AbstractCake) {
             IGLog.info("CakeChaser, effect: cake.");
-            return false;
+            return getLife() <= 0;
         }
 
-        return false;
+        return getLife() <= 0;
     }
 
     @Override
