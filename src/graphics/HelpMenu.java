@@ -72,9 +72,24 @@ public class HelpMenu extends JDialog {
         }
     }
 
+    private class CakePanel extends JPanel {
+        GridBagConstraints gbc;
+
+        public CakePanel() {
+            setLayout(new GridLayout(5, 5));
+            gbc = new GridBagConstraints();
+
+            make(this, gbc, 0, "pictures/cake/cake_cream.png", "lifeCakeText");
+            make(this, gbc, 1, "pictures/cake/cake_citron.png", "superLifeCakeText");
+            make(this, gbc, 2, "pictures/cake/cake_choco.png", "hyperLifeCakeText");
+            make(this, gbc, 3, "pictures/cake/cake_fraise.png", "speedCakeText");
+            make(this, gbc, 4, "pictures/cake/cake_citrus.png", "invulCakeText");
+        }
+    }
+
     public HelpMenu(ResourceBundle bundle) {
-        setPreferredSize(new Dimension(400, 600));
-        setSize(new Dimension(400, 600));
+        setPreferredSize(new Dimension(400, 700));
+        setSize(new Dimension(400, 700));
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setModal(true);
@@ -84,6 +99,8 @@ public class HelpMenu extends JDialog {
         JTabbedPane p = new JTabbedPane();
         p.addTab("Test1", new GluttonPanel());
         p.addTab("Test2", new NutritionistPanel());
+        p.addTab("Test3", new CakePanel());
+        p.addTab("Test4", new NutritionistPanel());
         add(p);
 
         setResizable(false);
