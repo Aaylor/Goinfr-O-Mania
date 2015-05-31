@@ -185,7 +185,7 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
     }
 
     @Override
-    public void move(Direction d) {
+    public void move(Direction d, boolean multiple) {
         double nextX, nextY;
 
         Point2D position = getPoint();
@@ -193,9 +193,10 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
         Dimension entitySize = getSize();
 
         double speed = getSpeed() * (((double)getSpeedModifier()) / 100.);
+        float angleModifier = !multiple ? 2.f : 0.8f;
 
-        Point2D newPoint = null;
-        Circle newCircle = null;
+        Point2D newPoint;
+        Circle newCircle;
         switch (d) {
             case FRONT:
                 nextX = position.getX() + (speed * Math.cos(angle));
@@ -225,11 +226,11 @@ public abstract class AbstractMovableEntity extends Entity implements Movable {
                 break;
 
             case LEFT:
-                addDirection(-1f * getSpeed());
+                addDirection(-angleModifier * getSpeed());
                 break;
 
             case RIGHT:
-                addDirection(1f * getSpeed());
+                addDirection(angleModifier * getSpeed());
                 break;
 
             default:

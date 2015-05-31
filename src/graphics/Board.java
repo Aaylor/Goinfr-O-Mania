@@ -34,9 +34,9 @@ public class Board extends Observable {
     }
 
 
-    public void sendGluttonMovement(Movable.Direction d) {
+    public void sendGluttonMovement(Movable.Direction d, boolean b) {
         Glutton glutton = currentLevel.getEntityManager().getGlutton();
-        glutton.move(d);
+        glutton.move(d, b);
         setChanged();
         notifyObservers();
     }
@@ -46,7 +46,6 @@ public class Board extends Observable {
         glutton.getManager().attack(glutton);
     }
 
-    /* XXX: Remove this. */
     public void notification() {
         setChanged();
         notifyObservers();

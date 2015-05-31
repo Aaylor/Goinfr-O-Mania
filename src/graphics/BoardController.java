@@ -168,16 +168,35 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         KeyConfiguration keyConfiguration =
                 MainFrame.getCurrentInstance().getSettings().getKeyConfiguration();
 
+        boolean find         = false;
+        boolean twoMovements = false;
+
         synchronized (pressedKeys) {
             for (Integer pressedKey : pressedKeys) {
                 if (pressedKey == keyConfiguration.getUp()) {
-                    board.sendGluttonMovement(Movable.Direction.FRONT);
+                    if (find) {twoMovements = true; break;}
+                    if (!find) find = true;
                 } else if (pressedKey == keyConfiguration.getDown()) {
-                    board.sendGluttonMovement(Movable.Direction.BELOW);
+                    if (find) {twoMovements = true; break;}
+                    if (!find) find = true;
                 } else if (pressedKey == keyConfiguration.getLeft()) {
-                    board.sendGluttonMovement(Movable.Direction.LEFT);
+                    if (find) {twoMovements = true; break;}
+                    if (!find) find = true;
                 } else if (pressedKey == keyConfiguration.getRight()) {
-                    board.sendGluttonMovement(Movable.Direction.RIGHT);
+                    if (find) {twoMovements = true; break;}
+                    if (!find) find = true;
+                }
+            }
+
+            for (Integer pressedKey : pressedKeys) {
+                if (pressedKey == keyConfiguration.getUp()) {
+                    board.sendGluttonMovement(Movable.Direction.FRONT, twoMovements);
+                } else if (pressedKey == keyConfiguration.getDown()) {
+                    board.sendGluttonMovement(Movable.Direction.BELOW, twoMovements);
+                } else if (pressedKey == keyConfiguration.getLeft()) {
+                    board.sendGluttonMovement(Movable.Direction.LEFT, twoMovements);
+                } else if (pressedKey == keyConfiguration.getRight()) {
+                    board.sendGluttonMovement(Movable.Direction.RIGHT, twoMovements);
                 } else if (pressedKey == keyConfiguration.getAttack()) {
                     board.sendGluttonAttack();
                 }
@@ -309,7 +328,6 @@ public class BoardController extends Thread implements MouseListener, KeyListene
         getBoard().getLevel().getChrono().start();
 
         while (true) {
-            long start = System.currentTimeMillis();
             waitForResume();
             if (board.getLevel().getEntityManager().getGlutton().getLife() <= 0) {
                 IGLog.info("Glutton is dead.");

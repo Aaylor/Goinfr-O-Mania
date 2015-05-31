@@ -12,7 +12,7 @@ public interface Movable {
     /**
      *  Movement effects.
      */
-    public void move(Direction d);
+    public void move(Direction d, boolean multiple);
 
     public void translate(double dx, double dy);
 

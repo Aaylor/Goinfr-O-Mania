@@ -65,24 +65,28 @@ public abstract class AbstractNutritionist extends AbstractMovableEntity
         double oppositeAngle = ExtMath.addToAngle(angle, 180);
         double nextAngle = calculateNextAngle(entity);
 
-        if (nextAngle <= angle - 2 || nextAngle >= angle + 2) {
+        boolean frontMove = nextAngle >= angle - 30 && nextAngle <= angle + 3;
+        boolean angleMove = nextAngle <= angle - 2 || nextAngle >= angle + 2;
+        boolean b = frontMove && angleMove;
+
+        if (angleMove) {
             if (angle >= 180) {
                 if (nextAngle <= angle && nextAngle >= oppositeAngle) {
-                    this.move(Movable.Direction.LEFT);
+                    this.move(Movable.Direction.LEFT, b);
                 } else {
-                    this.move(Movable.Direction.RIGHT);
+                    this.move(Movable.Direction.RIGHT, b);
                 }
             } else {
                 if (nextAngle >= angle && nextAngle <= oppositeAngle) {
-                    this.move(Movable.Direction.RIGHT);
+                    this.move(Movable.Direction.RIGHT, b);
                 } else {
-                    this.move(Movable.Direction.LEFT);
+                    this.move(Movable.Direction.LEFT, b);
                 }
             }
         }
 
-        if (nextAngle >= angle - 30 && nextAngle <= angle + 30) {
-            this.move(Movable.Direction.FRONT);
+        if (frontMove) {
+            this.move(Movable.Direction.FRONT, b);
         }
     }
 
@@ -99,6 +103,7 @@ public abstract class AbstractNutritionist extends AbstractMovableEntity
 
             if (weaponCircle.intersects(who.getBoundsCircle())) {
                 getManager().attack(this);
+                return;
             }
         }
     }
