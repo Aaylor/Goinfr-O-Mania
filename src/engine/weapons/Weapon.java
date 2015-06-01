@@ -80,7 +80,7 @@ public class Weapon implements Cloneable {
         w.maxDamage  = maxDamage;
         w.cooldown   = new Cooldown(cooldown.getTime());
         try {
-            w.weaponSkin = (Skin)weaponSkin.clone();
+            w.weaponSkin = weaponSkin == null ? null : (Skin)weaponSkin.clone();
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
@@ -162,20 +162,11 @@ public class Weapon implements Cloneable {
 
 
         /* Trap Weapon */
-        HashMap<String, String> trapSounds = new HashMap<>();
-        trapSounds.put("left-punch", "sounds/left-punch.mp3");
-        trapSounds.put("right-punch", "sounds/right-punch.mp3");
-        /* FIXME */
-        Skin trapPunch = new Skin(20,20);
-        /*try {
-            BufferedImage[] c = EntityAssociation.createCharacterFromFile("pictures/animation/", 7, ".png");
-            skinPunch = new Skin(c, 4);
-        } catch (Exception e){}*/
         ImageIcon icon = new ImageIcon(
                 ExtGraphics.resizeInitialImage("pictures/punch.png", 30, true)
         );
         Weapon.register("trap-weapon",
-                new TrapWeapon("trap-weapon", new LinkedList<>(), 10, 2000, skinPunch, icon));
+                new TrapWeapon("trap-weapon", new LinkedList<>(), 10, 2000, null, null));
     }
 
     protected void playNextSound() {
