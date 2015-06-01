@@ -22,7 +22,9 @@ public class TrapWeapon extends Weapon implements Cloneable {
     public boolean attack(Entity entity) {
         playNextSound();
         getCooldown().start();
-        getWeaponSkin().start(true);
+
+        if (getWeaponSkin() != null)
+            getWeaponSkin().start(true);
 
         entity.getManager().addRandomTrapBehindEntity(entity);
 

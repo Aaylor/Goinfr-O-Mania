@@ -205,7 +205,10 @@ public class Weapon implements Cloneable {
     }
 
     public BufferedImage getNextAnimation() {
-        return weaponSkin.move();
+        if (weaponSkin != null)
+            return weaponSkin.move();
+        else
+            return null;
     }
 
     public ImageIcon getWeaponIcon() {
